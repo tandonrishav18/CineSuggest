@@ -1,0 +1,6 @@
+{
+  "name": "CineSuggest",
+  "description": "The visual home page of CineSuggest, a highly polished, cinematic film curation and discovery platform featuring dynamic movie grids, review tools, and editorial digests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

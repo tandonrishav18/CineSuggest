@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(jobs *)",
+      "Bash(curl *)",
+      "Bash(node *)",
+      "Bash(npm run *)",
+      "Bash(pkill *)",
+      "Bash(http-server *)",
+      "WebSearch",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(netstat -tlnp)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(npm list *)"
+    ]
+  }
+}

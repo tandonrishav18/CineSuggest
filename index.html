@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cine Suggest | Verify your Identity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6&family=Share:wght@700&family=Ubuntu:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260627" />
+  </head>
+  <body>
+    <div class="screen">
+      <div class="shape-grid" aria-hidden="true"></div>
+      <div class="spotlight" aria-hidden="true"></div>
+
+      <header class="brand" aria-label="Cine Suggest">
+        <div id="brand-logo"></div>
+      </header>
+
+
+      <main class="verification-shell">
+        <form
+          class="verification-card"
+          aria-labelledby="verification-title"
+          data-node-id="1:6552"
+        >
+          <div class="card-heading-group">
+            <h1 id="verification-title">Verify your Identity</h1>
+            <p>We have sent email with your login code</p>
+          </div>
+
+          <label class="sr-only" for="login-code"
+            >Enter your 6 digit code</label
+          >
+          <input
+            id="login-code"
+            class="code-input"
+            name="login-code"
+            inputmode="numeric"
+            maxlength="6"
+            pattern="[0-9]*"
+            placeholder="Enter Your 6 digit code..."
+            autocomplete="one-time-code"
+          />
+
+          <div class="action-group">
+            <button class="primary-button" type="submit">Continue</button>
+            <p class="resend-copy">
+              Check your spam folder if you did&rsquo;t get the mail. Still
+              nothing?
+              <button class="resend-button" type="button">Resend code.</button>
+            </p>
+          </div>
+
+          <button class="secondary-button" type="button">Go Back</button>
+          <p id="verification-feedback" class="sr-only" aria-live="polite"></p>
+        </form>
+      </main>
+    </div>
+
+    <!-- Motion — standalone animation library (local build) -->
+    <script src="./node_modules/motion/dist/motion.js"></script>
+    <script src="./logo.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

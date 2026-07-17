@@ -1,0 +1,487 @@
+:root {
+  --background: #001017;
+  --background-deep: #000b10;
+  --primary: #75d4cb;
+  --text-primary: #ffffff;
+  --glass: rgba(128, 128, 128, 0.3);
+  --glass-stroke: rgba(255, 255, 255, 0.4);
+  --input-fill: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--background-deep);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background-deep);
+  color: var(--text-primary);
+  font-family: "Ubuntu", Arial, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.screen {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #001118 0%, #001016 54%, #00141b 100%);
+}
+
+.shape-grid,
+.spotlight,
+.poster-rail {
+  pointer-events: none;
+  position: absolute;
+}
+
+.shape-grid {
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(117, 212, 203, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 212, 203, 0.055) 1px, transparent 1px);
+  background-size: 34.833px 34.833px;
+  opacity: 0.9;
+}
+
+.spotlight {
+  z-index: 1;
+  top: -422px;
+  left: calc(50% - 480px);
+  width: 959px;
+  height: 1318px;
+  background: radial-gradient(
+    ellipse at 50% 41%,
+    rgba(130, 195, 190, 0.44) 0%,
+    rgba(92, 138, 137, 0.34) 34%,
+    rgba(41, 78, 82, 0.18) 55%,
+    rgba(0, 16, 23, 0) 78%
+  );
+  filter: blur(2px);
+}
+
+.poster-rail {
+  z-index: 2;
+  top: 530px;
+  left: calc(50% - 720px);
+  width: 3078px;
+  height: 470px;
+  opacity: 0.1;
+  filter: saturate(0.85) contrast(1.12);
+}
+
+
+.poster {
+  position: absolute;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.poster-interstellar-wide {
+  left: 0;
+  top: 302px;
+  width: 300px;
+  height: 168px;
+}
+
+.poster-neptune {
+  left: 107px;
+  top: 0;
+  width: 194.407px;
+  height: 288px;
+}
+
+.poster-mission {
+  left: 312px;
+  top: 99px;
+  width: 253px;
+  height: 371px;
+}
+
+.poster-once {
+  left: 577px;
+  top: 277px;
+  width: 250px;
+  height: 193px;
+}
+
+.poster-avengers {
+  left: 839px;
+  top: 84px;
+  width: 260px;
+  height: 386px;
+}
+
+.poster-jaws {
+  left: 1111px;
+  top: 0;
+  width: 357.396px;
+  height: 470px;
+}
+
+.poster-portrait-one {
+  left: 1480px;
+  top: 0;
+  width: 175px;
+  height: 263px;
+}
+
+.poster-wide-two {
+  left: 1480px;
+  top: 284px;
+  width: 243px;
+  height: 186px;
+}
+
+.poster-wide-four {
+  left: 1735px;
+  top: 284px;
+  width: 330px;
+  height: 186px;
+}
+
+.poster-portrait-four {
+  left: 2077px;
+  top: 201px;
+  width: 172px;
+  height: 269px;
+}
+
+.poster-portrait-two {
+  left: 2267px;
+  top: 0;
+  width: 192px;
+  height: 284px;
+}
+
+.poster-wide-three {
+  left: 2261px;
+  top: 291px;
+  width: 396px;
+  height: 179px;
+}
+
+.poster-portrait-three {
+  left: 2669px;
+  top: 277px;
+  width: 130px;
+  height: 193px;
+}
+
+.poster-moonlight {
+  left: 2811px;
+  top: 100px;
+  width: 255px;
+  height: 370px;
+}
+
+.brand {
+  position: absolute;
+  z-index: 4;
+  top: 48px;
+  left: 48px;
+  height: 160px;
+  color: #fff;
+  line-height: 1;
+  opacity: 0; /* Motion entrance */
+}
+
+.brand span {
+  display: block;
+  font-family: "Jaro", Impact, fantasy;
+  font-size: 128px;
+  font-variation-settings: "opsz" 6;
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+
+.verification-shell {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100svh;
+  padding: clamp(188px, 28.125vh, 288px) 24px 48px;
+}
+
+.verification-card {
+  position: relative;
+  display: flex;
+  width: 494px;
+  height: 520px;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  margin: 0;
+  padding: 48px;
+  overflow: hidden;
+  border: 0;
+  outline: 0.604px solid var(--glass-stroke);
+  border-radius: 27.78px;
+  background: var(--glass);
+  backdrop-filter: blur(26.05px);
+  box-shadow:
+    inset 0 0 0 0.4px rgba(255, 255, 255, 0.08),
+    0 30px 92px rgba(0, 0, 0, 0.12);
+  opacity: 0; /* Motion spring entrance */
+}
+
+.card-heading-group {
+  display: flex;
+  width: 100%;
+  height: 107px;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  text-align: center;
+  opacity: 0; /* Motion stagger will reveal this */
+}
+
+.card-heading-group h1 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.96);
+  font-family: "Share", "Arial Narrow", Arial, sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 22.331px;
+  white-space: nowrap;
+}
+
+.card-heading-group p {
+  width: 100%;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 25px;
+  text-align: center;
+}
+
+.code-input {
+  width: 100%;
+  height: 56px;
+  padding: 0 32.5px;
+  border: 1px solid #fff;
+  border-radius: 24px;
+  outline: none;
+  background: var(--input-fill);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 22.331px;
+  opacity: 0; /* Motion stagger */
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.code-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.code-input:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(117, 212, 203, 0.16);
+}
+
+.action-group {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  opacity: 0; /* Motion stagger */
+}
+
+.primary-button,
+.secondary-button {
+  display: flex;
+  width: 100%;
+  height: 47px;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 24px;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 22.331px;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.primary-button {
+  border: 0;
+  background: var(--primary);
+  color: #000;
+  box-shadow: inset 0 0 5.2px rgba(255, 255, 255, 0.54);
+}
+
+.primary-button:hover {
+  background: #5dbcbc;
+}
+
+.primary-button:active {
+  transform: translateY(1px);
+}
+
+.resend-copy {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+.resend-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+.resend-button:hover,
+.resend-button:focus-visible {
+  color: var(--primary);
+}
+
+.secondary-button {
+  border: 1px solid #fff;
+  background: transparent;
+  color: var(--primary);
+  opacity: 0; /* Motion stagger */
+}
+
+.secondary-button:hover {
+  background: #ffffff;
+  color: #001017;
+  border-color: #ffffff;
+}
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.resend-button:focus-visible {
+  outline: 3px solid rgba(117, 212, 203, 0.35);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .screen {
+    min-height: 760px;
+  }
+
+  .shape-grid {
+    background-size: 30px 30px;
+  }
+
+  .spotlight {
+    top: -380px;
+    left: 50%;
+    width: 760px;
+    transform: translateX(-50%);
+  }
+
+  .brand {
+    top: 32px;
+    left: 24px;
+    height: auto;
+  }
+
+  .brand span {
+    font-size: clamp(80px, 22vw, 104px);
+  }
+
+  .poster-rail {
+    top: 455px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.78);
+    transform-origin: top center;
+  }
+
+  .verification-shell {
+    padding-top: 170px;
+  }
+
+  .verification-card {
+    width: min(494px, calc(100vw - 32px));
+    height: auto;
+    min-height: auto;
+    gap: 28px;
+    padding: 32px;
+    border-radius: 26px;
+  }
+
+  .card-heading-group {
+    height: auto;
+    gap: 24px;
+  }
+
+  .card-heading-group h1 {
+    font-size: clamp(29px, 8vw, 36px);
+    line-height: 1;
+    white-space: normal;
+  }
+
+  .card-heading-group p {
+    font-size: clamp(20px, 5.2vw, 24px);
+    line-height: 1.08;
+  }
+
+  .code-input {
+    padding: 0 26px;
+  }
+
+  .resend-copy {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
