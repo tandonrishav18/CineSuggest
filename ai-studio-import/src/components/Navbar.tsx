@@ -72,6 +72,16 @@ export default function Navbar({ onSearch }: NavbarProps) {
           >
             <SlidersHorizontal className="w-5 h-5 stroke-[2]" />
           </motion.button>
+
+          {/* Login Link */}
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="../"
+            className="px-4 py-1.5 rounded-full bg-[#1a3040] border border-[#3dd9c8]/30 hover:bg-[#3dd9c8]/10 text-white text-xs font-semibold tracking-wide transition-colors duration-200 cursor-pointer shrink-0"
+          >
+            Login
+          </motion.a>
         </motion.div>
       </div>
     </header>

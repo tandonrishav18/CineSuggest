@@ -116,9 +116,9 @@ form.addEventListener("submit", (event) => {
   );
   feedback.textContent = "Code submitted.";
   
-  // Redirect to landing page after the animation plays
+  // Redirect to home page after the animation plays
   setTimeout(() => {
-    window.location.href = "./landing/";
+    window.location.href = "./home/";
   }, 500);
 });
 
