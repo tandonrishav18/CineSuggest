@@ -238,7 +238,11 @@ export default function TrendingNow() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/80 border border-[#14273f]/60 bg-neutral-950 group"
+              className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/80 border border-[#14273f]/60 bg-neutral-950 group cursor-pointer"
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest("button")) return;
+                window.location.href = `../movie-cards/?movie=${currentSelectedMovie.id}`;
+              }}
             >
               {/* Card Backdrop Image */}
               <img
@@ -348,9 +352,7 @@ export default function TrendingNow() {
                 <motion.div
                   key={movie.id}
                   onClick={() => {
-                    setCurrentSelectedMovie(movie);
-                    setIsLiked(false);
-                    setIsReminded(false);
+                    window.location.href = `../movie-cards/?movie=${movie.id}`;
                   }}
                   whileHover={{
                     scale: 1.05,

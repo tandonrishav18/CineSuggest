@@ -1,0 +1,6 @@
+{
+  "name": "Cine Suggest",
+  "description": "An editorial movie discovery and review platform for cinematic suggestions and ratings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&family=Creepster&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Antonio", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-horror: "Creepster", system-ui, sans-serif;
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(rgba(117, 212, 203, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(117, 212, 203, 0.05) 1px, transparent 1px),
+      linear-gradient(180deg, #001118 0%, #001016 54%, #00141b 100%);
+    background-size:
+      34.833px 34.833px,
+      34.833px 34.833px,
+      100% 100%;
+    background-attachment: fixed;
+    background-position: center;
+  }
+}
+
+/* Base style resets and customizations */
+body {
+  background-color: #001118;
+  background-image:
+    linear-gradient(rgba(117, 212, 203, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 212, 203, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #001118 0%, #001016 54%, #00141b 100%);
+  background-size:
+    34.833px 34.833px,
+    34.833px 34.833px,
+    100% 100%;
+  background-attachment: fixed;
+  background-position: center;
+  color: #f8fafc;
+  font-family: var(--font-sans);
+}
+
+/* Custom scrollbar to keep layout premium */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #03080c;
+}
+::-webkit-scrollbar-thumb {
+  background: #0d202e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #173d56;
+}
