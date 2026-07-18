@@ -74,7 +74,7 @@ const MASTER_MOVIES: Movie[] = [
   {
     id: "oppenheimer",
     title: "Oppenheimer",
-    url: "https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&w=600&q=80", // fiery atomic sky/energy portrait
+    url: "", // solid dark background matching design specification
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-4 py-6 select-none pointer-events-none z-10 bg-gradient-to-t from-black/95 via-black/10 to-black/60">
         {/* Oppenheimer amber cinematic overlay */}
@@ -360,48 +360,15 @@ const MASTER_MOVIES: Movie[] = [
 ];
 
 export default function HeroSection({ onStartExploring }: HeroSectionProps) {
-  // Use React state initialized with the first 9 master movies to populate our 9 visual layout slots!
-  const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => MASTER_MOVIES.slice(0, 9));
+  // Use React state initialized with the 9 visual layout slots matching the design PNG exactly!
+  const [currentMovies] = useState<Movie[]>(() => {
+    const designOrder = ["archer", "blade-runner", "oppenheimer", "succession", "her", "vikram", "spider-man", "ekaki", "inception"];
+    return designOrder.map(id => MASTER_MOVIES.find(m => m.id === id) || MASTER_MOVIES[0]);
+  });
 
-  // Swap 3 random movies on our 9-slot board over time with smooth 3D flip card animations!
+  // No swapping to preserve the layout matching the original design specification
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Pick 3 random unique slots to swap (0 to 8)
-      const slotsToSwap: number[] = [];
-      while (slotsToSwap.length < 3) {
-        const idx = Math.floor(Math.random() * 9);
-        if (!slotsToSwap.includes(idx)) {
-          slotsToSwap.push(idx);
-        }
-      }
-      
-      setCurrentMovies((prevMovies) => {
-        // Collect currently visible movie IDs to avoid duplicates on the screen
-        const activeIds = new Set(prevMovies.map(m => m.id));
-        const inactiveMovies = MASTER_MOVIES.filter(m => !activeIds.has(m.id));
-        
-        // Ensure we have at least 3 inactive movies to swap
-        if (inactiveMovies.length < 3) return prevMovies;
-        
-        // Grab 3 unique random new movies that are currently off-screen
-        const availableInactive = [...inactiveMovies];
-        const chosenNewMovies: Movie[] = [];
-        for (let i = 0; i < 3; i++) {
-          const randIdx = Math.floor(Math.random() * availableInactive.length);
-          const movie = availableInactive.splice(randIdx, 1)[0];
-          chosenNewMovies.push(movie);
-        }
-        
-        const nextMovies = [...prevMovies];
-        slotsToSwap.forEach((slotIdx, i) => {
-          nextMovies[slotIdx] = chosenNewMovies[i];
-        });
-        
-        return nextMovies;
-      });
-    }, 4000); // Trigger a transition every 4.0 seconds
-
-    return () => clearInterval(interval);
+    // Keep visual consistency with the design mockup
   }, []);
 
   return (
@@ -513,12 +480,14 @@ export default function HeroSection({ onStartExploring }: HeroSectionProps) {
                       {/* Fluid glass sheeting highlights on posters */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-20" />
                       
-                      <img 
-                        src={movie.url} 
-                        alt={movie.title} 
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                        referrerPolicy="no-referrer"
-                      />
+                      {movie.url && (
+                        <img 
+                          src={movie.url} 
+                          alt={movie.title} 
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                          referrerPolicy="no-referrer"
+                        />
+                      )}
 
                       {/* Meticulously crafted custom watermark typography */}
                       {movie.watermark}
