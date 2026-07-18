@@ -21,6 +21,17 @@ export const MOVIES: Movie[] = [
         name: 'Amazon Prime Video',
         logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-prime',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 99',
       }
     ],
     reviews: [
@@ -58,6 +69,17 @@ export const MOVIES: Movie[] = [
         name: 'Netflix',
         logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 79',
       }
     ],
     reviews: [
@@ -95,6 +117,17 @@ export const MOVIES: Movie[] = [
         name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 69',
       }
     ],
     reviews: [
@@ -132,6 +165,17 @@ export const MOVIES: Movie[] = [
         name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 89',
       }
     ],
     reviews: [
@@ -169,6 +213,16 @@ export const MOVIES: Movie[] = [
         name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
       }
     ],
     reviews: [
@@ -211,6 +265,17 @@ export const MOVIES: Movie[] = [
         name: 'Netflix',
         logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 120',
       }
     ],
     reviews: [
@@ -248,6 +313,17 @@ export const MOVIES: Movie[] = [
         name: 'Amazon Prime Video',
         logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-prime',
+      },
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 59',
       }
     ],
     reviews: [
@@ -282,9 +358,20 @@ export const MOVIES: Movie[] = [
     stillUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
     streamProviders: [
       {
-        name: 'Disney Hotstar',
+        name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 49',
       }
     ],
     reviews: [
@@ -319,9 +406,19 @@ export const MOVIES: Movie[] = [
     stillUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
     streamProviders: [
       {
-        name: 'Youtube',
-        logo: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=120&auto=format&fit=crop',
+        name: 'YouTube',
+        logo: '',
         watchUrl: '#watch-youtube',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
       }
     ],
     reviews: [
@@ -359,6 +456,17 @@ export const MOVIES: Movie[] = [
         name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 109',
       }
     ],
     reviews: [
@@ -396,6 +504,17 @@ export const MOVIES: Movie[] = [
         name: 'Jio Hotstar',
         logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
         watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 129',
       }
     ],
     reviews: [
@@ -430,9 +549,20 @@ export const MOVIES: Movie[] = [
     stillUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800',
     streamProviders: [
       {
-        name: 'Mubi',
-        logo: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=120&auto=format&fit=crop',
-        watchUrl: '#watch-mubi',
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 149',
       }
     ],
     reviews: [
@@ -449,5 +579,203 @@ export const MOVIES: Movie[] = [
         userLiked: false,
       }
     ]
+  },
+  {
+    id: 'oblivion',
+    title: 'Oblivion',
+    description: "A veteran assigned to extract Earth's remaining resources begins to question what he knows about his mission and his past after rescuing a stranger from a downed spacecraft.",
+    year: 2013,
+    duration: '2H 4M',
+    rating: 'PG-13',
+    certificateDetails: 'action, violence, sci-fi images',
+    posterUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=400&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=400&q=80',
+    categories: ['Action', 'Sci-Fi', 'Mystery'],
+    imdbRating: '7.0/10',
+    rottenTomatoesRating: '54% Fresh',
+    rewatchValue: 70,
+    stillUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=400&q=80',
+    streamProviders: [
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 79',
+      }
+    ],
+    reviews: []
+  },
+  {
+    id: 'stranger-things',
+    title: 'Stranger Things 5',
+    description: "The final season of the epic supernatural series. As Vecna's terrifying shadow looms over Hawkins, the gang must band together for one last stand to close the gate and save their town once and for all.",
+    year: 2025,
+    duration: '5 Seasons',
+    rating: '16+',
+    certificateDetails: 'terror, language, supernatural elements',
+    posterUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
+    categories: ['Sci-Fi', 'Drama', 'Horror'],
+    imdbRating: '8.7/10',
+    rottenTomatoesRating: '92% Fresh',
+    rewatchValue: 95,
+    stillUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
+    streamProviders: [
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 99',
+      }
+    ],
+    reviews: []
+  },
+  {
+    id: 'project-hail-mary',
+    title: 'Project Hail Mary',
+    description: "An astronaut fights to save Earth from an extinction-level event. Based on Andy Weir's best-selling novel, this high-stakes space survival thriller details human ingenuity and friendship in the cold depths of the universe.",
+    year: 2026,
+    duration: '2H 35M',
+    rating: 'PG-13',
+    certificateDetails: 'intense sequences of sci-fi action',
+    posterUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=400&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=400&q=80',
+    categories: ['Sci-Fi', 'Adventure', 'Thriller'],
+    imdbRating: '8.5/10',
+    rottenTomatoesRating: '90% Fresh',
+    rewatchValue: 92,
+    stillUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=400&q=80',
+    streamProviders: [
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 119',
+      }
+    ],
+    reviews: []
+  },
+  {
+    id: 'raees',
+    title: 'Raees',
+    description: "A clever bootlegger goes on a daring rise in Gujarat, building an empire while evading a relentless police officer determined to shut down his operations.",
+    year: 2017,
+    duration: '2H 23M',
+    rating: 'U/A 13+',
+    certificateDetails: 'action, violence, intense drama',
+    posterUrl: 'https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=400&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=400&q=80',
+    categories: ['Action', 'Crime', 'Drama'],
+    imdbRating: '6.8/10',
+    rottenTomatoesRating: '67% Fresh',
+    rewatchValue: 74,
+    stillUrl: 'https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=400&q=80',
+    streamProviders: [
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'YouTube',
+        logo: '',
+        watchUrl: '#watch-youtube',
+        priceText: 'Rent From Rs. 69',
+      }
+    ],
+    reviews: []
+  },
+  {
+    id: 'kalki',
+    title: 'Kalki 2898 AD',
+    description: "A modern avatar of Vishnu, a Hindu god, is believed to have descended to earth to protect the world from evil forces in a dystopian future.",
+    year: 2024,
+    duration: '3H 0M',
+    rating: 'U/A 13+',
+    certificateDetails: 'action, violence, sci-fi imagery',
+    posterUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80',
+    categories: ['Action', 'Sci-Fi', 'Fantasy'],
+    imdbRating: '7.2/10',
+    rottenTomatoesRating: '82% Fresh',
+    rewatchValue: 80,
+    stillUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80',
+    streamProviders: [
+      {
+        name: 'Amazon Prime Video',
+        logo: 'https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-prime',
+      },
+      {
+        name: 'Jio Hotstar',
+        logo: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-hotstar',
+      },
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      }
+    ],
+    reviews: []
+  },
+  {
+    id: 'joker',
+    title: 'Joker',
+    description: "Arthur Fleck, a clown-for-hire, is driven to madness and crime by a society that ignores and rejects him, triggering an epic descent into chaos.",
+    year: 2019,
+    duration: '2H 2M',
+    rating: 'R',
+    certificateDetails: 'extreme violence, language, dark themes',
+    posterUrl: 'https://images.unsplash.com/photo-1608889175123-8ec330b86f84?auto=format&fit=crop&w=400&q=80',
+    trailerThumbUrl: 'https://images.unsplash.com/photo-1608889175123-8ec330b86f84?auto=format&fit=crop&w=400&q=80',
+    categories: ['Drama', 'Crime', 'Thriller'],
+    imdbRating: '8.4/10',
+    rottenTomatoesRating: '69% Fresh',
+    rewatchValue: 88,
+    stillUrl: 'https://images.unsplash.com/photo-1608889175123-8ec330b86f84?auto=format&fit=crop&w=400&q=80',
+    streamProviders: [
+      {
+        name: 'Netflix',
+        logo: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=120&auto=format&fit=crop',
+        watchUrl: '#watch-netflix',
+      }
+    ],
+    reviews: []
   }
 ];

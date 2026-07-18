@@ -3,7 +3,8 @@ import {
   LayoutGrid, 
   PlaySquare, 
   Radio, 
-  User 
+  User,
+  Heart
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
@@ -21,12 +22,13 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
     { id: "trending", label: "Trending Now", icon: LayoutGrid },
     { id: "digest", label: "Cine Digest", icon: PlaySquare },
     { id: "reviews", label: "Hot Reviews", icon: Radio },
+    { id: "cinelist", label: "CineList", icon: Heart, href: "../movie-cards/?view=cinelist" },
   ];
 
   return (
     <aside 
       id="side-nav" 
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-3 px-6 lg:py-6 lg:px-3.5 bg-[#050b13]/85 lg:bg-[#050b13]/65 backdrop-blur-xl border border-[#14273f]/80 rounded-full lg:rounded-[2rem] gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.6)] w-auto max-w-[90vw] lg:max-w-none"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-3 px-6 lg:py-6 lg:px-3.5 bg-white/[0.04] lg:bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-full lg:rounded-[2rem] gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-auto max-w-[90vw] lg:max-w-none"
     >
       {/* Profile Avatar / Top Icon */}
       <motion.div 
@@ -63,7 +65,13 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
               onMouseLeave={() => setHoveredId(null)}
             >
               <motion.button
-                onClick={() => onNavigate(item.id)}
+                onClick={() => {
+                  if ((item as any).href) {
+                    window.location.href = (item as any).href;
+                  } else {
+                    onNavigate(item.id);
+                  }
+                }}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer relative ${

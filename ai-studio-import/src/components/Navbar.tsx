@@ -1,4 +1,4 @@
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search } from "lucide-react";
 import { motion } from "motion/react";
 import { useState, FormEvent } from "react";
 
@@ -24,9 +24,9 @@ export default function Navbar({ onSearch }: NavbarProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <a href="#" className="flex items-center text-[1.45rem] font-bold tracking-tight font-display select-none leading-none">
-            <span className="text-white font-extrabold">Cine</span>
-            <span className="text-[#3dd9c8] font-extrabold italic drop-shadow-[0_0_10px_rgba(61,217,200,0.35)]">Suggest</span>
+          <a href="../landing/" className="flex items-center gap-1 text-2xl font-black tracking-tight font-display select-none leading-none">
+            <span className="text-white">Cine</span>
+            <span className="text-[#36ffdb]">Suggest</span>
           </a>
         </motion.div>
 
@@ -63,15 +63,6 @@ export default function Navbar({ onSearch }: NavbarProps) {
             />
           </form>
 
-          {/* Filter Icon */}
-          <motion.button 
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-9 h-9 flex items-center justify-center text-[#3dd9c8] cursor-pointer"
-            aria-label="Filter"
-          >
-            <SlidersHorizontal className="w-5 h-5 stroke-[2]" />
-          </motion.button>
 
           {/* Login Link */}
           <motion.a

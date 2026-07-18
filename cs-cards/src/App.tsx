@@ -8,6 +8,7 @@ import WhereToWatch from './components/WhereToWatch';
 import RateNow from './components/RateNow';
 import CommunityReviews from './components/CommunityReviews';
 import Footer from './components/Footer';
+import CineList from './components/CineList';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>(MOVIES);
@@ -16,6 +17,10 @@ export default function App() {
     return params.get('movie') || 'sinners';
   });
   const [cineList, setCineList] = useState<string[]>([]);
+  const [activeView, setActiveView] = useState<'discover' | 'cinelist'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('view') === 'cinelist' ? 'cinelist' : 'discover';
+  });
 
   const rateNowRef = useRef<HTMLDivElement>(null);
 
@@ -101,48 +106,78 @@ export default function App() {
         movies={movies}
         selectedMovie={currentMovie}
         onSelectMovie={handleSelectMovie}
+        activeView={activeView}
+        onViewChange={setActiveView}
+        cineListCount={cineList.length}
       />
 
       {/* Main Container */}
       <main className="flex-1">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentMovie.id}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          >
-            {/* Poster, title, tags, description, play trailer block */}
-            <MovieDetail
-              movie={currentMovie}
-              onBackToDiscover={() => {
-                // Switch back to "Sinners" or first item
-                setSelectedMovieId('sinners');
+          {activeView === 'cinelist' ? (
+            <motion.div
+              key="cinelist-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(117,212,203,0.012) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(117,212,203,0.012) 1px, transparent 1px)
+                `,
+                backgroundSize: '40px 40px',
               }}
-              onScrollToRate={handleScrollToRate}
-              onToggleCineList={handleToggleCineList}
-              isInCineList={cineList.includes(currentMovie.id)}
-            />
+            >
+              <CineList
+                savedMovieIds={cineList}
+                movies={movies}
+                onSelectMovie={(movie) => {
+                  handleSelectMovie(movie);
+                  setActiveView('discover');
+                }}
+                onRemoveMovie={handleToggleCineList}
+                onBrowseMovies={() => setActiveView('discover')}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={currentMovie.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            >
+              {/* Poster, title, tags, description, play trailer block */}
+              <MovieDetail
+                movie={currentMovie}
+                onBackToDiscover={() => {
+                  window.location.href = '../home/';
+                }}
+                onScrollToRate={handleScrollToRate}
+                onToggleCineList={handleToggleCineList}
+                isInCineList={cineList.includes(currentMovie.id)}
+              />
 
-            {/* Where to Watch widget */}
-            <WhereToWatch movie={currentMovie} />
+              {/* Where to Watch widget */}
+              <WhereToWatch movie={currentMovie} />
 
-            {/* Rate Now widget (Review Text area & split circles star feedback) */}
-            <RateNow
-              movie={currentMovie}
-              onSubmitReview={handleAddReview}
-              rateNowRef={rateNowRef}
-            />
+              {/* Rate Now widget (Review Text area & split circles star feedback) */}
+              <RateNow
+                movie={currentMovie}
+                onSubmitReview={handleAddReview}
+                rateNowRef={rateNowRef}
+              />
 
-            {/* Community Reviews List & Call-to-action */}
-            <CommunityReviews
-              movie={currentMovie}
-              reviews={currentMovie.reviews}
-              onHelpfulClick={handleHelpfulClick}
-              onScrollToRateInput={handleScrollToRate}
-            />
-          </motion.div>
+              {/* Community Reviews List & Call-to-action */}
+              <CommunityReviews
+                movie={currentMovie}
+                reviews={currentMovie.reviews}
+                onHelpfulClick={handleHelpfulClick}
+                onScrollToRateInput={handleScrollToRate}
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
 
