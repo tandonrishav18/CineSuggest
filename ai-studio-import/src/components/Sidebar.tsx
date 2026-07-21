@@ -28,7 +28,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <aside 
       id="side-nav" 
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-3 px-6 lg:py-6 lg:px-3.5 bg-white/[0.04] lg:bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-full lg:rounded-[2rem] gap-6 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-auto max-w-[90vw] lg:max-w-none"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-3 px-6 lg:py-6 lg:px-3.5 bg-[#071118]/60 backdrop-blur-3xl backdrop-saturate-150 border border-white/15 rounded-full lg:rounded-[2rem] gap-6 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] w-auto max-w-[90vw] lg:max-w-none transition-all duration-300"
     >
       {/* Profile Avatar / Top Icon */}
       <motion.div 
