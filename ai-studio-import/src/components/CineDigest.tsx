@@ -160,31 +160,37 @@ export default function CineDigest() {
                   {/* Rating/Vote controls */}
                   <div className="flex items-center gap-2">
                     <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                       onClick={() => handleVote(mainItem.id, 'up')}
                       className={`w-9 h-9 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-300 ${
                         votedStates[mainItem.id] === 'up'
-                          ? "bg-[#36ffdb]/20 border-[#36ffdb] text-[#36ffdb]"
-                          : "bg-black/60 border-neutral-800 text-neutral-400 hover:text-white"
+                          ? "bg-[#36ffdb] border-[#36ffdb] text-[#03080c] shadow-[0_0_15px_rgba(54,255,219,0.4)]"
+                          : "bg-black/60 border-neutral-800 text-white hover:border-[#36ffdb] hover:text-[#36ffdb]"
                       }`}
+                      aria-label="Upvote article"
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.85 }}
+                      animate={votedStates[mainItem.id] === 'up' ? { scale: [1, 1.25, 1] } : {}}
+                      transition={{ type: "spring", stiffness: 400, damping: 12 }}
                     >
-                      <ThumbsUp className="w-4 h-4" />
+                      <ThumbsUp className={`w-4 h-4 ${votedStates[mainItem.id] === 'up' ? "fill-current text-[#03080c]" : ""}`} />
                     </motion.button>
                     <span className="text-xs font-mono text-neutral-400 min-w-[24px] text-center">
                       {mainItem.upvotes}
                     </span>
                     <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                       onClick={() => handleVote(mainItem.id, 'down')}
                       className={`w-9 h-9 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-300 ${
                         votedStates[mainItem.id] === 'down'
-                          ? "bg-rose-500/20 border-rose-500 text-rose-400"
-                          : "bg-black/60 border-neutral-800 text-neutral-400 hover:text-white"
+                          ? "bg-rose-500 border-rose-500 text-[#03080c] shadow-[0_0_15px_rgba(244,63,94,0.4)]"
+                          : "bg-black/60 border-neutral-800 text-white hover:border-rose-500 hover:text-rose-400"
                       }`}
+                      aria-label="Downvote article"
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.85 }}
+                      animate={votedStates[mainItem.id] === 'down' ? { scale: [1, 1.25, 1] } : {}}
+                      transition={{ type: "spring", stiffness: 400, damping: 12 }}
                     >
-                      <ThumbsDown className="w-4 h-4" />
+                      <ThumbsDown className={`w-4 h-4 ${votedStates[mainItem.id] === 'down' ? "fill-current text-[#03080c]" : ""}`} />
                     </motion.button>
                   </div>
                 </div>
@@ -248,31 +254,37 @@ export default function CineDigest() {
                     {/* Upvote/Downvote panel */}
                     <div className="flex items-center gap-1.5">
                       <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                         onClick={() => handleVote(item.id, 'up')}
-                        className={`w-7.5 h-7.5 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-200 ${
+                        className={`w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-300 ${
                           votedStates[item.id] === 'up'
-                            ? "bg-[#36ffdb]/20 border-[#36ffdb] text-[#36ffdb]"
-                            : "bg-black/60 border-neutral-800 text-neutral-400 hover:text-white"
+                            ? "bg-[#36ffdb] border-[#36ffdb] text-[#03080c] shadow-[0_0_15px_rgba(54,255,219,0.4)]"
+                            : "bg-black/60 border-neutral-800 text-white hover:border-[#36ffdb] hover:text-[#36ffdb]"
                         }`}
+                        aria-label="Upvote article"
+                        whileHover={{ scale: 1.15 }}
+                        whileTap={{ scale: 0.85 }}
+                        animate={votedStates[item.id] === 'up' ? { scale: [1, 1.25, 1] } : {}}
+                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
                       >
-                        <ThumbsUp className="w-3 h-3" />
+                        <ThumbsUp className={`w-3.5 h-3.5 ${votedStates[item.id] === 'up' ? "fill-current text-[#03080c]" : ""}`} />
                       </motion.button>
                       <span className="text-[10px] font-mono text-neutral-400 min-w-[18px] text-center">
                         {item.upvotes}
                       </span>
                       <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                         onClick={() => handleVote(item.id, 'down')}
-                        className={`w-7.5 h-7.5 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-200 ${
+                        className={`w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-300 ${
                           votedStates[item.id] === 'down'
-                            ? "bg-rose-500/20 border-rose-500 text-rose-400"
-                            : "bg-black/60 border-neutral-800 text-neutral-400 hover:text-white"
+                            ? "bg-rose-500 border-rose-500 text-[#03080c] shadow-[0_0_15px_rgba(244,63,94,0.4)]"
+                            : "bg-black/60 border-neutral-800 text-white hover:border-rose-500 hover:text-rose-400"
                         }`}
+                        aria-label="Downvote article"
+                        whileHover={{ scale: 1.15 }}
+                        whileTap={{ scale: 0.85 }}
+                        animate={votedStates[item.id] === 'down' ? { scale: [1, 1.25, 1] } : {}}
+                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
                       >
-                        <ThumbsDown className="w-3 h-3" />
+                        <ThumbsDown className={`w-3.5 h-3.5 ${votedStates[item.id] === 'down' ? "fill-current text-[#03080c]" : ""}`} />
                       </motion.button>
                     </div>
                   </div>

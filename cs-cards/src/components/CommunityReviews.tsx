@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, ThumbsUp, Share2, Star, Flame, Award, HelpCircle, Droplet, Meh } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Movie, Review } from '../types';
 
 interface CommunityReviewsProps {
@@ -55,7 +56,7 @@ export default function CommunityReviews({
     <section className="mx-auto max-w-7xl px-4 py-8 md:px-8">
       
       {/* Section Header */}
-      <h3 className="font-display text-3xl font-bold tracking-tight text-white mb-8 select-none">
+      <h3 className="font-share text-3xl font-bold tracking-tight text-white mb-8 select-none">
         Community Reviews
       </h3>
 
@@ -151,7 +152,7 @@ export default function CommunityReviews({
       {/* Share your Vibe Check Call-to-action */}
       <div className="rounded-2xl border border-[#112332] bg-[#0a1217] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-8">
         <div>
-          <h4 className="font-sans text-lg font-bold text-white select-none">
+          <h4 className="font-share text-lg font-bold text-white select-none">
             Share your Vibe Check
           </h4>
           <p className="text-xs md:text-sm text-slate-400 mt-1">
@@ -160,12 +161,14 @@ export default function CommunityReviews({
         </div>
 
         <div>
-          <button
+          <motion.button
             onClick={onScrollToRateInput}
-            className="rounded-full bg-[#4df2d6] text-[#03080c] px-6 py-2.5 text-xs font-bold transition-all hover:scale-[1.03] active:scale-95 shadow-md shadow-teal-950/25 cursor-pointer whitespace-nowrap"
+            whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+            whileTap={{ scale: 0.95 }}
+            className="rounded-full bg-[#75D4CB] hover:bg-[#22A498] text-[#03080c] px-6 py-2.5 text-sm font-sans font-normal transition-all cursor-pointer whitespace-nowrap select-none shadow-md"
           >
             Write a Review →
-          </button>
+          </motion.button>
         </div>
       </div>
 

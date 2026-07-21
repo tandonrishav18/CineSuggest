@@ -28,19 +28,19 @@ export default function Header({
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#03080c]/95 backdrop-blur-md px-4 py-4 md:px-8 border-b border-[#112332]/40">
+    <header className="sticky top-0 z-50 w-full bg-black/16 backdrop-blur-md px-4 py-4 md:px-8 border-b border-[#112332]/40">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-4">
         {/* Left Brand logo only */}
         <div className="flex items-center">
           {/* Brand Logo */}
           <a
-            href="../landing/"
-            className="flex cursor-pointer items-center gap-1 select-none"
+            href="../home/"
+            className="flex cursor-pointer items-center gap-1 select-none normal-case"
           >
-            <span className="font-display text-2xl md:text-3xl font-black tracking-tight text-white">
+            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-white">
               Cine
             </span>
-            <span className="font-display text-2xl md:text-3xl font-black tracking-tight text-[#4df2d6]">
+            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-[#4df2d6]">
               Suggest
             </span>
           </a>
@@ -138,7 +138,6 @@ export default function Header({
               </span>
             )}
           </button>
-
         </div>
       </div>
     </header>

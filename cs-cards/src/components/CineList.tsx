@@ -28,7 +28,7 @@ export default function CineList({
       {/* Title Header with Total Count */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="font-sans text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          <h2 className="font-share text-2xl md:text-3xl font-black text-white tracking-tight">
             CineList
           </h2>
           <p className="text-sm text-slate-400 mt-1">
@@ -64,7 +64,7 @@ export default function CineList({
               </div>
             </div>
 
-            <h3 className="font-sans text-xl font-bold text-white mb-2">
+            <h3 className="font-share text-xl font-bold text-white mb-2">
               Your CineList is empty.
             </h3>
             <p className="text-slate-400 text-sm max-w-sm mb-8 leading-relaxed">
@@ -121,7 +121,7 @@ export default function CineList({
                   {/* Text Description */}
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                      <h4 className="font-sans text-base md:text-lg font-bold text-white group-hover:text-[#4df2d6] transition-colors truncate">
+                      <h4 className="font-share text-base md:text-lg font-bold text-white group-hover:text-[#4df2d6] transition-colors truncate">
                         {movie.title}
                       </h4>
                       <span className="text-xs text-slate-500">{movie.year}</span>

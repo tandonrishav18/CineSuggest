@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
-import { RotateCw, User, SmilePlus, ChevronRight, Check, RefreshCw } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { RotateCw, User, SmilePlus, ChevronRight, Check, RefreshCw, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Movie, Review } from '../types';
 
-interface RateNowProps {
-  movie: Movie;
-  onSubmitReview: (review: Omit<Review, 'id' | 'timestamp'>) => void;
-  rateNowRef: React.RefObject<HTMLDivElement | null>;
-}
+const EMOJI_LIST = [
+  "🍿", "🎬", "⭐", "🔥", "🤯", "😱", "😭", "🤩", 
+  "💀", "💯", "❤️", "🤡", "👿", "👏", "🥳", "👍", 
+  "💩", "💖", "🏆", "⚡", "🧟", "🦇", "🕷️", "🔪", 
+  "🩸", "🚀", "👽", "💥", "🎭", "🎥", "🎟️", "🍿"
+];
 
 export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowProps) {
   const [personalRewatchCount, setPersonalRewatchCount] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    if (showEmojiPicker) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showEmojiPicker]);
   
   // Rating state goes from 0 to 5 (each step is 0.5 circle/0.5 unit out of 5)
   const [selectedRating, setSelectedRating] = useState<number>(0);
@@ -26,8 +44,18 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
-    if (text.length <= characterLimit) {
-      setReviewText(text);
+    setReviewText(text.slice(0, characterLimit));
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pastedText = e.clipboardData.getData('text');
+    if (pastedText) {
+      e.preventDefault();
+      const target = e.currentTarget;
+      const start = target.selectionStart ?? reviewText.length;
+      const end = target.selectionEnd ?? reviewText.length;
+      const nextText = (reviewText.slice(0, start) + pastedText + reviewText.slice(end)).slice(0, characterLimit);
+      setReviewText(nextText);
     }
   };
 
@@ -136,7 +164,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
     >
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-8 select-none">
-        <h3 className="font-space text-4xl font-bold tracking-tight text-white">
+        <h3 className="font-share text-4xl font-bold tracking-tight text-white">
           Rate Now
         </h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-teal-500/30 text-[#4df2d6] hover:border-[#4df2d6] transition-all cursor-pointer">
@@ -155,7 +183,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
 
           {/* Value numbers */}
           <div className="my-6 flex flex-col items-center">
-            <div className="font-sans text-7xl font-extrabold text-white leading-none tracking-tighter flex items-baseline justify-center">
+            <div className="font-share text-7xl font-bold text-white leading-none tracking-tighter flex items-baseline justify-center">
               <span>{movie.rewatchValue + personalRewatchCount}</span>
               <span className="text-4xl font-bold text-white ml-1">%</span>
             </div>
@@ -164,36 +192,43 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
             </div>
           </div>
 
-          {/* Button worth a rewatch with Framer Motion toggle matching attached images exactly */}
+          {/* Button worth a rewatch with smooth Framer Motion spring toggle */}
           <div className="h-12 flex items-center justify-center">
             <motion.button
               layout
               onClick={handleRewatchClick}
-              className={`flex h-11 items-center justify-center rounded-full text-sm font-semibold select-none cursor-pointer whitespace-nowrap transition-colors duration-300 ${
-                personalRewatchCount > 0
-                  ? 'w-11 bg-[#5ce1cb] text-black border border-transparent shadow-[0_0_18px_rgba(92,225,203,0.75)]'
-                  : 'w-48 bg-transparent text-white border border-slate-600 hover:bg-[#1fb095] hover:text-black hover:border-transparent'
-              }`}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              initial={false}
+              animate={{
+                width: personalRewatchCount > 0 ? 44 : 192,
+                backgroundColor: personalRewatchCount > 0 ? "#5ce1cb" : "rgba(0, 0, 0, 0)",
+                color: personalRewatchCount > 0 ? "#000000" : "#ffffff",
+                borderColor: personalRewatchCount > 0 ? "transparent" : "rgb(71, 85, 105)",
+                boxShadow: personalRewatchCount > 0 ? "0 0 18px rgba(92,225,203,0.75)" : "0 0 0px rgba(0,0,0,0)"
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="relative flex h-11 items-center justify-center rounded-full text-sm font-semibold select-none cursor-pointer whitespace-nowrap overflow-hidden border"
             >
-              <AnimatePresence mode="wait" initial={false}>
+              <AnimatePresence mode="popLayout" initial={false}>
                 {personalRewatchCount > 0 ? (
                   <motion.div
                     key="voted"
-                    initial={{ scale: 0.5, opacity: 0, rotate: -45 }}
-                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                    exit={{ scale: 0.5, opacity: 0, rotate: 45 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ scale: 0.2, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.2, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 22 }}
+                    className="flex items-center justify-center"
                   >
                     <Check size={18} className="text-black stroke-[3.5]" />
                   </motion.div>
                 ) : (
                   <motion.div
                     key="unvoted"
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.15 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 25 }}
                     className="flex items-center justify-center gap-2"
                   >
                     <RefreshCw size={14} className="text-current stroke-[2.5]" />
@@ -230,6 +265,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
                   placeholder="Add your review"
                   value={reviewText}
                   onChange={handleTextChange}
+                  onPaste={handlePaste}
                   className="w-full bg-transparent border-b border-neutral-700/80 py-3 text-base text-slate-200 placeholder-neutral-500 outline-none focus:border-teal-500/50 transition-colors pr-24"
                 />
 
@@ -238,25 +274,69 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
                   {reviewText.length}/{characterLimit}
                 </span>
 
-                {/* Smiley feedback */}
-                <button
-                  type="button"
-                  onClick={() => setReviewText((prev) => `${prev} 🍿`.substring(0, characterLimit))}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#4df2d6] transition-colors"
-                  title="Add emoji"
-                >
-                  <SmilePlus size={20} className="text-white" />
-                </button>
+                {/* Smiley feedback & Emoji Picker Popover */}
+                <div ref={emojiPickerRef} className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                    className={`p-1 rounded-full text-slate-400 hover:text-[#4df2d6] transition-colors cursor-pointer ${showEmojiPicker ? 'text-[#4df2d6]' : ''}`}
+                    title="Add emoji"
+                  >
+                    <SmilePlus size={20} className="text-current" />
+                  </button>
+
+                  <AnimatePresence>
+                    {showEmojiPicker && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.88, y: 8 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: 8 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                        className="absolute right-0 bottom-10 z-50 p-3.5 bg-[#0a141f]/95 border border-[#1e3448] rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl w-64 select-none"
+                      >
+                        <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-800/80 text-xs font-sans text-slate-300 font-semibold tracking-wide">
+                          <span>Choose an Emoji</span>
+                          <button
+                            type="button"
+                            onClick={() => setShowEmojiPicker(false)}
+                            className="text-slate-500 hover:text-white p-0.5 rounded cursor-pointer transition-colors"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-8 gap-1.5 max-h-36 overflow-y-auto pr-0.5">
+                          {EMOJI_LIST.map((emoji, index) => (
+                            <motion.button
+                              key={index}
+                              type="button"
+                              whileHover={{ scale: 1.28, backgroundColor: "rgba(54, 255, 219, 0.15)" }}
+                              whileTap={{ scale: 0.88 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                              onClick={() => {
+                                setReviewText((prev) => `${prev} ${emoji}`.slice(0, characterLimit));
+                              }}
+                              className="w-7 h-7 text-base flex items-center justify-center rounded-lg text-slate-100 transition-colors cursor-pointer"
+                            >
+                              {emoji}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
 
             {/* CTA Submit Button */}
-            <button
+            <motion.button
               type="submit"
-              className="rounded-full bg-[#3fa897] hover:bg-[#4df2d6] px-6 py-2.5 text-sm font-semibold text-[#03080c] transition-all hover:scale-[1.01] active:scale-95 shadow-lg cursor-pointer self-start"
+              whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+              whileTap={{ scale: 0.95 }}
+              className="rounded-full bg-[#75D4CB] hover:bg-[#22A498] px-6 py-2.5 text-sm font-sans font-normal text-[#03080c] transition-all cursor-pointer self-start select-none shadow-md"
             >
               Submit Your Review →
-            </button>
+            </motion.button>
           </form>
 
         </div>

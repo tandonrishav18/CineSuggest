@@ -238,7 +238,11 @@ export default function TrendingNow() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/80 border border-[#14273f]/60 bg-neutral-950 group cursor-pointer"
+              style={{
+                background: "linear-gradient(#090e17, #090e17) padding-box, linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(156, 156, 156, 0.4) 100%) border-box",
+                border: "1px solid transparent"
+              }}
+              className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/80 group cursor-pointer"
               onClick={(e) => {
                 if ((e.target as HTMLElement).closest("button")) return;
                 window.location.href = `../movie-cards/?movie=${currentSelectedMovie.id}`;
@@ -277,16 +281,19 @@ export default function TrendingNow() {
                   <div className="flex items-center gap-3">
                     {/* Like / Thumbs Up Button */}
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                       onClick={() => setIsLiked(!isLiked)}
                       className={`w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-300 ${
                         isLiked
-                          ? "bg-[#36ffdb]/20 border-[#36ffdb] text-[#36ffdb]"
-                          : "bg-black/60 border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600"
+                          ? "bg-[#36ffdb] border-[#36ffdb] text-[#03080c] shadow-[0_0_15px_rgba(54,255,219,0.4)]"
+                          : "bg-black/60 border-neutral-800 text-white hover:border-[#36ffdb] hover:text-[#36ffdb]"
                       }`}
+                      aria-label="Like movie"
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.85 }}
+                      animate={isLiked ? { scale: [1, 1.25, 1] } : {}}
+                      transition={{ type: "spring", stiffness: 400, damping: 12 }}
                     >
-                      <ThumbsUp className={`w-4.5 h-4.5 ${isLiked ? "fill-[#36ffdb]/25" : ""}`} />
+                      <ThumbsUp className={`w-4.5 h-4.5 ${isLiked ? "fill-current text-[#03080c]" : ""}`} />
                     </motion.button>
 
                     {/* Remind Me Button */}
@@ -356,14 +363,14 @@ export default function TrendingNow() {
                   }}
                   whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 12px 24px rgba(0,0,0,0.6), 0 0 15px rgba(54,255,219,0.2)"
+                    boxShadow: "0 12px 24px rgba(0,0,0,0.6)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className={`aspect-[2/3] rounded-2xl overflow-hidden relative cursor-pointer border transition-all duration-300 bg-neutral-900 shadow-md group ${
-                    isCurrent
-                      ? "border-[#36ffdb] shadow-[0_0_12px_rgba(54,255,219,0.3)] ring-1 ring-[#36ffdb]/50"
-                      : "border-[#142337]/90 hover:border-neutral-600"
-                  }`}
+                  style={{
+                    background: "linear-gradient(#090e17, #090e17) padding-box, linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(156, 156, 156, 0.4) 100%) border-box",
+                    border: "1px solid transparent"
+                  }}
+                  className="aspect-[2/3] rounded-2xl overflow-hidden relative cursor-pointer transition-all duration-300 shadow-md group"
                 >
                   {/* Poster Image */}
                   <img
@@ -381,11 +388,6 @@ export default function TrendingNow() {
 
                   {/* Glass highlighting sheen */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                  {/* Subtle highlight borders */}
-                  {isCurrent && (
-                    <div className="absolute inset-0 border-2 border-[#36ffdb] rounded-2xl pointer-events-none z-20" />
-                  )}
 
 
 

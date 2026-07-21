@@ -6,11 +6,11 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
         
         {/* Left Brand */}
-        <div className="flex items-center gap-1 select-none">
-          <span className="font-display text-xl font-black tracking-tight text-white">
+        <div className="flex items-center gap-1 select-none normal-case">
+          <span className="font-jaro text-xl font-black tracking-wider text-white">
             Cine
           </span>
-          <span className="font-display text-xl font-black tracking-tight text-[#4df2d6]">
+          <span className="font-jaro text-xl font-black tracking-wider text-[#4df2d6]">
             Suggest
           </span>
         </div>

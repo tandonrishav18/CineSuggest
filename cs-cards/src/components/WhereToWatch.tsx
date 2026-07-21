@@ -147,7 +147,7 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
 
         {/* RIGHT COLUMN: Where to Watch List (Spans 7 cols) */}
         <div className="md:col-span-7 flex flex-col justify-between pl-0 md:pl-6 py-0.5">
-          <h3 className="font-sans text-xl md:text-2xl font-bold text-white mb-6 select-none">
+          <h3 className="font-share text-xl md:text-2xl font-bold text-white mb-6 select-none">
             Where to watch:
           </h3>
           

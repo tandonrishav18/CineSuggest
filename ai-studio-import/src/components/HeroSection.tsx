@@ -274,15 +274,17 @@ export default function HeroSection({ onStartExploring }: HeroSectionProps) {
           >
             <motion.button
               onClick={onStartExploring}
+              initial={{ backgroundColor: "#75D4CB" }}
+              animate={{ backgroundColor: "#75D4CB" }}
               whileHover={{ 
                 scale: 1.05,
-                boxShadow: "0 0 25px rgba(54, 255, 219, 0.35)" 
+                backgroundColor: "#22A498"
               }}
-              whileTap={{ scale: 0.98 }}
-              className="group flex items-center gap-2 bg-[#36ffdb] hover:bg-[#2ae0c0] text-neutral-950 font-sans font-semibold px-8 py-3 rounded-full cursor-pointer transition-all duration-300 shadow-lg shadow-cyan-950/20 text-sm"
+              whileTap={{ scale: 0.95 }}
+              className="group flex items-center gap-2 text-[#03080c] font-sans font-normal px-8 py-3 rounded-full cursor-pointer transition-all duration-300 shadow-md text-sm select-none"
             >
               <span className="tracking-wide flex items-center gap-1">
-                Start Exploring <span className="font-sans font-bold transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+                Start Exploring <span className="font-sans font-normal transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
               </span>
             </motion.button>
           </motion.div>
@@ -341,7 +343,11 @@ export default function HeroSection({ onStartExploring }: HeroSectionProps) {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 1.2, ease: "easeInOut" }}
-                      className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-white/5 bg-neutral-950 flex flex-col justify-between"
+                      style={{
+                        background: "linear-gradient(#090e17, #090e17) padding-box, linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(156, 156, 156, 0.4) 100%) border-box",
+                        border: "1px solid transparent"
+                      }}
+                      className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col justify-between"
                     >
                       {/* Realistic cinema-screen light reflection highlight */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-20" />

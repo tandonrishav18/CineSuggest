@@ -1,10 +1,12 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useRef, useEffect } from "react";
 import { Movie } from "../types";
 import {
   Play,
   ChevronLeft,
   ThumbsUp,
   RefreshCw,
+  Check,
   SmilePlus,
   MessageSquare,
   Share2,
@@ -13,9 +15,17 @@ import {
   User2,
   Star,
   Flame,
+  X,
 } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+
+const EMOJI_LIST = [
+  "🍿", "🎬", "⭐", "🔥", "🤯", "😱", "😭", "🤩", 
+  "💀", "💯", "❤️", "🤡", "👿", "👏", "🥳", "👍", 
+  "💩", "💖", "🏆", "⚡", "🧟", "🦇", "🕷️", "🔪", 
+  "🩸", "🚀", "👽", "💥", "🎭", "🎥", "🎟️", "🍿"
+];
 
 interface MovieDetailsProps {
   movie: Movie;
@@ -106,6 +116,25 @@ const platforms = [
 
 /* ═══════════════════════════════════════════════════════════════ */
 export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
+  const [hasRewatched, setHasRewatched] = useState(false);
+  const [reviewInputText, setReviewInputText] = useState("");
+  const [showMovieDetailsEmojiPicker, setShowMovieDetailsEmojiPicker] = useState(false);
+  const movieDetailsEmojiRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (movieDetailsEmojiRef.current && !movieDetailsEmojiRef.current.contains(event.target as Node)) {
+        setShowMovieDetailsEmojiPicker(false);
+      }
+    };
+
+    if (showMovieDetailsEmojiPicker) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMovieDetailsEmojiPicker]);
   const isSinners = movie.id === "sinners";
   const d = isSinners ? getSinnersDetails() : {
     genres: ["Drama"],
@@ -213,7 +242,7 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
                 <ThumbsUp className="w-3.5 h-3.5" />
               </button>
               {d.genres.map((g) => (
-                <span key={g} className="px-3 py-1 text-[11px] text-neutral-400 border border-neutral-800 rounded-full bg-[#0b1622]">
+                <span key={g} className="px-3 py-1 text-[11px] text-neutral-400 border border-neutral-800 rounded-full bg-[#0b1622] opacity-50 select-none">
                   {g}
                 </span>
               ))}
@@ -224,7 +253,7 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
               <span className="text-[12px] text-neutral-500 font-light tracking-widest">
                 {d.year} | {d.runtime}
               </span>
-              <span className="px-3 py-1 text-[11px] text-neutral-500 border border-neutral-800 rounded-full bg-[#0b1622]">
+              <span className="px-3 py-1 text-[11px] text-neutral-500 border border-neutral-800 rounded-full bg-[#0b1622] opacity-50 select-none">
                 {d.ratingPill}
               </span>
             </div>
@@ -249,9 +278,21 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
               </div>
 
               <div className="flex items-center gap-3 flex-wrap">
-                <button className="flex items-center gap-1.5 px-5 py-2 bg-[#36ffdb] hover:bg-[#2ae8c6] text-[#03060a] text-[12px] font-bold rounded-full transition-all cursor-pointer shadow-md shadow-[#36ffdb]/20">
-                  Rate now <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+                <motion.button 
+                  initial={{ backgroundColor: "#75D4CB" }}
+                  animate={{ backgroundColor: "#75D4CB" }}
+                  whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-1.5 px-6 py-2.5 text-[#03080c] text-sm font-sans font-normal rounded-full cursor-pointer shadow-md select-none"
+                >
+                  <span>Rate now</span>
+                  <motion.span 
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                  >
+                    →
+                  </motion.span>
+                </motion.button>
                 <button className="flex items-center gap-2 px-5 py-2 border border-neutral-700 text-neutral-300 hover:text-white hover:border-neutral-500 text-[12px] font-medium rounded-full transition-all cursor-pointer">
                   <ListPlus className="w-3.5 h-3.5 text-[#36ffdb]" />
                   Add to cine list
@@ -297,15 +338,54 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
             {/* rewatch card */}
             <div className="flex flex-col items-center justify-center text-center p-7 bg-[#070e18] border border-[#14273f]/50 rounded-2xl gap-4">
               <RefreshCw className="w-6 h-6 text-[#36ffdb]" strokeWidth={2} />
-              <div>
-                <span className="text-[42px] font-extrabold text-white leading-none">92</span>
-                <span className="text-xl font-semibold text-neutral-400">%</span>
+              <div className="font-share text-[42px] font-bold text-white leading-none">
+                <span>92</span>
+                <span className="text-xl font-bold text-white">%</span>
               </div>
               <p className="text-[10px] font-semibold tracking-widest text-neutral-500 uppercase">Rewatch Value</p>
-              <button className="flex items-center gap-1.5 px-4 py-1.5 border border-neutral-700 rounded-full text-[11px] text-neutral-300 hover:bg-neutral-800 hover:text-white transition-all cursor-pointer">
-                <RefreshCw className="w-3 h-3" />
-                Worth a rewatch
-              </button>
+              <motion.button 
+                layout
+                onClick={() => setHasRewatched(!hasRewatched)}
+                initial={false}
+                animate={{
+                  width: hasRewatched ? 36 : 145,
+                  backgroundColor: hasRewatched ? "#5ce1cb" : "rgba(0,0,0,0)",
+                  color: hasRewatched ? "#000000" : "#d4d4d4",
+                  borderColor: hasRewatched ? "transparent" : "rgb(64, 64, 64)",
+                  boxShadow: hasRewatched ? "0 0 16px rgba(92,225,203,0.7)" : "0 0 0px rgba(0,0,0,0)"
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                className="relative flex h-8 items-center justify-center rounded-full text-[11px] font-semibold select-none cursor-pointer whitespace-nowrap overflow-hidden border"
+              >
+                <AnimatePresence mode="popLayout" initial={false}>
+                  {hasRewatched ? (
+                    <motion.div
+                      key="voted"
+                      initial={{ scale: 0.2, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.2, opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 22 }}
+                      className="flex items-center justify-center"
+                    >
+                      <Check size={14} className="text-black stroke-[3.5]" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="unvoted"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                      className="flex items-center justify-center gap-1.5"
+                    >
+                      <RefreshCw className="w-3 h-3 text-current" />
+                      <span>Worth a rewatch</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </div>
 
             {/* review input card */}
@@ -320,26 +400,90 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
               </div>
 
               {/* review input */}
-              <div className="flex items-center gap-3 border-b border-neutral-800 pb-3">
+              <div className="flex items-center gap-3 border-b border-neutral-800 pb-3 relative">
                 <div className="w-8 h-8 rounded-full bg-[#0e2030] border border-[#36ffdb]/15 flex items-center justify-center text-[#36ffdb] shrink-0">
                   <User2 className="w-4 h-4" />
                 </div>
                 <input
                   type="text"
                   placeholder="Add your review"
+                  value={reviewInputText}
+                  onChange={(e) => setReviewInputText(e.target.value.slice(0, 150))}
+                  onPaste={(e) => {
+                    const pastedText = e.clipboardData.getData('text');
+                    if (pastedText) {
+                      e.preventDefault();
+                      const target = e.currentTarget;
+                      const start = target.selectionStart ?? reviewInputText.length;
+                      const end = target.selectionEnd ?? reviewInputText.length;
+                      const nextText = (reviewInputText.slice(0, start) + pastedText + reviewInputText.slice(end)).slice(0, 150);
+                      setReviewInputText(nextText);
+                    }
+                  }}
                   className="flex-1 bg-transparent text-[13px] text-neutral-300 placeholder-neutral-600 outline-none"
                 />
-                <span className="text-[11px] text-neutral-600 font-mono shrink-0">0/150</span>
-                <button className="text-neutral-600 hover:text-[#36ffdb] transition-colors shrink-0">
-                  <SmilePlus className="w-5 h-5" />
-                </button>
+                <span className="text-[11px] text-neutral-600 font-mono shrink-0">{reviewInputText.length}/150</span>
+                <div ref={movieDetailsEmojiRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowMovieDetailsEmojiPicker(!showMovieDetailsEmojiPicker)}
+                    className={`transition-colors shrink-0 cursor-pointer ${showMovieDetailsEmojiPicker ? 'text-[#36ffdb]' : 'text-neutral-600 hover:text-[#36ffdb]'}`}
+                    title="Add emoji"
+                  >
+                    <SmilePlus className="w-5 h-5" />
+                  </button>
+
+                  <AnimatePresence>
+                    {showMovieDetailsEmojiPicker && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.88, y: 8 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: 8 }}
+                        transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                        className="absolute right-0 bottom-9 z-50 p-3.5 bg-[#071118]/95 border border-[#14273f] rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl w-64 select-none"
+                      >
+                        <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-neutral-800 text-xs font-sans text-neutral-300 font-semibold tracking-wide">
+                          <span>Choose an Emoji</span>
+                          <button
+                            type="button"
+                            onClick={() => setShowMovieDetailsEmojiPicker(false)}
+                            className="text-neutral-500 hover:text-white p-0.5 rounded cursor-pointer transition-colors"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                        <div className="grid grid-cols-8 gap-1.5 max-h-36 overflow-y-auto pr-0.5">
+                          {EMOJI_LIST.map((emoji, index) => (
+                            <motion.button
+                              key={index}
+                              type="button"
+                              whileHover={{ scale: 1.28, backgroundColor: "rgba(54, 255, 219, 0.15)" }}
+                              whileTap={{ scale: 0.88 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                              onClick={() => {
+                                setReviewInputText((prev) => `${prev} ${emoji}`.slice(0, 150));
+                              }}
+                              className="w-7 h-7 text-base flex items-center justify-center rounded-lg text-neutral-100 transition-colors cursor-pointer"
+                            >
+                              {emoji}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
 
               {/* submit */}
               <div>
-                <button className="px-5 py-2 bg-[#1e5e56] hover:bg-[#27726a] text-[#36ffdb] text-[12px] font-semibold rounded-full transition-all cursor-pointer border border-[#36ffdb]/20">
+                <motion.button 
+                  whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 py-2.5 bg-[#75D4CB] hover:bg-[#22A498] text-[#03080c] text-sm font-sans font-normal rounded-full transition-all cursor-pointer select-none shadow-md"
+                >
                   Submit Your Review →
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -438,9 +582,13 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
                   Did this movie blow your mind or break your heart? Let the community know.
                 </p>
               </div>
-              <button className="px-5 py-2 bg-[#36ffdb] hover:bg-[#2ae8c6] text-[#03060a] text-[12px] font-bold rounded-full transition-all cursor-pointer shadow-md shadow-[#36ffdb]/20 shrink-0 whitespace-nowrap">
+              <motion.button 
+                whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-2.5 bg-[#75D4CB] hover:bg-[#22A498] text-[#03080c] text-sm font-sans font-normal rounded-full transition-all cursor-pointer shadow-md shrink-0 whitespace-nowrap select-none"
+              >
                 Write a Review →
-              </button>
+              </motion.button>
             </div>
 
           </div>

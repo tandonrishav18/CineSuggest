@@ -197,7 +197,7 @@ export default function MovieDetail({
             {/* Title Line & Category pills */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <h2 className="font-sans text-4xl font-extrabold text-[#4df2d6] tracking-tight">
+                <h2 className="font-share text-4xl font-extrabold text-[#4df2d6] tracking-tight">
                   {movie.title}
                 </h2>
                 
@@ -222,15 +222,12 @@ export default function MovieDetail({
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
                 {movie.categories.map((tag) => (
-                  <motion.span
+                  <span
                     key={tag}
-                    className="rounded-full border border-slate-700/80 bg-transparent px-4 py-1.5 text-xs font-medium text-slate-300 hover:border-[#4df2d6]/50 hover:text-white cursor-default transition-colors duration-300"
-                    whileHover={{ y: -2, scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                    className="rounded-full border border-slate-700/80 bg-transparent px-4 py-1.5 text-xs font-medium text-slate-300 opacity-50 select-none"
                   >
                     {tag}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             </div>
@@ -240,7 +237,7 @@ export default function MovieDetail({
               <div className="font-sans text-sm text-slate-400">
                 {movie.year} | {movie.duration}
               </div>
-              <div className="rounded-full border border-slate-700/80 px-4 py-1.5 text-xs text-slate-400 font-mono">
+              <div className="rounded-full border border-slate-700/80 px-4 py-1.5 text-xs text-slate-400 font-mono opacity-50 select-none">
                 {movie.rating} | {movie.certificateDetails}
               </div>
             </div>
@@ -268,14 +265,14 @@ export default function MovieDetail({
               <div className="flex flex-wrap items-center gap-3">
                 <motion.button
                   onClick={onScrollToRate}
-                  className="flex items-center gap-2 rounded-full bg-[#4df2d6] px-6 py-2.5 text-sm font-semibold text-[#03080c] shadow-md cursor-pointer whitespace-nowrap"
-                  whileHover={{ scale: 1.05 }}
+                  initial={{ backgroundColor: "#75D4CB" }}
+                  animate={{ backgroundColor: "#75D4CB" }}
+                  whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-sans font-normal text-[#03080c] shadow-md cursor-pointer whitespace-nowrap select-none"
                 >
                   <span>Rate now</span>
                   <motion.span 
-                    className="font-bold"
                     animate={{ x: [0, 4, 0] }}
                     transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
                   >

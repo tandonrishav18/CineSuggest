@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Left Side: Brand Logo */}
-        <div className="flex items-center gap-1.5 text-xl font-bold font-display tracking-tight text-white">
+        <div className="flex items-center gap-1.5 text-xl font-bold font-jaro tracking-wider text-white normal-case">
           <span>Cine</span>
           <span className="text-[#36ffdb] drop-shadow-[0_0_8px_rgba(54,255,219,0.3)]">Suggest</span>
         </div>

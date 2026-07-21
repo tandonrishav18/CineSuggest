@@ -139,14 +139,16 @@ export default function HotReviews({ reviews, onWriteReviewClick }: HotReviewsPr
           onClick={onWriteReviewClick}
           whileHover={{ 
             scale: 1.05, 
-            borderColor: "#36ffdb", 
-            boxShadow: "0 0 20px rgba(54, 255, 219, 0.25)"
+            backgroundColor: "#ffffff",
+            color: "#000000",
+            borderColor: "#ffffff",
+            boxShadow: "none"
           }}
           whileTap={{ scale: 0.98 }}
-          className="group flex items-center gap-2.5 px-6 py-3 rounded-full border border-[#142d4c] bg-neutral-950/80 text-neutral-300 hover:text-[#36ffdb] font-sans font-medium text-sm transition-all duration-300 cursor-pointer shadow-md"
+          className="group flex items-center gap-2.5 px-6 py-3 rounded-full border border-[#142d4c] bg-neutral-950/80 text-neutral-300 hover:bg-white hover:text-black hover:border-white font-sans font-normal text-sm transition-all duration-300 cursor-pointer"
         >
-          <span>Select Movie/ series and write your reviews</span>
-          <span className="text-[#36ffdb] transition-transform duration-300 group-hover:translate-x-1 font-bold">→</span>
+          <span className="group-hover:text-black">Select Movie/ series and write your reviews</span>
+          <span className="text-[#36ffdb] group-hover:text-black transition-transform duration-300 group-hover:translate-x-1 font-bold">→</span>
         </motion.button>
       </div>
 

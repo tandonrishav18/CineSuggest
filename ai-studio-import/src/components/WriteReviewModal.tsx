@@ -257,6 +257,17 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview }: Write
                 <textarea 
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
+                  onPaste={(e) => {
+                    const pastedText = e.clipboardData.getData('text');
+                    if (pastedText) {
+                      e.preventDefault();
+                      const target = e.currentTarget;
+                      const start = target.selectionStart ?? content.length;
+                      const end = target.selectionEnd ?? content.length;
+                      const nextText = content.slice(0, start) + pastedText + content.slice(end);
+                      setContent(nextText);
+                    }
+                  }}
                   placeholder="What makes this film unforgettable? Describe the cinematography, pacing, or acting..." 
                   className="w-full px-4 py-3 rounded-xl bg-neutral-950 border border-neutral-800/80 text-neutral-200 text-sm font-sans placeholder-neutral-600 outline-none focus:border-[#36ffdb] transition-colors h-28 resize-none"
                   required
@@ -266,9 +277,11 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview }: Write
               {/* Submit CTA */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(54, 255, 219, 0.3)" }}
+                initial={{ backgroundColor: "#75D4CB" }}
+                animate={{ backgroundColor: "#75D4CB" }}
+                whileHover={{ scale: 1.02, backgroundColor: "#22A498" }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full mt-2 py-3 rounded-xl bg-[#36ffdb] hover:bg-[#2ae0c0] text-neutral-950 font-sans font-semibold text-center cursor-pointer shadow-lg transition-colors"
+                className="w-full mt-2 py-3 rounded-full text-[#03080c] font-sans font-normal text-center cursor-pointer shadow-md transition-colors select-none"
               >
                 Submit Review
               </motion.button>
