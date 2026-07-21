@@ -24,9 +24,13 @@ export default function Navbar({ onSearch }: NavbarProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <a href="../home/" className="flex items-center gap-1.5 text-2xl font-black tracking-wider font-jaro select-none leading-none normal-case">
-            <span className="text-white">Cine</span>
-            <span className="text-[#36ffdb]">Suggest</span>
+          <a href="../home/" className="flex cursor-pointer items-center gap-1 select-none normal-case">
+            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-white">
+              Cine
+            </span>
+            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-[#36ffdb]">
+              Suggest
+            </span>
           </a>
         </motion.div>
 
