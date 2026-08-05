@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MOVIES } from './data';
-import { Review, Movie } from './types';
+import { getTrendingMovies, searchMovies, getMovieDetails, getMovieTrailer, getWatchProviders } from './services/api';
+import { Review, Movie, StreamProvider } from './types';
 import Header from './components/Header';
 import MovieDetail from './components/MovieDetail';
 import WhereToWatch from './components/WhereToWatch';
@@ -10,39 +10,177 @@ import CommunityReviews from './components/CommunityReviews';
 import Footer from './components/Footer';
 import CineList from './components/CineList';
 
+const createWatchProviders = (providers: Array<any>): StreamProvider[] => {
+  if (!Array.isArray(providers)) return [];
+  return providers.map((provider) => ({
+    name: provider.provider_name || provider.provider_name || 'Unknown',
+    logo: provider.logo_path
+      ? `https://image.tmdb.org/t/p/w92${provider.logo_path}`
+      : '',
+    watchUrl: '#watch-' + String(provider.provider_name || provider.provider_name || 'provider').toLowerCase().replace(/\s+/g, '-'),
+    priceText: provider.display_priority ? '' : undefined,
+  }));
+};
+
+const formatSummaryMovie = (movie: any): Movie => ({
+  id: String(movie.id),
+  title: movie.title || movie.name || 'Untitled',
+  description: movie.overview || '',
+  year: movie.release_date ? new Date(movie.release_date).getFullYear() : movie.first_air_date ? new Date(movie.first_air_date).getFullYear() : 0,
+  duration: movie.runtime ? `${movie.runtime} mins` : 'Unknown',
+  rating: movie.adult ? '18+' : 'PG-13',
+  certificateDetails: movie.certification || 'No certification available',
+  posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+  trailerThumbUrl: movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+  categories: Array.isArray(movie.genres) ? movie.genres.map((genre: any) => genre.name) : [],
+  imdbRating: movie.vote_average ? `${movie.vote_average.toFixed(1)}/10` : '0.0/10',
+  rottenTomatoesRating: movie.vote_average ? `${Math.round(movie.vote_average * 10)}% Fresh` : '0% Fresh',
+  rewatchValue: movie.vote_average ? Math.min(100, Math.max(70, Math.round(movie.vote_average * 10))) : 75,
+  streamProviders: [],
+  reviews: [],
+  stillUrl: movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+});
+
+const formatDetailMovie = (movie: any, trailerKey?: string, providers: Array<any> = []): Movie => ({
+  id: String(movie.id),
+  title: movie.title || movie.name || 'Untitled',
+  description: movie.overview || '',
+  year: movie.release_date ? new Date(movie.release_date).getFullYear() : movie.first_air_date ? new Date(movie.first_air_date).getFullYear() : 0,
+  duration: movie.runtime ? `${movie.runtime} mins` : 'Unknown',
+  rating: movie.adult ? '18+' : 'PG-13',
+  certificateDetails: movie.release_dates?.results?.length
+    ? movie.release_dates.results[0].release_dates[0].certification || 'No certification available'
+    : 'No certification available',
+  posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+  trailerThumbUrl: trailerKey ? `https://img.youtube.com/vi/${trailerKey}/hqdefault.jpg` : movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+  categories: Array.isArray(movie.genres) ? movie.genres.map((genre: any) => genre.name) : [],
+  imdbRating: movie.vote_average ? `${movie.vote_average.toFixed(1)}/10` : '0.0/10',
+  rottenTomatoesRating: movie.vote_average ? `${Math.round(movie.vote_average * 10)}% Fresh` : '0% Fresh',
+  rewatchValue: movie.vote_average ? Math.min(100, Math.max(70, Math.round(movie.vote_average * 10))) : 80,
+  streamProviders: createWatchProviders(providers),
+  reviews: [],
+  stillUrl: movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+});
+
 export default function App() {
-  const [movies, setMovies] = useState<Movie[]>(MOVIES);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovieId, setSelectedMovieId] = useState<string>(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('movie') || 'sinners';
+    return params.get('movie') || '';
   });
   const [cineList, setCineList] = useState<string[]>([]);
   const [activeView, setActiveView] = useState<'discover' | 'cinelist'>(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('view') === 'cinelist' ? 'cinelist' : 'discover';
   });
-
+  const [currentMovieDetails, setCurrentMovieDetails] = useState<Movie | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
   const rateNowRef = useRef<HTMLDivElement>(null);
 
-  // Get active movie
-  const currentMovie = movies.find((m) => m.id === selectedMovieId) || movies[0];
+  const loadTrending = async () => {
+    setLoading(true);
+    try {
+      const data = await getTrendingMovies();
+      const results = Array.isArray(data.results) ? data.results : [];
+      const formatted = results.map(formatSummaryMovie);
+      setMovies(formatted);
 
-  // Handle switching active movie
+      if (!selectedMovieId || !formatted.some((movie) => movie.id === selectedMovieId)) {
+        if (formatted.length > 0) {
+          setSelectedMovieId(formatted[0].id);
+          setCurrentMovieDetails(null);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadTrending();
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (!searchQuery.trim()) {
+        await loadTrending();
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const data = await searchMovies(searchQuery.trim());
+        const results = Array.isArray(data.results) ? data.results : [];
+        const formatted = results.map(formatSummaryMovie);
+        setMovies(formatted);
+
+        if (formatted.length > 0 && !formatted.some((movie) => movie.id === selectedMovieId)) {
+          setSelectedMovieId(formatted[0].id);
+          setCurrentMovieDetails(null);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const currentMovie = movies.find((movie) => movie.id === selectedMovieId);
+    const shouldFetchDetail = !currentMovie || !currentMovie.categories.length || currentMovie.duration === 'Unknown';
+
+    if (!selectedMovieId) {
+      setCurrentMovieDetails(null);
+      return;
+    }
+
+    const loadDetails = async () => {
+      setLoading(true);
+      try {
+        const detailData = await getMovieDetails(selectedMovieId);
+        const trailerData = await getMovieTrailer(selectedMovieId).catch(() => ({ key: undefined }));
+        const watchProviders = await getWatchProviders(selectedMovieId).catch(() => ({ providers: [] }));
+        const detailMovie = formatDetailMovie(detailData, trailerData?.key, watchProviders?.providers);
+        setCurrentMovieDetails(detailMovie);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (shouldFetchDetail || !currentMovieDetails || currentMovieDetails.id !== selectedMovieId) {
+      loadDetails();
+    }
+  }, [selectedMovieId, movies]);
+
+  const currentMovie = currentMovieDetails?.id === selectedMovieId ? currentMovieDetails : movies.find((m) => m.id === selectedMovieId) || movies[0] || null;
+
   const handleSelectMovie = (movie: Movie) => {
     setSelectedMovieId(movie.id);
     const url = new URL(window.location.href);
     url.searchParams.set('movie', movie.id);
     window.history.replaceState({}, '', url.pathname + url.search);
+    setCurrentMovieDetails(null);
   };
 
-  // Toggle Cine List (Wishlist)
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setActiveView('discover');
+  };
+
   const handleToggleCineList = (movieId: string) => {
     setCineList((prev) =>
       prev.includes(movieId) ? prev.filter((id) => id !== movieId) : [...prev, movieId]
     );
   };
 
-  // Prepend a user review to the selected movie
   const handleAddReview = (newReviewData: Omit<Review, 'id' | 'timestamp'>) => {
     setMovies((prevMovies) =>
       prevMovies.map((movie) => {
@@ -54,15 +192,24 @@ export default function App() {
           };
           return {
             ...movie,
-            reviews: [newReview, ...movie.reviews],
+            reviews: [newReview, ...(movie.reviews || [])],
           };
         }
         return movie;
       })
     );
+    if (currentMovieDetails?.id === selectedMovieId) {
+      setCurrentMovieDetails((prev) => prev ? { ...prev, reviews: [
+        {
+          ...newReviewData,
+          id: `user-review-${Date.now()}`,
+          timestamp: 'Just now',
+        },
+        ...prev.reviews,
+      ] } : prev);
+    }
   };
 
-  // Toggle helpful rating for a review
   const handleHelpfulClick = (reviewId: string) => {
     setMovies((prevMovies) =>
       prevMovies.map((movie) => {
@@ -87,15 +234,13 @@ export default function App() {
     );
   };
 
-  // Smooth scroll to rating card and focus text input
   const handleScrollToRate = () => {
     if (rateNowRef.current) {
       rateNowRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Wait for scroll animation, then focus the input field
       setTimeout(() => {
         const inputElement = rateNowRef.current?.querySelector('input');
         inputElement?.focus();
-      }, 800);
+      }, 300);
     }
   };
 
@@ -104,11 +249,14 @@ export default function App() {
       {/* Header with Search and Filter capabilities */}
       <Header
         movies={movies}
-        selectedMovie={currentMovie}
+        selectedMovie={currentMovie || { id: '', title: '', description: '', year: 0, duration: '', rating: '', certificateDetails: '', posterUrl: '', trailerThumbUrl: '', categories: [], imdbRating: '0.0/10', rottenTomatoesRating: '0% Fresh', rewatchValue: 0, streamProviders: [], reviews: [], stillUrl: '' }}
         onSelectMovie={handleSelectMovie}
         activeView={activeView}
         onViewChange={setActiveView}
         cineListCount={cineList.length}
+        onSearch={handleSearch}
+        searchQuery={searchQuery}
+        isLoading={loading}
       />
 
       {/* Main Container */}
@@ -142,40 +290,42 @@ export default function App() {
             </motion.div>
           ) : (
             <motion.div
-              key={currentMovie.id}
+              key={currentMovie?.id || 'discover'}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              {/* Poster, title, tags, description, play trailer block */}
-              <MovieDetail
-                movie={currentMovie}
-                onBackToDiscover={() => {
-                  window.location.href = '../home/';
-                }}
-                onScrollToRate={handleScrollToRate}
-                onToggleCineList={handleToggleCineList}
-                isInCineList={cineList.includes(currentMovie.id)}
-              />
+              {currentMovie ? (
+                <>
+                  <MovieDetail
+                    movie={currentMovie}
+                    onBackToDiscover={() => {
+                      window.location.href = '../home/';
+                    }}
+                    onScrollToRate={handleScrollToRate}
+                    onToggleCineList={handleToggleCineList}
+                    isInCineList={cineList.includes(currentMovie.id)}
+                  />
 
-              {/* Where to Watch widget */}
-              <WhereToWatch movie={currentMovie} />
+                  <WhereToWatch movie={currentMovie} />
 
-              {/* Rate Now widget (Review Text area & split circles star feedback) */}
-              <RateNow
-                movie={currentMovie}
-                onSubmitReview={handleAddReview}
-                rateNowRef={rateNowRef}
-              />
+                  <RateNow
+                    movie={currentMovie}
+                    onSubmitReview={handleAddReview}
+                    rateNowRef={rateNowRef}
+                  />
 
-              {/* Community Reviews List & Call-to-action */}
-              <CommunityReviews
-                movie={currentMovie}
-                reviews={currentMovie.reviews}
-                onHelpfulClick={handleHelpfulClick}
-                onScrollToRateInput={handleScrollToRate}
-              />
+                  <CommunityReviews
+                    movie={currentMovie}
+                    reviews={currentMovie.reviews}
+                    onHelpfulClick={handleHelpfulClick}
+                    onScrollToRateInput={handleScrollToRate}
+                  />
+                </>
+              ) : (
+                <div className="py-20 text-center text-white">Loading movie details...</div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

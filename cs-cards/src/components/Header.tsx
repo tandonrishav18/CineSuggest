@@ -10,6 +10,9 @@ interface HeaderProps {
   activeView: 'discover' | 'cinelist';
   onViewChange: (view: 'discover' | 'cinelist') => void;
   cineListCount: number;
+  onSearch: (query: string) => void;
+  searchQuery: string;
+  isLoading?: boolean;
 }
 
 export default function Header({
@@ -19,8 +22,10 @@ export default function Header({
   activeView,
   onViewChange,
   cineListCount,
+  onSearch,
+  searchQuery,
+  isLoading = false,
 }: HeaderProps) {
-  const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const filteredMovies = movies.filter((movie) =>
@@ -62,7 +67,7 @@ export default function Header({
                 placeholder="Search movies..."
                 value={searchQuery}
                 onChange={(e) => {
-                  setSearchQuery(e.target.value);
+                  onSearch(e.target.value);
                   setIsDropdownOpen(true);
                 }}
                 onFocus={() => setIsDropdownOpen(true)}
@@ -119,7 +124,11 @@ export default function Header({
             }}
             title="Switch Movie (Demo Filter)"
           >
-            <SlidersHorizontal size={18} />
+            {isLoading ? (
+              <div className="h-4 w-4 rounded-full bg-white animate-pulse" />
+            ) : (
+              <SlidersHorizontal size={18} />
+            )}
           </button>
 
           <button 

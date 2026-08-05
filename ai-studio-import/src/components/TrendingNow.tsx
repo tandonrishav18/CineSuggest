@@ -193,9 +193,12 @@ function renderMoviePosterWatermark(movieId: string, title: string) {
 
 interface TrendingNowProps {
   movies: Movie[];
+  sectionTitle?: string;
+  isLoading?: boolean;
+  noResultsText?: string;
 }
 
-export default function TrendingNow({ movies }: TrendingNowProps) {
+export default function TrendingNow({ movies, sectionTitle = "Trending Now", isLoading = false, noResultsText = "No movies are available right now." }: TrendingNowProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isReminded, setIsReminded] = useState<boolean>(false);
   const [currentSelectedMovie, setCurrentSelectedMovie] = useState<Movie | null>(movies.length > 0 ? movies[0] : null);
@@ -213,7 +216,7 @@ export default function TrendingNow({ movies }: TrendingNowProps) {
         className="py-16 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
       >
         <div className="text-center text-neutral-400 text-sm py-32">
-          Loading trending movies...
+          {isLoading ? "Loading movies..." : noResultsText}
         </div>
       </section>
     );
@@ -232,7 +235,7 @@ export default function TrendingNow({ movies }: TrendingNowProps) {
         <div>
           <div className="flex items-center gap-4">
             <h2 className="text-3xl md:text-4xl font-bold font-display text-white tracking-tight">
-              Trending Now
+              {sectionTitle}
             </h2>
             {/* Circular Next Arrow Button */}
             <motion.button
