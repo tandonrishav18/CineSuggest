@@ -1,8 +1,7 @@
 import { ArrowRight, Bell, ChevronRight, ThumbsUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Movie } from "../types";
-import { FEATURED_DUNE, TRENDING_MOVIES } from "../data/movies";
 
 function renderMoviePosterWatermark(movieId: string, title: string) {
   switch (movieId) {
@@ -192,10 +191,33 @@ function renderMoviePosterWatermark(movieId: string, title: string) {
   }
 }
 
-export default function TrendingNow() {
+interface TrendingNowProps {
+  movies: Movie[];
+}
+
+export default function TrendingNow({ movies }: TrendingNowProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isReminded, setIsReminded] = useState<boolean>(false);
-  const [currentSelectedMovie, setCurrentSelectedMovie] = useState<Movie>(FEATURED_DUNE);
+  const [currentSelectedMovie, setCurrentSelectedMovie] = useState<Movie | null>(movies.length > 0 ? movies[0] : null);
+
+  useEffect(() => {
+    if (!currentSelectedMovie && movies.length > 0) {
+      setCurrentSelectedMovie(movies[0]);
+    }
+  }, [movies, currentSelectedMovie]);
+
+  if (!currentSelectedMovie) {
+    return (
+      <section
+        id="trending"
+        className="py-16 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
+      >
+        <div className="text-center text-neutral-400 text-sm py-32">
+          Loading trending movies...
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -352,7 +374,7 @@ export default function TrendingNow() {
         {/* Right Column: Grid of 10 Movies */}
         <div className="lg:col-span-7 flex flex-col gap-4">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
-            {TRENDING_MOVIES.map((movie) => {
+            {movies.map((movie) => {
               const isCurrent = movie.id === currentSelectedMovie.id;
 
               return (

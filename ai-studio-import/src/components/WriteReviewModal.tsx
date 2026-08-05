@@ -1,13 +1,13 @@
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState, FormEvent } from "react";
-import { TRENDING_MOVIES } from "../data/movies";
-import { ReviewItem } from "../types";
+import { useEffect, useState, FormEvent } from "react";
+import { Movie, ReviewItem } from "../types";
 
 interface WriteReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddReview: (review: ReviewItem) => void;
+  movies: Movie[];
 }
 
 const GRADIENTS = [
@@ -18,8 +18,8 @@ const GRADIENTS = [
   "from-blue-400 via-indigo-500 to-violet-600"
 ];
 
-export default function WriteReviewModal({ isOpen, onClose, onAddReview }: WriteReviewModalProps) {
-  const [selectedMovie, setSelectedMovie] = useState(TRENDING_MOVIES[0].title);
+export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies }: WriteReviewModalProps) {
+  const [selectedMovie, setSelectedMovie] = useState(() => movies[0]?.title ?? "");
   const [customMovie, setCustomMovie] = useState("");
   const [useCustomMovie, setUseCustomMovie] = useState(false);
   const [rating, setRating] = useState(5);
@@ -27,6 +27,12 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview }: Write
   const [authorName, setAuthorName] = useState("");
   const [content, setContent] = useState("");
   const [selectedGradient, setSelectedGradient] = useState(GRADIENTS[0]);
+
+  useEffect(() => {
+    if (!selectedMovie && movies.length > 0) {
+      setSelectedMovie(movies[0].title);
+    }
+  }, [movies, selectedMovie]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -132,10 +138,11 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview }: Write
                     onChange={(e) => setSelectedMovie(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800/80 text-neutral-200 text-sm font-sans outline-none focus:border-[#36ffdb] transition-colors cursor-pointer"
                   >
-                    {TRENDING_MOVIES.map(m => (
+                    {movies.length > 0 ? movies.map((m) => (
                       <option key={m.id} value={m.title}>{m.title}</option>
-                    ))}
-                    <option value="Dune: Part Three">Dune: Part Three</option>
+                    )) : (
+                      <option value="" disabled>No movies available</option>
+                    )}
                   </select>
                 ) : (
                   <input 

@@ -8,13 +8,51 @@ import HotReviews from "./components/HotReviews";
 import WriteReviewModal from "./components/WriteReviewModal";
 import Footer from "./components/Footer";
 import { INITIAL_REVIEWS } from "./data/movies";
-import { ReviewItem } from "./types";
+import { getTrendingMovies } from "./services/api";
+import { Movie, ReviewItem } from "./types";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [reviews, setReviews] = useState<ReviewItem[]>(INITIAL_REVIEWS);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const formatMovie = (movie: any): Movie => ({
+    id: String(movie.id),
+    title: movie.title || movie.name || "Untitled",
+    posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "",
+    backdropUrl: movie.backdrop_path
+      ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
+      : movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : "",
+    rating: movie.adult ? "18+" : undefined,
+    description: movie.overview || "",
+    wikipediaUrl: `https://www.themoviedb.org/movie/${movie.id}`
+  });
+
+  const loadTrendingMovies = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getTrendingMovies();
+      const results = Array.isArray(data.results) ? data.results : [];
+      setMovies(results.map(formatMovie));
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load trending movies");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadTrendingMovies();
+  }, []);
 
   // Smooth scroll handler
   const handleNavigate = (sectionId: string) => {
@@ -72,7 +110,7 @@ export default function App() {
           <HeroSection onStartExploring={() => handleNavigate("trending")} />
 
           {/* Trending Now */}
-          <TrendingNow />
+          <TrendingNow movies={movies} />
 
           {/* Cine Digest */}
           <CineDigest />
@@ -94,6 +132,7 @@ export default function App() {
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onAddReview={handleAddReview}
+        movies={movies}
       />
     </div>
   );
