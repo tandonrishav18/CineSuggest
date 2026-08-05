@@ -8,13 +8,14 @@ import HotReviews from "./components/HotReviews";
 import WriteReviewModal from "./components/WriteReviewModal";
 import Footer from "./components/Footer";
 import { INITIAL_REVIEWS } from "./data/movies";
-import { getTrendingMovies } from "./services/api";
+import { getTrendingMovies, searchMovies } from "./services/api";
 import { Movie, ReviewItem } from "./types";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [reviews, setReviews] = useState<ReviewItem[]>(INITIAL_REVIEWS);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [searchResults, setSearchResults] = useState<Movie[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
@@ -51,8 +52,36 @@ export default function App() {
   };
 
   useEffect(() => {
-    loadTrendingMovies();
-  }, []);
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    if (!searchQuery.trim()) {
+      setSearchResults(null);
+      loadTrendingMovies();
+    } else {
+      setLoading(true);
+      setError(null);
+      timer = setTimeout(async () => {
+        try {
+          const data = await searchMovies(searchQuery.trim());
+          const results = Array.isArray(data.results) ? data.results : [];
+          setSearchResults(results.map(formatMovie));
+        } catch (err) {
+          console.error(err);
+          setError("Failed to search movies");
+        } finally {
+          setLoading(false);
+        }
+      }, 300);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [searchQuery]);
+
+  const displayMovies = searchResults ?? movies;
 
   // Smooth scroll handler
   const handleNavigate = (sectionId: string) => {
@@ -110,7 +139,12 @@ export default function App() {
           <HeroSection onStartExploring={() => handleNavigate("trending")} />
 
           {/* Trending Now */}
-          <TrendingNow movies={movies} />
+          <TrendingNow
+        movies={displayMovies}
+        sectionTitle={searchQuery.trim() ? `Search Results for "${searchQuery.trim()}"` : "Trending Now"}
+        isLoading={loading}
+        noResultsText={searchQuery.trim() ? "No matching movies were found." : "No trending movies are available right now."}
+      />
 
           {/* Cine Digest */}
           <CineDigest />
@@ -132,7 +166,7 @@ export default function App() {
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onAddReview={handleAddReview}
-        movies={movies}
+        movies={displayMovies}
       />
     </div>
   );
