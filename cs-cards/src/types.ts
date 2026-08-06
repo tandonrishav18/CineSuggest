@@ -35,4 +35,5 @@ export interface Movie {
   streamProviders: StreamProvider[];
   reviews: Review[];
   stillUrl: string; // The image for the "Where to watch" section
+  trailerKey?: string;
 }

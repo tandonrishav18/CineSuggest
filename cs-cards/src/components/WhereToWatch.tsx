@@ -119,9 +119,13 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
     show: { 
       opacity: 1, 
       y: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 15 } 
+      transition: { type: 'spring' as const, stiffness: 100, damping: 15 } 
     }
   };
+
+  if (!movie.streamProviders || movie.streamProviders.length === 0) {
+    return null;
+  }
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 md:px-8 mt-4">
@@ -172,7 +176,16 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
                       rotate: { type: "keyframes", duration: 0.35, ease: "easeInOut" }
                     }}
                   >
-                    {renderProviderLogo(provider.name)}
+                    {provider.logo && provider.logo.startsWith('http') ? (
+                      <img
+                        src={provider.logo}
+                        alt={provider.name}
+                        referrerPolicy="no-referrer"
+                        className="h-11 w-11 shrink-0 rounded-full object-cover border border-[#112332] shadow-lg"
+                      />
+                    ) : (
+                      renderProviderLogo(provider.name)
+                    )}
                   </motion.div>
                   <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#4df2d6] transition-colors duration-300">
                     {provider.name}

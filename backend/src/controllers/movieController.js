@@ -42,6 +42,18 @@ const getSimilarMovies = asyncHandler(async (req, res) => {
   res.json(data);
 });
 
+const getMovieCast = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const data = await movieService.getMovieCast(id);
+  res.json(data);
+});
+
+const getRecommendations = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const data = await movieService.getRecommendations(id);
+  res.json(data);
+});
+
 module.exports = {
   getTrendingMovies,
   searchMovies,
@@ -49,5 +61,7 @@ module.exports = {
   getMovieTrailer,
   getWatchProviders,
   getMovieImages,
-  getSimilarMovies
+  getSimilarMovies,
+  getMovieCast,
+  getRecommendations
 };

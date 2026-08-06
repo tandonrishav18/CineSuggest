@@ -10,6 +10,12 @@ const EMOJI_LIST = [
   "🩸", "🚀", "👽", "💥", "🎭", "🎥", "🎟️", "🍿"
 ];
 
+interface RateNowProps {
+  movie: Movie;
+  onSubmitReview: (review: Omit<Review, 'id' | 'likes'>) => void;
+  rateNowRef?: React.RefObject<HTMLDivElement>;
+}
+
 export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowProps) {
   const [personalRewatchCount, setPersonalRewatchCount] = useState(0);
   const [reviewText, setReviewText] = useState('');
@@ -89,6 +95,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
     onSubmitReview({
       author: 'You',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop', // Beautiful profile avatar
+      timestamp: 'Just now',
       vibeTag,
       vibeType,
       content: reviewText.trim(),

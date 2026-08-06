@@ -21,19 +21,32 @@ export default function App() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const formatMovie = (movie: any): Movie => ({
-    id: String(movie.id),
-    title: movie.title || movie.name || "Untitled",
-    posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "",
-    backdropUrl: movie.backdrop_path
-      ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
-      : movie.poster_path
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-      : "",
-    rating: movie.adult ? "18+" : undefined,
-    description: movie.overview || "",
-    wikipediaUrl: `https://www.themoviedb.org/movie/${movie.id}`
-  });
+  const formatMovie = (movie: any): Movie => {
+    let poster = movie.posterUrl || "";
+    if (!poster && movie.poster_path) {
+      poster = movie.poster_path.startsWith("http")
+        ? movie.poster_path
+        : `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    }
+
+    let backdrop = movie.backdropUrl || "";
+    if (!backdrop && movie.backdrop_path) {
+      backdrop = movie.backdrop_path.startsWith("http")
+        ? movie.backdrop_path
+        : `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
+    }
+    if (!backdrop) backdrop = poster;
+
+    return {
+      id: String(movie.id),
+      title: movie.title || movie.name || "Untitled",
+      posterUrl: poster,
+      backdropUrl: backdrop,
+      rating: movie.rating || (movie.adult ? "18+" : "U/A 13+"),
+      description: movie.overview || movie.description || "",
+      wikipediaUrl: movie.wikipediaUrl || `https://www.themoviedb.org/movie/${movie.id}`
+    };
+  };
 
   const loadTrendingMovies = async () => {
     setLoading(true);
@@ -42,10 +55,15 @@ export default function App() {
     try {
       const data = await getTrendingMovies();
       const results = Array.isArray(data.results) ? data.results : [];
-      setMovies(results.map(formatMovie));
+      if (results.length > 0) {
+        setMovies(results.map(formatMovie));
+      } else {
+        setMovies(TRENDING_MOVIES);
+      }
     } catch (err) {
-      console.error(err);
-      setError("Failed to load trending movies");
+      console.error("Backend fetch error:", err);
+      setError("Using fallback movie data");
+      setMovies(TRENDING_MOVIES);
     } finally {
       setLoading(false);
     }
@@ -136,7 +154,7 @@ export default function App() {
         <main className="w-full relative">
 
           {/* Hero Section */}
-          <HeroSection onStartExploring={() => handleNavigate("trending")} />
+          <HeroSection movies={movies} onStartExploring={() => handleNavigate("trending")} />
 
           {/* Trending Now */}
           <TrendingNow

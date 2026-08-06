@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useRef, useEffect } from "react";
 import { Movie } from "../types";
+import { getMovieDetails, getMovieTrailer, getMovieCast, getWatchProviders, getMovieImages, getRecommendations } from "../services/api";
 import {
   Play,
   ChevronLeft,
@@ -135,22 +136,124 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showMovieDetailsEmojiPicker]);
-  const isSinners = movie.id === "sinners";
-  const d = isSinners ? getSinnersDetails() : {
-    genres: ["Drama"],
-    runtime: "2H 00M",
-    year: "2024",
-    ratingPill: "PG-13",
-    imdb: "7.9/10",
-    rotten: "85% Fresh",
-    posterUrl: movie.posterUrl,
-    trailerThumb: movie.backdropUrl ?? "",
-    sceneImg: movie.backdropUrl ?? "",
-    description: movie.description,
-  };
+  const [detailData, setDetailData] = useState<any>(null);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const [isPlayingTrailer, setIsPlayingTrailer] = useState(false);
+  const [castList, setCastList] = useState<Array<{ id: number; name: string; character: string; profile_path: string | null }>>([]);
+  const [providersList, setProvidersList] = useState<Array<{ provider_id: number; provider_name: string; logo_path: string }>>([]);
+  const [imagesList, setImagesList] = useState<Array<{ url: string; type: 'backdrop' | 'poster' }>>([]);
+  const [recommendationsList, setRecommendationsList] = useState<Movie[]>([]);
 
-  // For non-sinners movies still use their own poster
-  const posterSrc = isSinners ? d.posterUrl : movie.posterUrl;
+  useEffect(() => {
+    if (!movie.id) return;
+    const fetchDetails = async () => {
+      try {
+        const numId = Number(movie.id);
+        if (!isNaN(numId)) {
+          const res = await getMovieDetails(numId);
+          setDetailData(res);
+          try {
+            const trailerRes = await getMovieTrailer(numId);
+            if (trailerRes?.key) {
+              setTrailerKey(trailerRes.key);
+            }
+          } catch (err) {
+            console.error("No trailer found:", err);
+          }
+          try {
+            const castRes = await getMovieCast(numId);
+            if (Array.isArray(castRes?.cast)) {
+              setCastList(castRes.cast.slice(0, 10));
+            }
+          } catch (err) {
+            console.error("No cast found:", err);
+          }
+          try {
+            const providerRes = await getWatchProviders(numId);
+            if (Array.isArray(providerRes?.providers)) {
+              setProvidersList(providerRes.providers);
+            }
+          } catch (err) {
+            console.error("No watch providers found:", err);
+          }
+          try {
+            const imagesRes = await getMovieImages(numId);
+            const backdrops = Array.isArray(imagesRes?.backdrops)
+              ? imagesRes.backdrops.map((img: any) => ({ url: `https://image.tmdb.org/t/p/w780${img.file_path}`, type: 'backdrop' as const }))
+              : [];
+            const posters = Array.isArray(imagesRes?.posters)
+              ? imagesRes.posters.map((img: any) => ({ url: `https://image.tmdb.org/t/p/w500${img.file_path}`, type: 'poster' as const }))
+              : [];
+            const combined = [...backdrops, ...posters];
+            if (combined.length > 0) {
+              setImagesList(combined);
+            }
+          } catch (err) {
+            console.error("No images found:", err);
+          }
+          try {
+            const recRes = await getRecommendations(numId);
+            if (Array.isArray(recRes?.results)) {
+              const formattedRecs = recRes.results.slice(0, 6).map((m: any) => ({
+                id: String(m.id),
+                title: m.title || m.name || "Untitled",
+                posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : "",
+                backdropUrl: m.backdrop_path ? `https://image.tmdb.org/t/p/w780${m.backdrop_path}` : "",
+                description: m.overview || "",
+                rating: m.vote_average ? `${m.vote_average.toFixed(1)}/10` : undefined,
+              }));
+              setRecommendationsList(formattedRecs);
+            }
+          } catch (err) {
+            console.error("No recommendations found:", err);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load movie details:", err);
+      }
+    };
+    fetchDetails();
+  }, [movie.id]);
+
+  const posterSrc = detailData?.poster_path
+    ? `https://image.tmdb.org/t/p/w500${detailData.poster_path}`
+    : movie.posterUrl || "/assets/sinners-poster.jpg";
+
+  const backdropSrc = imagesList.length > 0
+    ? imagesList[0].url
+    : detailData?.backdrop_path
+    ? `https://image.tmdb.org/t/p/w780${detailData.backdrop_path}`
+    : movie.backdropUrl || posterSrc;
+
+  const genres = Array.isArray(detailData?.genres)
+    ? detailData.genres.map((g: any) => g.name)
+    : ["Drama"];
+
+  const runtimeFormatted = detailData?.runtime
+    ? `${Math.floor(detailData.runtime / 60)}H ${detailData.runtime % 60}M`
+    : "2H 00M";
+
+  const yearFormatted = detailData?.release_date
+    ? new Date(detailData.release_date).getFullYear().toString()
+    : "2025";
+
+  const imdbScore = detailData?.vote_average
+    ? `${detailData.vote_average.toFixed(1)}/10`
+    : "8.0/10";
+
+  const d = {
+    genres,
+    runtime: runtimeFormatted,
+    year: yearFormatted,
+    ratingPill: detailData?.adult ? "R | 18+" : "PG-13",
+    imdb: imdbScore,
+    rotten: detailData?.vote_average ? `${Math.round(detailData.vote_average * 10)}% Fresh` : "85% Fresh",
+    posterUrl: posterSrc,
+    trailerThumb: backdropSrc,
+    sceneImg: backdropSrc,
+    description: detailData?.overview || movie.description || "",
+    title: detailData?.title || movie.title,
+  };
 
   return (
     <motion.div
@@ -211,26 +314,41 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
 
             {/* trailer card */}
             <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-neutral-900 aspect-video group">
-              <img
-                src={d.trailerThumb}
-                alt="Trailer"
-                className="w-full h-full object-cover brightness-90 group-hover:brightness-75 transition-all duration-300"
-              />
-              {/* play button */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="w-14 h-14 rounded-full border-2 border-white/80 bg-black/40 hover:bg-black/60 flex items-center justify-center transition-all">
-                  <Play className="w-5 h-5 fill-white text-white ml-0.5" />
-                </button>
-              </div>
-              {/* title watermark */}
-              <div className="absolute bottom-4 left-5 pointer-events-none">
-                <p className="text-lg font-black uppercase tracking-widest text-white drop-shadow-[0_2px_6px_rgba(0,0,0,1)]">
-                  {movie.title}
-                </p>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-neutral-300 mt-0.5">
-                  Official Trailer
-                </p>
-              </div>
+              {isPlayingTrailer && trailerKey ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                  title={`${movie.title} Official Trailer`}
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <>
+                  <img
+                    src={d.trailerThumb}
+                    alt="Trailer"
+                    className="w-full h-full object-cover brightness-90 group-hover:brightness-75 transition-all duration-300"
+                  />
+                  {/* play button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button 
+                      onClick={() => setIsPlayingTrailer(true)}
+                      className="w-14 h-14 rounded-full border-2 border-white/80 bg-black/40 hover:bg-black/60 flex items-center justify-center transition-all cursor-pointer"
+                    >
+                      <Play className="w-5 h-5 fill-white text-white ml-0.5" />
+                    </button>
+                  </div>
+                  {/* title watermark */}
+                  <div className="absolute bottom-4 left-5 pointer-events-none">
+                    <p className="text-lg font-black uppercase tracking-widest text-white drop-shadow-[0_2px_6px_rgba(0,0,0,1)]">
+                      {movie.title}
+                    </p>
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-neutral-300 mt-0.5">
+                      Official Trailer
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* title + like + genres */}
@@ -301,29 +419,67 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
             </div>
 
             {/* where to watch */}
-            <div>
-              <h3 className="text-[13px] font-bold text-white tracking-wider uppercase mb-3">
-                Where to watch:
-              </h3>
-              <div className="flex flex-col gap-2">
-                {platforms.map(({ name, Logo, action }) => (
-                  <div
-                    key={name}
-                    className="flex items-center justify-between px-4 py-3 bg-[#080f19]/70 border border-[#14273f]/50 rounded-2xl hover:border-[#14273f] transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Logo />
-                      <span className="text-[13px] font-medium text-neutral-300">{name}</span>
+            {providersList.length > 0 && (
+              <div>
+                <h3 className="text-[13px] font-bold text-white tracking-wider uppercase mb-3">
+                  Where to watch:
+                </h3>
+                <div className="flex flex-col gap-2">
+                  {providersList.map((provider) => (
+                    <div
+                      key={provider.provider_id || provider.provider_name}
+                      className="flex items-center justify-between px-4 py-3 bg-[#080f19]/70 border border-[#14273f]/50 rounded-2xl hover:border-[#14273f] transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        {provider.logo_path ? (
+                          <img
+                            src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
+                            alt={provider.provider_name}
+                            referrerPolicy="no-referrer"
+                            className="w-9 h-9 rounded-full object-cover shadow-md"
+                          />
+                        ) : (
+                          <div className="w-9 h-9 rounded-full bg-neutral-800 flex items-center justify-center text-xs text-white">
+                            {provider.provider_name[0]}
+                          </div>
+                        )}
+                        <span className="text-[13px] font-medium text-neutral-300">{provider.provider_name}</span>
+                      </div>
+                      <button className="px-4 py-1.5 border border-neutral-700 bg-[#0b1622] hover:bg-neutral-700 text-neutral-300 hover:text-white text-[11px] font-medium rounded-full transition-all cursor-pointer">
+                        Stream
+                      </button>
                     </div>
-                    <button className="px-4 py-1.5 border border-neutral-700 bg-[#0b1622] hover:bg-neutral-700 text-neutral-300 hover:text-white text-[11px] font-medium rounded-full transition-all cursor-pointer">
-                      {action}
-                    </button>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* ── Top Cast ─────────────────────────────────────────── */}
+        {castList.length > 0 && (
+          <div className="mt-14 border-t border-neutral-900 pt-10">
+            <h2 className="text-[26px] font-bold text-white tracking-tight mb-7">Top Cast</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {castList.map((member) => (
+                <div key={member.id} className="flex flex-col items-center text-center p-4 bg-[#070e18] border border-[#14273f]/50 rounded-2xl gap-3 hover:border-[#36ffdb]/40 transition-all">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border border-[#36ffdb]/30 bg-neutral-900 shadow-md">
+                    <img
+                      src={member.profile_path ? `https://image.tmdb.org/t/p/w185${member.profile_path}` : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop'}
+                      alt={member.name}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[12.5px] font-bold text-white leading-tight">{member.name}</p>
+                    <p className="text-[10px] text-neutral-400 font-light mt-1">{member.character}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Rate Now ────────────────────────────────────────── */}
         <div className="mt-14 border-t border-neutral-900 pt-10">
@@ -488,6 +644,33 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
             </div>
           </div>
         </div>
+
+        {/* ── Recommendations ────────────────────────────────── */}
+        {recommendationsList.length > 0 && (
+          <div className="mt-14 border-t border-neutral-900 pt-10">
+            <h2 className="text-[26px] font-bold text-white tracking-tight mb-7">Recommended Movies</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+              {recommendationsList.map((rec) => (
+                <div key={rec.id} className="flex flex-col bg-[#070e18] border border-[#14273f]/50 rounded-2xl overflow-hidden group hover:border-[#36ffdb]/40 transition-all">
+                  <div className="aspect-[2/3] w-full overflow-hidden bg-neutral-900">
+                    <img
+                      src={rec.posterUrl || rec.backdropUrl || '/assets/sinners-poster.jpg'}
+                      alt={rec.title}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-3 flex flex-col gap-1">
+                    <p className="text-[12px] font-bold text-white leading-tight line-clamp-1">{rec.title}</p>
+                    {rec.rating && (
+                      <span className="text-[10px] font-mono text-[#36ffdb]">{rec.rating}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Community Reviews ────────────────────────────────── */}
         <div className="mt-14 border-t border-neutral-900 pt-10">

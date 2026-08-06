@@ -1,5 +1,5 @@
 // Motion — standalone DOM animation via window.Motion (motion/dist/motion.js IIFE)
-const { animateMini } = Motion;
+const animateMini = window.Motion ? window.Motion.animateMini : (el, props, opts) => {};
 
 // ─── Element refs ────────────────────────────────────────────────────────────
 const form          = document.querySelector(".verification-card");
@@ -16,21 +16,25 @@ const easeSettle  = [0.19, 1.0, 0.22, 1.0]; // gentle settle
 const easeBounce  = [0.34, 1.56, 0.64, 1];  // bouncy press release
 
 // ─── 1. Brand logo — slide in ────────────────────────────────────────────────
-animateMini(
-  brand,
-  { opacity: [0, 1], transform: ["translateX(-28px)", "translateX(0px)"] },
-  { duration: 0.75, easing: easeSpring }
-);
+if (brand) {
+  animateMini(
+    brand,
+    { opacity: [0, 1], transform: ["translateX(-28px)", "translateX(0px)"] },
+    { duration: 0.75, easing: easeSpring }
+  );
+}
 
 // ─── 2. Verification card — spring rise ──────────────────────────────────────
-animateMini(
-  form,
-  {
-    opacity: [0, 1],
-    transform: ["translateY(56px) scale(0.96)", "translateY(0px) scale(1)"],
-  },
-  { delay: 0.12, duration: 0.85, easing: easeSettle }
-);
+if (form) {
+  animateMini(
+    form,
+    {
+      opacity: [0, 1],
+      transform: ["translateY(56px) scale(0.96)", "translateY(0px) scale(1)"],
+    },
+    { delay: 0.12, duration: 0.85, easing: easeSettle }
+  );
+}
 
 // ─── 3. Card children — manual stagger ───────────────────────────────────────
 const cardChildren = [
@@ -70,58 +74,76 @@ addPressAnim(primaryButton);
 addPressAnim(goBackButton);
 
 // ─── 6. Input focus ring ──────────────────────────────────────────────────────
-input.addEventListener("focus", () =>
-  animateMini(
-    input,
-    { boxShadow: "0 0 0 4px rgba(117,212,203,0.22)" },
-    { duration: 0.3, easing: [0.22, 1, 0.36, 1] }
-  )
-);
-input.addEventListener("blur", () =>
-  animateMini(
-    input,
-    { boxShadow: "0 0 0 0px rgba(117,212,203,0)" },
-    { duration: 0.25, easing: "ease-out" }
-  )
-);
+if (input) {
+  input.addEventListener("focus", () =>
+    animateMini(
+      input,
+      { boxShadow: "0 0 0 4px rgba(117,212,203,0.22)" },
+      { duration: 0.3, easing: [0.22, 1, 0.36, 1] }
+    )
+  );
+  input.addEventListener("blur", () =>
+    animateMini(
+      input,
+      { boxShadow: "0 0 0 0px rgba(117,212,203,0)" },
+      { duration: 0.25, easing: "ease-out" }
+    )
+  );
+
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/\D/g, "").slice(0, 6);
+  });
+}
 
 // ─── 7. Form logic ────────────────────────────────────────────────────────────
-input.addEventListener("input", () => {
-  input.value = input.value.replace(/\D/g, "").slice(0, 6);
-});
+if (form) {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!input || input.value.length !== 6) {
+      // Shake
+      animateMini(
+        form,
+        {
+          transform: [
+            "translateX(0px)", "translateX(-10px)", "translateX(10px)",
+            "translateX(-7px)", "translateX(7px)", "translateX(-3px)",
+            "translateX(3px)", "translateX(0px)",
+          ],
+        },
+        { duration: 0.5, easing: "linear" }
+      );
+      if (feedback) feedback.textContent = "Enter a 6 digit code.";
+      return;
+    }
+    // Success bounce
+    if (primaryButton) {
+      animateMini(
+        primaryButton,
+        { transform: ["scale(1)", "scale(1.06)", "scale(1)"] },
+        { duration: 0.4, easing: easeBounce }
+      );
+    }
+    if (feedback) feedback.textContent = "Code submitted. Redirecting...";
+    
+    // Redirect to home page after the animation plays
+    setTimeout(() => {
+      window.location.href = "./home/";
+    }, 500);
+  });
+}
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (input.value.length !== 6) {
-    // Shake
-    animateMini(
-      form,
-      {
-        transform: [
-          "translateX(0px)", "translateX(-10px)", "translateX(10px)",
-          "translateX(-7px)", "translateX(7px)", "translateX(-3px)",
-          "translateX(3px)", "translateX(0px)",
-        ],
-      },
-      { duration: 0.5, easing: "linear" }
-    );
-    feedback.textContent = "Enter a 6 digit code.";
-    return;
-  }
-  // Success bounce
-  animateMini(
-    primaryButton,
-    { transform: ["scale(1)", "scale(1.06)", "scale(1)"] },
-    { duration: 0.4, easing: easeBounce }
-  );
-  feedback.textContent = "Code submitted.";
-  
-  // Redirect to home page after the animation plays
-  setTimeout(() => {
-    window.location.href = "./home/";
-  }, 500);
-});
+if (resendButton) {
+  resendButton.addEventListener("click", () => {
+    if (feedback) feedback.textContent = "A new verification code has been sent to your email.";
+  });
+}
 
-goBackButton.addEventListener("click", () => {
-  feedback.textContent = "Going back.";
-});
+if (goBackButton) {
+  goBackButton.addEventListener("click", () => {
+    if (feedback) feedback.textContent = "Going back...";
+    setTimeout(() => {
+      window.location.href = "./landing/";
+    }, 300);
+  });
+}
+

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { getTrendingMovies, searchMovies, getMovieDetails, getMovieTrailer, getWatchProviders } from './services/api';
+import { getTrendingMovies, searchMovies, getMovieDetails, getMovieTrailer, getWatchProviders, getMovieImages } from './services/api';
 import { Review, Movie, StreamProvider } from './types';
 import Header from './components/Header';
 import MovieDetail from './components/MovieDetail';
@@ -60,10 +60,12 @@ const formatDetailMovie = (movie: any, trailerKey?: string, providers: Array<any
   streamProviders: createWatchProviders(providers),
   reviews: [],
   stillUrl: movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
+  trailerKey,
 });
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [selectedMovieId, setSelectedMovieId] = useState<string>(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('movie') || '';
@@ -86,11 +88,8 @@ export default function App() {
       const formatted = results.map(formatSummaryMovie);
       setMovies(formatted);
 
-      if (!selectedMovieId || !formatted.some((movie) => movie.id === selectedMovieId)) {
-        if (formatted.length > 0) {
-          setSelectedMovieId(formatted[0].id);
-          setCurrentMovieDetails(null);
-        }
+      if (!selectedMovieId && formatted.length > 0) {
+        setSelectedMovieId(formatted[0].id);
       }
     } catch (error) {
       console.error(error);
@@ -106,7 +105,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (!searchQuery.trim()) {
-        await loadTrending();
+        setSearchResults([]);
         return;
       }
 
@@ -115,12 +114,7 @@ export default function App() {
         const data = await searchMovies(searchQuery.trim());
         const results = Array.isArray(data.results) ? data.results : [];
         const formatted = results.map(formatSummaryMovie);
-        setMovies(formatted);
-
-        if (formatted.length > 0 && !formatted.some((movie) => movie.id === selectedMovieId)) {
-          setSelectedMovieId(formatted[0].id);
-          setCurrentMovieDetails(null);
-        }
+        setSearchResults(formatted);
       } catch (error) {
         console.error(error);
       } finally {
@@ -146,7 +140,18 @@ export default function App() {
         const detailData = await getMovieDetails(selectedMovieId);
         const trailerData = await getMovieTrailer(selectedMovieId).catch(() => ({ key: undefined }));
         const watchProviders = await getWatchProviders(selectedMovieId).catch(() => ({ providers: [] }));
+        const imagesData = await getMovieImages(selectedMovieId).catch(() => ({ backdrops: [], posters: [] }));
+
+        const bestImage = imagesData?.backdrops?.[0]?.file_path
+          ? `https://image.tmdb.org/t/p/w780${imagesData.backdrops[0].file_path}`
+          : imagesData?.posters?.[0]?.file_path
+          ? `https://image.tmdb.org/t/p/w500${imagesData.posters[0].file_path}`
+          : undefined;
+
         const detailMovie = formatDetailMovie(detailData, trailerData?.key, watchProviders?.providers);
+        if (bestImage) {
+          detailMovie.stillUrl = bestImage;
+        }
         setCurrentMovieDetails(detailMovie);
       } catch (error) {
         console.error(error);
@@ -158,16 +163,21 @@ export default function App() {
     if (shouldFetchDetail || !currentMovieDetails || currentMovieDetails.id !== selectedMovieId) {
       loadDetails();
     }
-  }, [selectedMovieId, movies]);
+  }, [selectedMovieId]);
 
-  const currentMovie = currentMovieDetails?.id === selectedMovieId ? currentMovieDetails : movies.find((m) => m.id === selectedMovieId) || movies[0] || null;
+  const currentMovie = selectedMovieId
+    ? (currentMovieDetails?.id === selectedMovieId ? currentMovieDetails : movies.find((m) => m.id === selectedMovieId) || null)
+    : null;
 
   const handleSelectMovie = (movie: Movie) => {
+    if (!movies.some(m => m.id === movie.id)) {
+      setMovies(prev => [movie, ...prev]);
+    }
     setSelectedMovieId(movie.id);
+    setCurrentMovieDetails(null);
     const url = new URL(window.location.href);
     url.searchParams.set('movie', movie.id);
     window.history.replaceState({}, '', url.pathname + url.search);
-    setCurrentMovieDetails(null);
   };
 
   const handleSearch = (query: string) => {
@@ -249,6 +259,7 @@ export default function App() {
       {/* Header with Search and Filter capabilities */}
       <Header
         movies={movies}
+        searchResults={searchResults}
         selectedMovie={currentMovie || { id: '', title: '', description: '', year: 0, duration: '', rating: '', certificateDetails: '', posterUrl: '', trailerThumbUrl: '', categories: [], imdbRating: '0.0/10', rottenTomatoesRating: '0% Fresh', rewatchValue: 0, streamProviders: [], reviews: [], stillUrl: '' }}
         onSelectMovie={handleSelectMovie}
         activeView={activeView}
@@ -323,8 +334,18 @@ export default function App() {
                     onScrollToRateInput={handleScrollToRate}
                   />
                 </>
+              ) : selectedMovieId ? (
+                <div className="py-24 text-center text-slate-300">Loading movie details...</div>
               ) : (
-                <div className="py-20 text-center text-white">Loading movie details...</div>
+                <div className="py-24 text-center text-slate-300 flex flex-col items-center justify-center gap-4">
+                  <p className="text-lg font-medium">Select a movie from the Home page or Search to view details.</p>
+                  <a
+                    href="../home/"
+                    className="px-6 py-2.5 rounded-full bg-[#4df2d6] text-[#03080c] text-sm font-semibold hover:bg-[#3dd9c8] transition-colors"
+                  >
+                    Go to Home Page
+                  </a>
+                </div>
               )}
             </motion.div>
           )}

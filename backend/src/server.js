@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const movieRoutes = require("./routes/movieRoutes");
+const authRoutes = require("./routes/authRoutes");
 const requestLogger = require("./middleware/requestLogger");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -12,8 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 
-// Register movie routes
+// Register routes
 app.use("/movies", movieRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.json({
@@ -25,7 +27,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ThumbsUp, Plus, Check, Play, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Movie } from '../types';
+import { getMovieCast, getRecommendations } from '../services/api';
 
 const CineListIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -43,6 +44,40 @@ export default function MovieDetail({
 }: MovieDetailProps) {
   const [hasLiked, setHasLiked] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [castList, setCastList] = useState<Array<{ id: number; name: string; character: string; profile_path: string | null }>>([]);
+  const [recommendationsList, setRecommendationsList] = useState<Array<{ id: string; title: string; posterUrl: string; rating?: string }>>([]);
+
+  useEffect(() => {
+    if (!movie.id) return;
+    const fetchCastAndRecs = async () => {
+      try {
+        const numId = Number(movie.id);
+        if (!isNaN(numId)) {
+          const res = await getMovieCast(numId);
+          if (Array.isArray(res?.cast)) {
+            setCastList(res.cast.slice(0, 10));
+          }
+          try {
+            const recRes = await getRecommendations(numId);
+            if (Array.isArray(recRes?.results)) {
+              const formattedRecs = recRes.results.slice(0, 5).map((m: any) => ({
+                id: String(m.id),
+                title: m.title || m.name || "Untitled",
+                posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : m.backdrop_path ? `https://image.tmdb.org/t/p/w780${m.backdrop_path}` : '',
+                rating: m.vote_average ? `${m.vote_average.toFixed(1)}/10` : undefined,
+              }));
+              setRecommendationsList(formattedRecs);
+            }
+          } catch (err) {
+            console.error("Failed to load recommendations:", err);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load movie cast:", err);
+      }
+    };
+    fetchCastAndRecs();
+  }, [movie.id]);
 
   // 3D Parallax Tilt state
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -326,37 +361,88 @@ export default function MovieDetail({
 
       </div>
 
-      {/* TRAILER MODAL IF PLAYED */}
+      {/* TOP CAST SECTION */}
+      {castList.length > 0 && (
+        <div className="mt-10 border-t border-[#112332]/50 pt-8">
+          <h3 className="font-share text-xl md:text-2xl font-bold text-white mb-6 select-none">
+            Top Cast:
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {castList.map((member) => (
+              <div key={member.id} className="flex flex-col items-center text-center p-3.5 rounded-2xl border border-[#112332] bg-[#071118] gap-2.5 hover:border-teal-500/40 transition-colors">
+                <div className="h-16 w-16 overflow-hidden rounded-full border border-teal-500/30 bg-slate-900 shadow-md">
+                  <img
+                    src={member.profile_path ? `https://image.tmdb.org/t/p/w185${member.profile_path}` : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop'}
+                    alt={member.name}
+                    referrerPolicy="no-referrer"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <div className="font-bold text-slate-100 text-xs leading-tight">{member.name}</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">{member.character}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* RECOMMENDATIONS SECTION */}
+      {recommendationsList.length > 0 && (
+        <div className="mt-10 border-t border-[#112332]/50 pt-8">
+          <h3 className="font-share text-xl md:text-2xl font-bold text-white mb-6 select-none">
+            Recommended Movies:
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {recommendationsList.map((rec) => (
+              <div key={rec.id} className="flex flex-col rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group hover:border-teal-500/40 transition-colors">
+                <div className="aspect-[2/3] w-full overflow-hidden bg-slate-900">
+                  <img
+                    src={rec.posterUrl || 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=400&auto=format&fit=crop'}
+                    alt={rec.title}
+                    referrerPolicy="no-referrer"
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-3 flex flex-col gap-1">
+                  <div className="font-bold text-slate-100 text-xs leading-tight line-clamp-1">{rec.title}</div>
+                  {rec.rating && (
+                    <div className="text-[10px] font-mono text-[#4df2d6]">{rec.rating}</div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {showVideo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm animate-fade-in">
           <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl">
             {/* Close button */}
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80"
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80 cursor-pointer"
             >
               <X size={20} />
             </button>
             
-            {/* Simulated Video Player */}
-            <div className="aspect-video w-full flex flex-col items-center justify-center p-8 bg-slate-950 text-center gap-4">
-              <div className="animate-pulse flex flex-col items-center gap-3">
-                <Play size={48} className="text-[#4df2d6]" />
-                <p className="text-slate-400 font-mono text-sm">LOADING STREAM FOR {movie.title.toUpperCase()} OFFICIAL TRAILER...</p>
-              </div>
-              
-              {/* Mini Interactive controls */}
-              <div className="mt-8 border border-teal-950 bg-teal-950/10 rounded-xl p-4 max-w-md">
-                <p className="text-xs text-slate-400 italic">
-                  "Southern Gothic ambiance score playing... Twin brothers return. Shadows moving in the forest..."
-                </p>
-                <button 
-                  onClick={() => setShowVideo(false)}
-                  className="mt-4 px-4 py-1.5 text-xs font-semibold bg-[#4df2d6] text-[#03080c] rounded-full hover:opacity-90"
-                >
-                  Close Player
-                </button>
-              </div>
+            {/* Official YouTube Trailer Player */}
+            <div className="aspect-video w-full bg-black">
+              {movie.trailerKey ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${movie.trailerKey}?autoplay=1`}
+                  title={`${movie.title} Official Trailer`}
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="aspect-video w-full flex flex-col items-center justify-center p-8 bg-slate-950 text-center gap-4">
+                  <Play size={48} className="text-[#4df2d6]" />
+                  <p className="text-slate-400 font-mono text-sm">TRAILER NOT AVAILABLE FOR {movie.title.toUpperCase()}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

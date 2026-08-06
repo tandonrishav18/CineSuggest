@@ -1,4 +1,6 @@
-const API_BASE = "http://localhost:4000";
+const API_BASE = typeof window !== "undefined" 
+  ? `http://${window.location.hostname || "127.0.0.1"}:4000` 
+  : "http://127.0.0.1:4000";
 
 async function request(path: string) {
   const response = await fetch(`${API_BASE}${path}`);
@@ -26,4 +28,16 @@ export async function getMovieTrailer(id: string) {
 
 export async function getWatchProviders(id: string) {
   return request(`/movies/${id}/watch-providers`);
+}
+
+export async function getMovieCast(id: number | string) {
+  return request(`/movies/${id}/cast`);
+}
+
+export async function getMovieImages(id: number | string) {
+  return request(`/movies/${id}/images`);
+}
+
+export async function getRecommendations(id: number | string) {
+  return request(`/movies/${id}/recommendations`);
 }

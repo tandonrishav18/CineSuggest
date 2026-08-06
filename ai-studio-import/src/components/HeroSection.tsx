@@ -4,6 +4,12 @@ import React, { useState, useEffect } from "react";
 
 interface HeroSectionProps {
   onStartExploring: () => void;
+  movies?: Array<{
+    id: string;
+    title: string;
+    posterUrl: string;
+    backdropUrl?: string;
+  }>;
 }
 
 interface Movie {
@@ -192,13 +198,54 @@ const MASTER_MOVIES: Movie[] = [
   }
 ];
 
-export default function HeroSection({ onStartExploring }: HeroSectionProps) {
-  // Populates the 9 visual slots on our layout board
+export default function HeroSection({ onStartExploring, movies = [] }: HeroSectionProps) {
   const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => MASTER_MOVIES.slice(0, 9));
+
+  useEffect(() => {
+    if (movies && movies.length > 0) {
+      const heroList: Movie[] = movies.map((m) => ({
+        id: m.id,
+        title: m.title,
+        url: m.posterUrl || m.backdropUrl || "",
+        watermark: (
+          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/50">
+            <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
+              TRENDING
+            </div>
+            <div className="text-center my-auto flex flex-col items-center px-1">
+              <span className="font-display font-bold text-xs tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] line-clamp-2 uppercase">
+                {m.title}
+              </span>
+            </div>
+          </div>
+        )
+      }));
+      setCurrentMovies(heroList.slice(0, 9));
+    }
+  }, [movies]);
 
   // Gently transitions and shuffles active movies on the slots over time
   useEffect(() => {
-    // Shuffling is set up but with exactly 9 items on the board, it remains stable matching the mockup design
+    const sourcePool = movies && movies.length >= 9
+      ? movies.map((m) => ({
+          id: m.id,
+          title: m.title,
+          url: m.posterUrl || m.backdropUrl || "",
+          watermark: (
+            <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/50">
+              <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
+                TRENDING
+              </div>
+              <div className="text-center my-auto flex flex-col items-center px-1">
+                <span className="font-display font-bold text-xs tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] line-clamp-2 uppercase">
+                  {m.title}
+                </span>
+              </div>
+            </div>
+          )
+        }))
+      : MASTER_MOVIES;
+
     const interval = setInterval(() => {
       const slotsToSwap: number[] = [];
       while (slotsToSwap.length < 3) {
@@ -210,7 +257,7 @@ export default function HeroSection({ onStartExploring }: HeroSectionProps) {
       
       setCurrentMovies((prevMovies) => {
         const activeIds = new Set(prevMovies.map(m => m.id));
-        const inactiveMovies = MASTER_MOVIES.filter(m => !activeIds.has(m.id));
+        const inactiveMovies = sourcePool.filter(m => !activeIds.has(m.id));
         
         if (inactiveMovies.length < 3) return prevMovies;
         
@@ -232,7 +279,7 @@ export default function HeroSection({ onStartExploring }: HeroSectionProps) {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [movies]);
 
   return (
     <section 
