@@ -33,6 +33,7 @@ interface MovieDetailProps {
   onScrollToRate: () => void;
   onToggleCineList: (movieId: string) => void;
   isInCineList: boolean;
+  onSelectMovie?: (movie: Movie) => void;
 }
 
 export default function MovieDetail({
@@ -41,6 +42,7 @@ export default function MovieDetail({
   onScrollToRate,
   onToggleCineList,
   isInCineList,
+  onSelectMovie,
 }: MovieDetailProps) {
   const [hasLiked, setHasLiked] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -396,7 +398,33 @@ export default function MovieDetail({
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {recommendationsList.map((rec) => (
-              <div key={rec.id} className="flex flex-col rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group hover:border-teal-500/40 transition-colors">
+              <div 
+                key={rec.id} 
+                onClick={() => {
+                  if (onSelectMovie) {
+                    onSelectMovie({
+                      id: rec.id,
+                      title: rec.title,
+                      description: '',
+                      year: 0,
+                      duration: '',
+                      rating: '',
+                      certificateDetails: '',
+                      posterUrl: rec.posterUrl,
+                      trailerThumbUrl: '',
+                      categories: [],
+                      imdbRating: rec.rating || '0.0/10',
+                      rottenTomatoesRating: '0% Fresh',
+                      rewatchValue: 0,
+                      streamProviders: [],
+                      reviews: [],
+                      stillUrl: ''
+                    });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="flex flex-col rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group hover:border-teal-500/40 cursor-pointer transition-all duration-300 hover:scale-[1.03] shadow-md"
+              >
                 <div className="aspect-[2/3] w-full overflow-hidden bg-slate-900">
                   <img
                     src={rec.posterUrl || 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=400&auto=format&fit=crop'}

@@ -6,9 +6,22 @@ interface WhereToWatchProps {
   movie: Movie;
 }
 
+const DEFAULT_STREAM_PROVIDERS: StreamProvider[] = [
+  { name: 'Jio Hotstar', logo: '', watchUrl: '#watch-jio-hotstar' },
+  { name: 'Netflix', logo: '', watchUrl: '#watch-netflix' },
+  { name: 'Amazon Prime Video', logo: '', watchUrl: '#watch-amazon-prime-video' },
+  { name: 'Youtube', logo: '', watchUrl: '#watch-youtube', priceText: 'Rent From Rs. 120' },
+];
+
 export default function WhereToWatch({ movie }: WhereToWatchProps) {
   const isNosferatu = movie.id === 'nosferatu';
   
+  const providers = movie.streamProviders && movie.streamProviders.length > 0
+    ? movie.streamProviders
+    : DEFAULT_STREAM_PROVIDERS;
+
+  const stillImage = movie.stillUrl || movie.trailerThumbUrl || movie.posterUrl || 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=1200&q=80';
+
   // Custom SVG Vector Logos for crisp, authentic, matching rendering
   const renderProviderLogo = (name: string) => {
     switch (name.toLowerCase()) {
@@ -99,9 +112,9 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
   };
 
   // Safe image loading via weserv image proxy to bypass hotlinking protections
-  const proxiedImageUrl = movie.stillUrl.startsWith('http')
-    ? `https://images.weserv.nl/?url=${encodeURIComponent(movie.stillUrl)}`
-    : movie.stillUrl;
+  const proxiedImageUrl = stillImage.startsWith('http')
+    ? `https://images.weserv.nl/?url=${encodeURIComponent(stillImage)}`
+    : stillImage;
 
   const listContainerVariants = {
     hidden: { opacity: 0 },
@@ -122,10 +135,6 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
       transition: { type: 'spring' as const, stiffness: 100, damping: 15 } 
     }
   };
-
-  if (!movie.streamProviders || movie.streamProviders.length === 0) {
-    return null;
-  }
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 md:px-8 mt-4">
@@ -161,7 +170,7 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
             initial="hidden"
             animate="show"
           >
-            {movie.streamProviders.map((provider) => (
+            {providers.map((provider) => (
               <motion.div 
                 key={provider.name} 
                 variants={itemVariants}

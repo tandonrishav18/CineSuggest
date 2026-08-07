@@ -208,14 +208,9 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
         title: m.title,
         url: m.posterUrl || m.backdropUrl || "",
         watermark: (
-          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/50">
+          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
             <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
               TRENDING
-            </div>
-            <div className="text-center my-auto flex flex-col items-center px-1">
-              <span className="font-display font-bold text-xs tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] line-clamp-2 uppercase">
-                {m.title}
-              </span>
             </div>
           </div>
         )
@@ -232,14 +227,9 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
           title: m.title,
           url: m.posterUrl || m.backdropUrl || "",
           watermark: (
-            <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/50">
+            <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
               <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
                 TRENDING
-              </div>
-              <div className="text-center my-auto flex flex-col items-center px-1">
-                <span className="font-display font-bold text-xs tracking-wider text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] line-clamp-2 uppercase">
-                  {m.title}
-                </span>
               </div>
             </div>
           )

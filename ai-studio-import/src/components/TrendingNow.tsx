@@ -181,13 +181,7 @@ function renderMoviePosterWatermark(movieId: string, title: string) {
         </div>
       );
     default:
-      return (
-        <div className="absolute inset-0 flex flex-col justify-end p-2 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-transparent">
-          <span className="font-sans font-bold text-[10px] tracking-wider text-white drop-shadow-md uppercase truncate">
-            {title}
-          </span>
-        </div>
-      );
+      return null;
   }
 }
 

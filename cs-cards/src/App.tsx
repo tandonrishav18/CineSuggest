@@ -10,14 +10,23 @@ import CommunityReviews from './components/CommunityReviews';
 import Footer from './components/Footer';
 import CineList from './components/CineList';
 
+const DEFAULT_PROVIDERS: StreamProvider[] = [
+  { name: 'Jio Hotstar', logo: '', watchUrl: '#watch-jio-hotstar' },
+  { name: 'Netflix', logo: '', watchUrl: '#watch-netflix' },
+  { name: 'Amazon Prime Video', logo: '', watchUrl: '#watch-amazon-prime-video' },
+  { name: 'Youtube', logo: '', watchUrl: '#watch-youtube', priceText: 'Rent From Rs. 120' },
+];
+
 const createWatchProviders = (providers: Array<any>): StreamProvider[] => {
-  if (!Array.isArray(providers)) return [];
+  if (!Array.isArray(providers) || providers.length === 0) {
+    return DEFAULT_PROVIDERS;
+  }
   return providers.map((provider) => ({
-    name: provider.provider_name || provider.provider_name || 'Unknown',
+    name: provider.provider_name || 'Unknown',
     logo: provider.logo_path
       ? `https://image.tmdb.org/t/p/w92${provider.logo_path}`
       : '',
-    watchUrl: '#watch-' + String(provider.provider_name || provider.provider_name || 'provider').toLowerCase().replace(/\s+/g, '-'),
+    watchUrl: '#watch-' + String(provider.provider_name || 'provider').toLowerCase().replace(/\s+/g, '-'),
     priceText: provider.display_priority ? '' : undefined,
   }));
 };
@@ -317,6 +326,7 @@ export default function App() {
                     onScrollToRate={handleScrollToRate}
                     onToggleCineList={handleToggleCineList}
                     isInCineList={cineList.includes(currentMovie.id)}
+                    onSelectMovie={handleSelectMovie}
                   />
 
                   <WhereToWatch movie={currentMovie} />
