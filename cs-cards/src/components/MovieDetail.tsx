@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ThumbsUp, Plus, Check, Play, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Movie } from '../types';
-import { getMovieCast, getRecommendations } from '../services/api';
+import { getMovieCast, getRecommendations, getMovieImages } from '../services/api';
 
 const CineListIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -48,10 +48,11 @@ export default function MovieDetail({
   const [showVideo, setShowVideo] = useState(false);
   const [castList, setCastList] = useState<Array<{ id: number; name: string; character: string; profile_path: string | null }>>([]);
   const [recommendationsList, setRecommendationsList] = useState<Array<{ id: string; title: string; posterUrl: string; rating?: string }>>([]);
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (!movie.id) return;
-    const fetchCastAndRecs = async () => {
+    const fetchMovieData = async () => {
       try {
         const numId = Number(movie.id);
         if (!isNaN(numId)) {
@@ -73,13 +74,30 @@ export default function MovieDetail({
           } catch (err) {
             console.error("Failed to load recommendations:", err);
           }
+          try {
+            const imgRes = await getMovieImages(numId);
+            if (imgRes && Array.isArray(imgRes.backdrops) && imgRes.backdrops.length > 0) {
+              const fetchedStills = imgRes.backdrops.slice(0, 5).map((b: any) => `https://image.tmdb.org/t/p/w500${b.file_path}`);
+              setGalleryImages(fetchedStills);
+            } else {
+              setGalleryImages([]);
+            }
+          } catch (err) {
+            console.error("Failed to load movie images:", err);
+          }
         }
       } catch (err) {
         console.error("Failed to load movie cast:", err);
       }
     };
-    fetchCastAndRecs();
+    fetchMovieData();
   }, [movie.id]);
+
+  const displayGalleryImages = [
+    galleryImages[0] || movie.stillUrl || movie.trailerThumbUrl || movie.posterUrl,
+    galleryImages[1] || movie.trailerThumbUrl || movie.posterUrl || movie.stillUrl,
+    galleryImages[2] || movie.posterUrl || movie.stillUrl || movie.trailerThumbUrl,
+  ];
 
   // 3D Parallax Tilt state
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -190,6 +208,25 @@ export default function MovieDetail({
           <p className="text-slate-300 text-sm md:text-base leading-relaxed tracking-normal max-w-md">
             {movie.description}
           </p>
+
+          {/* Three Images in Square Curved Boxes */}
+          <div className="grid grid-cols-3 gap-3.5 mt-1 max-w-md">
+            {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
+              <motion.div 
+                key={idx}
+                className="aspect-square w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <img
+                  src={imgUrl}
+                  alt={`${movie.title} screenshot ${idx + 1}`}
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* RIGHT COLUMN: Trailer, Title details, Ratings (Spans 7 cols on lg) */}

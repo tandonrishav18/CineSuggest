@@ -225,3 +225,13 @@ exports.getRecommendations = async (id) => {
   }
 };
 
+exports.getMovieImages = async (id) => {
+  try {
+    const response = await tmdb.get(`/movie/${id}/images`);
+    return response.data;
+  } catch (error) {
+    console.warn(`TMDB API failed for images ${id}:`, error.message);
+    return { backdrops: [], posters: [] };
+  }
+};
+
