@@ -22,86 +22,93 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
 
   const stillImage = movie.stillUrl || movie.trailerThumbUrl || movie.posterUrl || 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=1200&q=80';
 
-  // Custom SVG Vector Logos matching official app icons
+  // Custom SVG Vector Logos for crisp, authentic, matching rendering
   const renderProviderLogo = (name: string) => {
-    const n = name.toLowerCase();
-
-    // NETFLIX: Black rounded icon with red N logo
-    if (n.includes('netflix')) {
-      return (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-black border border-neutral-800 shadow-md">
-          <svg viewBox="0 0 24 30" className="h-6 w-5">
-            <path d="M 4 2 L 8.5 2 L 8.5 28 L 4 28 Z" fill="#E50914" />
-            <path d="M 15.5 2 L 20 2 L 20 28 L 15.5 28 Z" fill="#E50914" />
-            <path d="M 4 2 L 9.5 2 L 20 28 L 14.5 28 Z" fill="#B81D24" />
-            <path d="M 4 2 L 8.5 2 L 20 28 L 15.5 28 Z" fill="#E50914" />
-          </svg>
-        </div>
-      );
+    switch (name.toLowerCase()) {
+      case 'jio hotstar':
+        return (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#0b0c16] via-[#101438] to-[#1a1c62] border border-[#1f286f] shadow-lg">
+            <svg viewBox="0 0 100 100" className="h-7 w-7">
+              <defs>
+                <radialGradient id="hotstar-sun" cx="0" cy="0" r="40" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="25%" stopColor="#ffea00" />
+                  <stop offset="60%" stopColor="#ff007c" />
+                  <stop offset="100%" stopColor="#181145" />
+                </radialGradient>
+              </defs>
+              <g transform="translate(50,50)">
+                {/* Glowing background inside translated group */}
+                <circle cx="0" cy="0" r="45" fill="url(#hotstar-sun)" opacity="0.25" />
+                
+                {/* Primary Radiating Spikes */}
+                {Array.from({ length: 8 }).map((_, i) => {
+                  const angle = (i * 360) / 8;
+                  return (
+                    <path
+                      key={i}
+                      d="M0,0 L4,-32 L0,-40 L-4,-32 Z"
+                      fill="url(#hotstar-sun)"
+                      transform={`rotate(${angle})`}
+                    />
+                  );
+                })}
+                {/* Secondary Radiating Spikes */}
+                {Array.from({ length: 8 }).map((_, i) => {
+                  const angle = (i * 360) / 8 + 22.5;
+                  return (
+                    <path
+                      key={i}
+                      d="M0,0 L2.5,-20 L0,-26 L-2.5,-20 Z"
+                      fill="url(#hotstar-sun)"
+                      transform={`rotate(${angle})`}
+                    />
+                  );
+                })}
+                {/* White Center Star */}
+                <circle cx="0" cy="0" r="7" fill="#ffffff" />
+              </g>
+            </svg>
+          </div>
+        );
+      case 'netflix':
+        return (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white shadow-md">
+            <svg viewBox="0 0 24 30" className="h-6 w-5">
+              {/* Left pillar */}
+              <path d="M 4 2 L 8 2 L 8 28 L 4 28 Z" fill="#E50914" />
+              {/* Right pillar */}
+              <path d="M 16 2 L 20 2 L 20 28 L 16 28 Z" fill="#E50914" />
+              {/* Middle diagonal with shadow folder depth */}
+              <path d="M 4 2 L 10 2 L 20 28 L 16 28 Z" fill="#B81D24" />
+            </svg>
+          </div>
+        );
+      case 'amazon prime video':
+        return (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#00a8e1] shadow-md">
+            <svg viewBox="0 0 48 48" className="h-6 w-6" fill="none">
+              <path d="M6 32c8 8 24 8 32 0" stroke="white" strokeWidth="4.5" strokeLinecap="round" />
+              <path d="M32 28l6 4-2-7" stroke="white" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="7" y="21" fill="white" fontSize="11" fontWeight="900" fontFamily="sans-serif">prime</text>
+            </svg>
+          </div>
+        );
+      case 'youtube':
+        return (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#ff0000] shadow-md">
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        );
+      default:
+        return (
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0a1217] text-slate-400 border border-[#112332]">
+            🍿
+          </div>
+        );
     }
-
-    // JIO HOTSTAR / DISNEY+ HOTSTAR: Dark blue gradient with yellow-pink-blue starburst
-    if (n.includes('hotstar') || n.includes('disney')) {
-      return (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#020514] via-[#0b1442] to-[#162775] border border-[#1f286f] shadow-lg">
-          <svg viewBox="0 0 100 100" className="h-7 w-7">
-            <defs>
-              <radialGradient id="hotstar-burst" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="30%" stopColor="#ffeb3b" />
-                <stop offset="70%" stopColor="#e91e63" />
-                <stop offset="100%" stopColor="#1565c0" />
-              </radialGradient>
-            </defs>
-            <g transform="translate(50,50)">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <path
-                  key={i}
-                  d="M0,0 L3.5,-30 L0,-38 L-3.5,-30 Z"
-                  fill="url(#hotstar-burst)"
-                  transform={`rotate(${i * 30})`}
-                />
-              ))}
-              <circle cx="0" cy="0" r="7" fill="#ffffff" />
-            </g>
-          </svg>
-        </div>
-      );
-    }
-
-    // AMAZON PRIME VIDEO: Deep royal blue rounded icon with white Prime Video & smile arrow logo
-    if (n.includes('prime') || n.includes('amazon')) {
-      return (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#00A8E1] shadow-md">
-          <svg viewBox="0 0 50 50" className="h-7 w-7" fill="none">
-            {/* prime text */}
-            <text x="5" y="24" fill="white" fontSize="13" fontWeight="900" fontFamily="sans-serif">prime</text>
-            <text x="5" y="34" fill="white" fontSize="9" fontWeight="700" fontFamily="sans-serif">video</text>
-            {/* Smile Arrow Curve */}
-            <path d="M 6 38 C 18 45 34 44 43 36" stroke="white" strokeWidth="3" strokeLinecap="round" />
-            <path d="M 39 33 L 44 36 L 40 40 Z" fill="white" />
-          </svg>
-        </div>
-      );
-    }
-
-    // YOUTUBE: Bright red rounded icon with white play triangle
-    if (n.includes('youtube')) {
-      return (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FF0000] shadow-md">
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="white">
-            <path d="M21.58 7.19a2.71 2.71 0 0 0-1.9-1.92C17.99 4.75 12 4.75 12 4.75s-5.99 0-7.68.52a2.71 2.71 0 0 0-1.9 1.92C2 8.89 2 12 2 12s0 3.11.42 4.81a2.71 2.71 0 0 0 1.9 1.92c1.69.52 7.68.52 7.68.52s5.99 0 7.68-.52a2.71 2.71 0 0 0 1.9-1.92C22 15.11 22 12 22 12s0-3.11-.42-4.81z" fill="#FF0000" />
-            <path d="M10 15l5-3-5-3v6z" fill="white" />
-          </svg>
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0a1217] text-slate-400 border border-[#112332]">
-        🍿
-      </div>
-    );
   };
 
   // Safe image loading via weserv image proxy to bypass hotlinking protections
@@ -178,7 +185,16 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
                       rotate: { type: "keyframes", duration: 0.35, ease: "easeInOut" }
                     }}
                   >
-                    {renderProviderLogo(provider.name)}
+                    {provider.logo && provider.logo.startsWith('http') ? (
+                      <img
+                        src={provider.logo}
+                        alt={provider.name}
+                        referrerPolicy="no-referrer"
+                        className="h-11 w-11 shrink-0 rounded-full object-cover border border-[#112332] shadow-lg"
+                      />
+                    ) : (
+                      renderProviderLogo(provider.name)
+                    )}
                   </motion.div>
                   <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#4df2d6] transition-colors duration-300">
                     {provider.name}

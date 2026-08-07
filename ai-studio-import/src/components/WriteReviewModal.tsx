@@ -19,9 +19,8 @@ const GRADIENTS = [
 ];
 
 export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies }: WriteReviewModalProps) {
-  const [selectedMovie, setSelectedMovie] = useState(() => movies[0]?.title ?? "");
-  const [customMovie, setCustomMovie] = useState("");
-  const [useCustomMovie, setUseCustomMovie] = useState(false);
+  const [movieSearchQuery, setMovieSearchQuery] = useState(() => movies[0]?.title ?? "");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [authorName, setAuthorName] = useState("");
@@ -29,16 +28,20 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
   const [selectedGradient, setSelectedGradient] = useState(GRADIENTS[0]);
 
   useEffect(() => {
-    if (!selectedMovie && movies.length > 0) {
-      setSelectedMovie(movies[0].title);
+    if (!movieSearchQuery && movies.length > 0) {
+      setMovieSearchQuery(movies[0].title);
     }
-  }, [movies, selectedMovie]);
+  }, [movies, movieSearchQuery]);
+
+  const filteredMovies = movies.filter((m) =>
+    m.title.toLowerCase().includes(movieSearchQuery.toLowerCase().trim())
+  );
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
 
-    const finalMovieTitle = useCustomMovie ? (customMovie.trim() || "Untitled Film") : selectedMovie;
+    const finalMovieTitle = movieSearchQuery.trim() || "Untitled Film";
     const finalAuthorName = authorName.trim() || "Anonymous Critic";
 
     const newReview: ReviewItem = {
@@ -55,7 +58,7 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
     // Reset fields
     setContent("");
     setAuthorName("");
-    setCustomMovie("");
+    setMovieSearchQuery(movies[0]?.title ?? "");
     onClose();
   };
 
@@ -119,41 +122,46 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
 
               {/* Movie Selection */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-xs font-mono text-neutral-400 uppercase tracking-wider">
-                    Select Movie / Series
-                  </label>
-                  <button 
-                    type="button"
-                    onClick={() => setUseCustomMovie(!useCustomMovie)}
-                    className="text-xs text-[#36ffdb] hover:underline font-mono focus:outline-none"
-                  >
-                    {useCustomMovie ? "Choose from List" : "Add custom name"}
-                  </button>
-                </div>
-
-                {!useCustomMovie ? (
-                  <select 
-                    value={selectedMovie}
-                    onChange={(e) => setSelectedMovie(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800/80 text-neutral-200 text-sm font-sans outline-none focus:border-[#36ffdb] transition-colors cursor-pointer"
-                  >
-                    {movies.length > 0 ? movies.map((m) => (
-                      <option key={m.id} value={m.title}>{m.title}</option>
-                    )) : (
-                      <option value="" disabled>No movies available</option>
-                    )}
-                  </select>
-                ) : (
+                <label className="block text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
+                  Select Movie / Series
+                </label>
+                <div className="relative">
                   <input 
-                    type="text"
-                    value={customMovie}
-                    onChange={(e) => setCustomMovie(e.target.value)}
-                    placeholder="Enter movie title..."
+                    type="text" 
+                    value={movieSearchQuery}
+                    onChange={(e) => {
+                      setMovieSearchQuery(e.target.value);
+                      setShowSuggestions(true);
+                    }}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => {
+                      setTimeout(() => setShowSuggestions(false), 200);
+                    }}
+                    placeholder="Type movie or series name..." 
                     className="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800/80 text-neutral-200 text-sm font-sans placeholder-neutral-600 outline-none focus:border-[#36ffdb] transition-colors"
                     required
                   />
-                )}
+
+                  {/* Autocomplete Suggestions List */}
+                  {showSuggestions && filteredMovies.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-1.5 max-h-48 overflow-y-auto bg-[#07111a] border border-[#1b3248] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-50 py-1">
+                      {filteredMovies.map((m) => (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            setMovieSearchQuery(m.title);
+                            setShowSuggestions(false);
+                          }}
+                          className="w-full text-left px-4 py-2 text-sm text-neutral-200 hover:bg-[#12263a] hover:text-[#36ffdb] transition-colors cursor-pointer"
+                        >
+                          {m.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Circle Rating Selector */}
