@@ -374,10 +374,10 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
           </AnimatePresence>
         </div>
 
-        {/* Right Column: Grid of 10 Movies */}
+        {/* Right Column: Grid of 9 Movies (5 in top row, 4 in bottom row) */}
         <div className="lg:col-span-7 flex flex-col gap-4">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
-            {movies.slice(0, 10).map((movie) => {
+            {movies.slice(0, 9).map((movie) => {
               const isCurrent = movie.id === currentSelectedMovie.id;
 
               return (

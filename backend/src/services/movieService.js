@@ -66,6 +66,39 @@ const FALLBACK_MOVIES = [
     backdrop_path: "/xOMo8BRK7PfcJv9JCnx7s52SuY.jpg",
     runtime: 166,
     genres: [{ id: 878, name: "Science Fiction" }, { id: 12, name: "Adventure" }]
+  },
+  {
+    id: 1083381,
+    title: "The Backrooms",
+    overview: "A strange doorway appears in the basement of a furniture showroom leading into an endless maze.",
+    release_date: "2026-05-27",
+    vote_average: 7.1,
+    poster_path: "/rhGx6E3qRNMgj3i5su2oukNHwIQ.jpg",
+    backdrop_path: "/dqmMWNWfLnExDRpMtIMqI97GQFR.jpg",
+    runtime: 110,
+    genres: [{ id: 27, name: "Horror" }, { id: 878, name: "Science Fiction" }]
+  },
+  {
+    id: 931285,
+    title: "Mortal Kombat II",
+    overview: "The fan favorite champions are pitted against one another in the ultimate battle.",
+    release_date: "2026-05-06",
+    vote_average: 7.9,
+    poster_path: "/hwRdDFIhaEmpRgoki805YvyyjZf.jpg",
+    backdrop_path: "/4EAAwpylq313qrDqpCxulUrXBNF.jpg",
+    runtime: 115,
+    genres: [{ id: 28, name: "Action" }, { id: 14, name: "Fantasy" }]
+  },
+  {
+    id: 1212763,
+    title: "Sinners",
+    overview: "Two brothers find themselves caught in a terrifying supernatural battle against ancient forces.",
+    release_date: "2026-04-18",
+    vote_average: 8.1,
+    poster_path: "/7JFVcU1uzv9zCfyMzLrsU04t8BU.jpg",
+    backdrop_path: "/biwEwIkjZhMUfXzz59bpeDzwYB6.jpg",
+    runtime: 125,
+    genres: [{ id: 27, name: "Horror" }, { id: 53, name: "Thriller" }]
   }
 ];
 
