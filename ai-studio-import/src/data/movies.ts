@@ -100,6 +100,51 @@ export const TRENDING_MOVIES: Movie[] = [
     rating: "U/A 16+",
     description: "Dhurandhar is an intense, monochromatic neo-noir crime thriller set in the underbelly of a bustling metropolis, exploring a police detective's descent into madness while chasing a clever serial mastermind.",
     wikipediaUrl: "https://en.wikipedia.org/wiki/Neo-noir"
+  },
+  {
+    id: "supergirl",
+    title: "Supergirl",
+    posterUrl: "https://upload.wikimedia.org/wikipedia/en/1/1a/Supergirl_Woman_of_Tomorrow_poster.jpg",
+    backdropUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80",
+    rating: "U/A 13+",
+    description: "When an unexpected and ruthless adversary strikes too close to home, Kara Zor-El, aka Supergirl, reluctantly joins forces with an unlikely companion on an epic, interstellar journey of vengeance and justice.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Supergirl"
+  },
+  {
+    id: "soulm8te",
+    title: "Soulm8te",
+    posterUrl: "https://upload.wikimedia.org/wikipedia/en/b/b5/Soulm8te_poster.jpg",
+    backdropUrl: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+    rating: "A 18+",
+    description: "A grieving engineer attempts to reprogram an artificial intelligence companion to become a truly sentient soulmate, unwittingly unleashing a relentless spree of precision-engineered mayhem.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Artificial_intelligence"
+  },
+  {
+    id: "disclosure-day",
+    title: "Disclosure Day",
+    posterUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Disclosure_Day_poster.jpg",
+    backdropUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    rating: "U/A 13+",
+    description: "A cybersecurity expert becomes a whistleblower after uncovering secrets about alien visitations, putting him on the run from a shadow corporation desperate to keep humanity in the dark.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Unidentified_flying_object"
+  },
+  {
+    id: "interstellar",
+    title: "Interstellar",
+    posterUrl: "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+    backdropUrl: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80",
+    rating: "U/A 13+",
+    description: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Interstellar_(film)"
+  },
+  {
+    id: "inception",
+    title: "Inception",
+    posterUrl: "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+    backdropUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    rating: "U/A 13+",
+    description: "Cobb, a skilled thief who steals corporate secrets through dream-sharing technology, is given the inverse task of planting an idea into the mind of a C.E.O. in exchange for his redemption.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Inception"
   }
 ];
 
