@@ -208,6 +208,25 @@ export default function MovieDetail({
           <p className="text-slate-300 text-sm md:text-base leading-relaxed tracking-normal max-w-md">
             {movie.description}
           </p>
+
+          {/* Three Images in Square Curved Boxes */}
+          <div className="grid grid-cols-3 gap-3.5 mt-1 max-w-md">
+            {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
+              <motion.div 
+                key={idx}
+                className="aspect-square w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <img
+                  src={imgUrl}
+                  alt={`${movie.title} screenshot ${idx + 1}`}
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* RIGHT COLUMN: Trailer, Title details, Ratings (Spans 7 cols on lg) */}
@@ -371,25 +390,7 @@ export default function MovieDetail({
                   </AnimatePresence>
                 </motion.button>
               </div>
-            </div>
 
-            {/* Three Images in Square Curved Boxes in Right Column Blank Space */}
-            <div className="grid grid-cols-3 gap-3.5 pt-4">
-              {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
-                <motion.div 
-                  key={idx}
-                  className="aspect-square w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <img
-                    src={imgUrl}
-                    alt={`${movie.title} screenshot ${idx + 1}`}
-                    referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                </motion.div>
-              ))}
             </div>
 
           </div>
