@@ -192,16 +192,20 @@ interface TrendingNowProps {
   noResultsText?: string;
 }
 
+const DOOMSDAY_SHOWCASE_MOVIE: Movie = {
+  id: "1003596",
+  title: "Avengers: Doomsday",
+  posterUrl: "https://image.tmdb.org/t/p/w500/bh2OuKvq19jBHsloUVCfPSZZw81.jpg",
+  backdropUrl: "https://image.tmdb.org/t/p/w1280/s4v0UX1anfXm0UvloLsTTJ4v222.jpg",
+  rating: "U/A 16+",
+  description: "is an upcoming Marvel Studios superhero film and the sequel to Avengers: Endgame. Directed by Anthony and Joe Russo, the film features Robert Downey Jr. as Doctor Doom, with heroes from the Avengers, Fantastic Four, X-Men, Wakandans, and New Avengers coming together across different universes to confront the powerful threat of Doctor Doom.",
+  wikipediaUrl: "https://en.wikipedia.org/wiki/Avengers:_Doomsday"
+};
+
 export default function TrendingNow({ movies, sectionTitle = "Trending Now", isLoading = false, noResultsText = "No movies are available right now." }: TrendingNowProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isReminded, setIsReminded] = useState<boolean>(false);
-  const [currentSelectedMovie, setCurrentSelectedMovie] = useState<Movie | null>(movies.length > 0 ? movies[0] : null);
-
-  useEffect(() => {
-    if (!currentSelectedMovie && movies.length > 0) {
-      setCurrentSelectedMovie(movies[0]);
-    }
-  }, [movies, currentSelectedMovie]);
+  const currentSelectedMovie = DOOMSDAY_SHOWCASE_MOVIE;
 
   if (!currentSelectedMovie) {
     return (
@@ -360,7 +364,7 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
                   rel="noreferrer"
                   className="text-[#36ffdb] hover:underline inline-flex items-center gap-0.5 ml-1 font-medium group/link"
                 >
-                  Read More in Wikipedia
+                  Read More
                   <ArrowRight className="w-3 h-3 inline transition-transform group-hover/link:translate-x-0.5" />
                 </a>
               </p>

@@ -100,7 +100,7 @@ export default function CineList({
                   damping: 30,
                   opacity: { duration: 0.2 } 
                 }}
-                className="group relative flex items-center justify-between gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-md p-3 md:p-4 hover:border-[#4df2d6]/25 transition-all hover:bg-white/[0.05] cursor-pointer overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]"
+                className="group relative flex items-center justify-between gap-4 rounded-2xl border border-[#4df2d6]/30 bg-[#081522]/60 backdrop-blur-md p-3 md:p-4 hover:border-[#4df2d6]/60 transition-all hover:bg-[#0c1f30]/80 cursor-pointer overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
                 onClick={() => onSelectMovie(movie)}
               >
                 {/* Subtle soft-glow light-leak inside hovered item */}

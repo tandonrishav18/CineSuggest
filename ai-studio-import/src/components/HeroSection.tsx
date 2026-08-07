@@ -41,157 +41,125 @@ const SLOTS: SlotConfig[] = [
 
 const MASTER_MOVIES: Movie[] = [
   {
-    id: "oblivion",
-    title: "Oblivion",
-    url: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=400&q=80",
+    id: "spider-man",
+    title: "Spider-Man: Brand New Day",
+    url: "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/30 to-black/40">
-        <div className="text-[5px] font-mono tracking-widest text-neutral-400 text-center uppercase font-semibold">
-          A FILM BY JOSEPH KOSINSKI
-        </div>
-        <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-base tracking-wider text-[#3dd9c8] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">OBLIVION</span>
-          <span className="text-[5px] font-sans text-neutral-400 tracking-[0.2em] font-medium uppercase mt-0.5">TOM CRUISE</span>
-        </div>
-        <div className="text-[7px] font-mono tracking-[0.3em] text-[#3dd9c8] text-center font-bold">
-          APRIL
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "avengers-endgame",
-    title: "Avengers: Endgame",
-    url: "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/40">
-        <div className="text-[5px] font-mono tracking-widest text-red-500 text-center uppercase font-bold">
+        <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
           MARVEL STUDIOS
         </div>
         <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-black text-xs tracking-wide text-red-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-none italic font-sans">AVENGERS</span>
-          <span className="text-[6px] font-sans text-sky-400 tracking-wider font-extrabold uppercase mt-0.5">ENDGAME</span>
-        </div>
-        <div className="text-[7px] font-mono tracking-[0.3em] text-neutral-400 text-center font-bold">
-          APRIL 26
+          <span className="font-display font-bold text-xs tracking-wider text-red-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">SPIDER-MAN</span>
+          <span className="text-[5px] font-sans text-neutral-400 tracking-[0.2em] font-medium uppercase mt-0.5">BRAND NEW DAY</span>
         </div>
       </div>
     )
   },
   {
-    id: "stranger-things",
-    title: "Stranger Things 5",
-    url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-4 py-6 select-none pointer-events-none z-10 bg-gradient-to-t from-red-950/95 via-transparent to-neutral-950/60">
-        <div className="text-[7px] font-mono tracking-[0.35em] text-red-500 text-center uppercase font-bold">
-          A NETFLIX ORIGINAL SERIES
-        </div>
-        <div className="my-auto flex flex-col items-center">
-          <span className="font-display font-black text-3xl tracking-[0.15em] text-red-600 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">STRANGER THINGS</span>
-          <span className="font-display font-black text-5xl text-red-700 mt-2">5</span>
-        </div>
-        <div className="text-[7px] font-sans text-neutral-400 tracking-[0.25em] font-medium uppercase text-center mt-1">
-          ONE SUMMER CAN CHANGE EVERYTHING
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "project-hail-mary",
-    title: "Project Hail Mary",
-    url: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-amber-950/90 via-transparent to-black/30">
-        <div className="text-[5px] font-mono tracking-widest text-amber-500 text-center uppercase font-bold">
-          RYAN GOSLING
-        </div>
-        <div className="text-center mt-auto flex flex-col items-center pb-2">
-          <span className="font-display font-light text-[8px] tracking-wider text-white">PROJECT</span>
-          <span className="font-display font-bold text-xs tracking-widest text-amber-500">HAIL MARY</span>
-          <span className="text-[5px] font-mono text-neutral-400 tracking-wider uppercase mt-1">03.20.26</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "raees",
-    title: "Raees",
+    id: "the-odyssey",
+    title: "The Odyssey",
     url: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&w=400&q=80",
     watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-blue-950/95 via-transparent to-black/30">
-        <div className="text-[5px] font-mono tracking-widest text-neutral-400 text-center uppercase font-bold">
-          SHAH RUKH KHAN
+      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/40">
+        <div className="text-[5px] font-mono tracking-widest text-amber-500 text-center uppercase font-bold">
+          WARNER BROS
+        </div>
+        <div className="text-center my-auto flex flex-col items-center">
+          <span className="font-display font-black text-xs tracking-wide text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-none font-sans">THE ODYSSEY</span>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: "the-last-house",
+    title: "The Last House",
+    url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+    watermark: (
+      <div className="absolute inset-0 flex flex-col justify-between p-4 py-6 select-none pointer-events-none z-10 bg-gradient-to-t from-black/95 via-transparent to-black/60">
+        <div className="text-[7px] font-mono tracking-[0.35em] text-neutral-400 text-center uppercase font-bold">
+          CINEMA ORIGINAL
+        </div>
+        <div className="my-auto flex flex-col items-center">
+          <span className="font-display font-black text-2xl tracking-[0.15em] text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">THE LAST HOUSE</span>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: "evil-dead-burn",
+    title: "Evil Dead Burn",
+    url: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=400&q=80",
+    watermark: (
+      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-red-950/90 via-transparent to-black/30">
+        <div className="text-[5px] font-mono tracking-widest text-red-500 text-center uppercase font-bold">
+          HORROR NIGHTS
         </div>
         <div className="text-center mt-auto flex flex-col items-center pb-2">
-          <span className="font-display font-black text-xs tracking-widest text-white italic">RAEES</span>
-          <span className="text-[4px] font-mono text-amber-400 tracking-wider uppercase mt-0.5">7 DAYS TO RAEES</span>
+          <span className="font-display font-bold text-xs tracking-widest text-red-600">EVIL DEAD BURN</span>
         </div>
       </div>
     )
   },
   {
-    id: "the-boys",
-    title: "The Boys",
-    url: "https://upload.wikimedia.org/wikipedia/en/e/e5/The_Boys_season_1_poster.jpg",
+    id: "obsession",
+    title: "Obsession",
+    url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80",
+    watermark: (
+      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-blue-950/95 via-transparent to-black/30">
+        <div className="text-center mt-auto flex flex-col items-center pb-2">
+          <span className="font-display font-black text-xs tracking-widest text-white italic">OBSESSION</span>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: "supergirl",
+    title: "Supergirl",
+    url: "https://upload.wikimedia.org/wikipedia/en/1/1a/Supergirl_Woman_of_Tomorrow_poster.jpg",
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-transparent to-black/30">
-        <div className="text-[5px] font-mono tracking-widest text-neutral-400 text-center uppercase">
-          PRIME ORIGINAL
+        <div className="text-[5px] font-mono tracking-widest text-sky-400 text-center uppercase">
+          DC STUDIOS
         </div>
         <div className="text-center mt-auto flex flex-col items-center">
-          <span className="font-display font-bold text-sm tracking-[0.25em] text-white">THE BOYS</span>
-          <span className="text-[5px] font-mono text-neutral-400 tracking-widest uppercase mt-1">FINAL SEASON &bull; APRIL 8</span>
+          <span className="font-display font-bold text-xs tracking-[0.25em] text-sky-300">SUPERGIRL</span>
         </div>
       </div>
     )
   },
   {
-    id: "kalki",
-    title: "Kalki 2898 AD",
+    id: "disclosure-day",
+    title: "Disclosure Day",
     url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80",
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-neutral-950/95 via-transparent to-black/45">
-        <div className="text-[5px] font-mono tracking-widest text-neutral-400 text-center uppercase font-semibold">
-          A VYJAYANTHI MOVIES PRODUCTION
-        </div>
         <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-[0.2em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">KALKI</span>
-          <span className="text-[5px] font-sans text-neutral-400 tracking-[0.15em] font-medium uppercase mt-0.5">2898 AD</span>
+          <span className="font-display font-bold text-xs tracking-[0.2em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">DISCLOSURE DAY</span>
         </div>
       </div>
     )
   },
   {
-    id: "dhurandhar",
-    title: "Dhurandhar",
-    url: "https://upload.wikimedia.org/wikipedia/en/c/ce/Dhurandhar_poster.jpg",
+    id: "soulm8te",
+    title: "Soulm8te",
+    url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80",
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/95 via-black/20 to-black/45">
-        <div className="text-[5px] font-mono tracking-widest text-neutral-400 text-center uppercase font-semibold">
-          AN ADITYA DHAR FILM
-        </div>
         <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-[0.2em] text-red-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">DHURANDHAR</span>
-        </div>
-        <div className="text-[7px] font-mono tracking-[0.3em] text-red-500 text-center font-bold">
-          DECEMBER
+          <span className="font-display font-bold text-xs tracking-[0.2em] text-pink-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">SOULM8TE</span>
         </div>
       </div>
     )
   },
   {
-    id: "joker",
-    title: "Joker",
-    url: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=400&q=80",
+    id: "avatar-aang",
+    title: "Avatar Aang",
+    url: "https://images.unsplash.com/photo-1568849676085-51415703900f?auto=format&fit=crop&w=400&q=80",
     watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 py-4 select-none pointer-events-none z-10 bg-gradient-to-t from-red-950/90 via-orange-900/40 to-transparent">
-        <div className="text-[5px] font-mono tracking-wider text-neutral-200 text-center uppercase leading-none">
-          JOAQUIN PHOENIX
-        </div>
+      <div className="absolute inset-0 flex flex-col justify-between p-3 py-4 select-none pointer-events-none z-10 bg-gradient-to-t from-amber-950/90 via-orange-900/40 to-transparent">
         <div className="text-center mt-auto flex flex-col items-center">
-          <span className="font-sans font-light text-xl tracking-wide text-white">JOKER</span>
-          <span className="text-[5px] font-mono text-neutral-300 tracking-widest uppercase mt-1">OCTOBER 4</span>
+          <span className="font-sans font-bold text-xs tracking-wide text-amber-400">AVATAR AANG</span>
         </div>
       </div>
     )
@@ -199,7 +167,23 @@ const MASTER_MOVIES: Movie[] = [
 ];
 
 export default function HeroSection({ onStartExploring, movies = [] }: HeroSectionProps) {
-  const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => MASTER_MOVIES.slice(0, 9));
+  const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => {
+    if (movies && movies.length >= 9) {
+      return movies.slice(0, 9).map((m) => ({
+        id: m.id,
+        title: m.title,
+        url: m.posterUrl || m.backdropUrl || "",
+        watermark: (
+          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
+            <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
+              TRENDING
+            </div>
+          </div>
+        )
+      }));
+    }
+    return MASTER_MOVIES.slice(0, 9);
+  });
 
   useEffect(() => {
     if (movies && movies.length > 0) {
@@ -274,7 +258,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative min-h-[92vh] flex items-center justify-center py-12 px-6 md:px-12 lg:pl-32 overflow-hidden"
+      className="relative flex items-start pt-1 pb-8 px-6 md:px-12 lg:pl-32 overflow-hidden"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />

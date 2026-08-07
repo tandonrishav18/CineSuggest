@@ -138,7 +138,7 @@ export default function App() {
   };
 
   return (
-    <div id="app-root" className="min-h-screen bg-transparent text-neutral-100 font-sans relative antialiased selection:bg-[#3dd9c8]/30 selection:text-[#3dd9c8] overflow-x-hidden pt-[60px]">
+    <div id="app-root" className="min-h-screen bg-transparent text-neutral-100 font-sans relative antialiased selection:bg-[#3dd9c8]/30 selection:text-[#3dd9c8] overflow-x-hidden pt-[44px]">
 
 
       {/* Main Header / Navigation */}
