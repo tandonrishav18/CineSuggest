@@ -1,7 +1,8 @@
-import { X } from "lucide-react";
+import { X, Search } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState, FormEvent } from "react";
 import { Movie, ReviewItem } from "../types";
+import { searchMovies } from "../services/api";
 
 interface WriteReviewModalProps {
   isOpen: boolean;
@@ -19,23 +20,54 @@ const GRADIENTS = [
 ];
 
 export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies }: WriteReviewModalProps) {
-  const [movieSearchQuery, setMovieSearchQuery] = useState(() => movies[0]?.title ?? "");
+  const [movieSearchQuery, setMovieSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchResults, setSearchResults] = useState<Array<{ id: string | number; title: string; year?: string | number; posterUrl?: string }>>([]);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [authorName, setAuthorName] = useState("");
   const [content, setContent] = useState("");
   const [selectedGradient, setSelectedGradient] = useState(GRADIENTS[0]);
 
+  // Live search TMDB movies as user types
   useEffect(() => {
-    if (!movieSearchQuery && movies.length > 0) {
-      setMovieSearchQuery(movies[0].title);
+    const q = movieSearchQuery.trim();
+    if (!q || q.length < 2) {
+      setSearchResults([]);
+      return;
     }
-  }, [movies, movieSearchQuery]);
 
-  const filteredMovies = movies.filter((m) =>
-    m.title.toLowerCase().includes(movieSearchQuery.toLowerCase().trim())
-  );
+    const timer = setTimeout(async () => {
+      try {
+        const data = await searchMovies(q);
+        if (Array.isArray(data?.results)) {
+          const mapped = data.results.slice(0, 10).map((m: any) => ({
+            id: m.id,
+            title: m.title || m.name || "Untitled",
+            year: m.release_date ? new Date(m.release_date).getFullYear() : "",
+            posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w92${m.poster_path}` : ""
+          }));
+          setSearchResults(mapped);
+        }
+      } catch (err) {
+        console.warn("Live movie search error:", err);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [movieSearchQuery]);
+
+  // Combine TMDB live results with local movies (only when query has text)
+  const combinedSuggestions = movieSearchQuery.trim().length > 0 ? Array.from(
+    new Map(
+      [
+        ...searchResults.map((s) => [s.title.toLowerCase(), s]),
+        ...movies
+          .filter((m) => m.title.toLowerCase().includes(movieSearchQuery.toLowerCase().trim()))
+          .map((m) => [m.title.toLowerCase(), { id: m.id, title: m.title, posterUrl: m.posterUrl }])
+      ]
+    ).values()
+  ) : [];
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -58,7 +90,7 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
     // Reset fields
     setContent("");
     setAuthorName("");
-    setMovieSearchQuery(movies[0]?.title ?? "");
+    setMovieSearchQuery("");
     onClose();
   };
 
@@ -143,9 +175,9 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
                   />
 
                   {/* Autocomplete Suggestions List */}
-                  {showSuggestions && filteredMovies.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-1.5 max-h-48 overflow-y-auto bg-[#07111a] border border-[#1b3248] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-50 py-1">
-                      {filteredMovies.map((m) => (
+                  {showSuggestions && movieSearchQuery.trim().length > 0 && combinedSuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-1.5 max-h-56 overflow-y-auto bg-[#07111a] border border-[#1b3248] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-50 py-1 divide-y divide-slate-800/40">
+                      {combinedSuggestions.map((m) => (
                         <button
                           key={m.id}
                           type="button"
@@ -154,9 +186,24 @@ export default function WriteReviewModal({ isOpen, onClose, onAddReview, movies 
                             setMovieSearchQuery(m.title);
                             setShowSuggestions(false);
                           }}
-                          className="w-full text-left px-4 py-2 text-sm text-neutral-200 hover:bg-[#12263a] hover:text-[#36ffdb] transition-colors cursor-pointer"
+                          className="w-full text-left px-3.5 py-2.5 flex items-center gap-3 text-sm text-neutral-200 hover:bg-[#12263a] hover:text-[#36ffdb] transition-colors cursor-pointer"
                         >
-                          {m.title}
+                          {m.posterUrl ? (
+                            <img 
+                              src={m.posterUrl} 
+                              alt={m.title}
+                              referrerPolicy="no-referrer"
+                              className="w-7 h-10 object-cover rounded shadow border border-slate-700/60 shrink-0" 
+                            />
+                          ) : (
+                            <div className="w-7 h-10 bg-slate-900 rounded border border-slate-800 flex items-center justify-center text-[10px] shrink-0">🍿</div>
+                          )}
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-semibold leading-snug truncate">{m.title}</span>
+                            {m.year && (
+                              <span className="text-[11px] font-mono text-neutral-400">{m.year}</span>
+                            )}
+                          </div>
                         </button>
                       ))}
                     </div>
