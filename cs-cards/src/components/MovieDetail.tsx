@@ -168,9 +168,9 @@ export default function MovieDetail({
         
         {/* LEFT COLUMN: Poster, Description (Spans 5 cols on lg) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          {/* Poster Image Card with Clean Zoom-In Image Animation */}
+          {/* Poster Image Card with Perfect 2:3 Movie Poster Aspect Ratio */}
           <motion.div 
-            className="relative aspect-[1/1] w-full group cursor-pointer"
+            className="relative aspect-[2/3] w-full group cursor-pointer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
