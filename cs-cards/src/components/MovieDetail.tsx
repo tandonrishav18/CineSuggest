@@ -168,9 +168,9 @@ export default function MovieDetail({
         
         {/* LEFT COLUMN: Poster, Description (Spans 5 cols on lg) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          {/* Poster Image Card */}
+          {/* Poster Image Card with Clean Zoom-In Image Animation */}
           <motion.div 
-            className="relative aspect-[1/1] w-full"
+            className="relative aspect-[1/1] w-full group cursor-pointer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -180,9 +180,9 @@ export default function MovieDetail({
                 src={movie.posterUrl}
                 alt={movie.title}
                 referrerPolicy="no-referrer"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
             </div>
           </motion.div>
 
@@ -198,10 +198,9 @@ export default function MovieDetail({
           {/* Trailer Player Mockup */}
           <motion.div 
             onClick={() => setShowVideo(true)}
-            className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-800 bg-[#071118] cursor-pointer shadow-lg hover:border-[#4df2d6]/30"
+            className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-slate-800 bg-[#071118] cursor-pointer shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -4, boxShadow: "0 10px 30px -10px rgba(77, 242, 214, 0.15)" }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
           >
             {/* Thumbnail */}
@@ -209,7 +208,7 @@ export default function MovieDetail({
               src={movie.trailerThumbUrl}
               alt={`${movie.title} trailer thumbnail`}
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-103"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             />
             
             {/* Cinematic overlay tint */}
@@ -423,14 +422,14 @@ export default function MovieDetail({
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
-                className="flex flex-col rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group hover:border-teal-500/40 cursor-pointer transition-all duration-300 hover:scale-[1.03] shadow-md"
+                className="flex flex-col rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-md"
               >
                 <div className="aspect-[2/3] w-full overflow-hidden bg-slate-900">
                   <img
                     src={rec.posterUrl || 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=400&auto=format&fit=crop'}
                     alt={rec.title}
                     referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                 </div>
                 <div className="p-3 flex flex-col gap-1">

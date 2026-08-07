@@ -142,17 +142,17 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
         
         {/* LEFT COLUMN: Movie Still Image (Spans 5 cols, level with right list) */}
         <motion.div 
-          className="md:col-span-5 relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#112332] bg-[#071118]"
+          className="md:col-span-5 relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#112332] bg-[#071118] group cursor-pointer"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.015 }}
+          whileHover={{ scale: 1.03, y: -2 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
           <img
             src={proxiedImageUrl}
             alt="Cinematic still from movie scene"
             referrerPolicy="no-referrer"
-            className={`h-full w-full object-cover ${isNosferatu ? 'object-[center_22%]' : ''}`}
+            className={`h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 ${isNosferatu ? 'object-[center_22%]' : ''}`}
           />
           {/* Subtle grid light leak / overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
