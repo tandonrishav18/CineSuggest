@@ -376,13 +376,13 @@ export default function MovieDetail({
 
           </div>
 
-          {/* Three Images in Square Curved Boxes (Moved to blank space in right column) */}
-          <div className="grid grid-cols-3 gap-3.5 mt-1 max-w-md">
+          {/* Three Images in Square Curved Boxes (Adjusted perfectly to fit full column width) */}
+          <div className="grid grid-cols-3 gap-4 mt-2 w-full">
             {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
               <motion.div 
                 key={idx}
-                className="aspect-square w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
-                whileHover={{ scale: 1.05 }}
+                className="aspect-[16/10] w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
+                whileHover={{ scale: 1.04, y: -2 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <img
