@@ -13,7 +13,7 @@ export default defineConfig(() => {
       },
     },
     build: {
-      outDir: '../home',
+      outDir: 'dist',
       emptyOutDir: true,
     },
     server: {
