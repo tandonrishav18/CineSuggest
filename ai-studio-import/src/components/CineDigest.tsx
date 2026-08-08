@@ -102,22 +102,22 @@ export default function CineDigest() {
             whileHover={{ borderColor: "rgba(54, 255, 219, 0.3)" }}
             className="w-full h-full rounded-3xl overflow-hidden border border-[#14273f]/60 bg-neutral-950 flex flex-col justify-between relative shadow-2xl min-h-[420px] group"
           >
-            {/* Background image & Hollywood graphic overlay */}
+            {/* Background image & overlay */}
             <div className="absolute inset-0">
               <img 
                 src={mainItem.imageUrl} 
                 alt={mainItem.title} 
-                className="w-full h-full object-cover opacity-65 transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    target.src = './assets/hollywood-sign.jpg';
+                  }
+                }}
+                className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
-              {/* Hollywood Sign Custom SVG overlay mockup for specific feel */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-white/20 text-7xl md:text-9xl font-black font-display tracking-widest leading-none select-none select-none filter blur-[1px]">
-                  A.I.
-                </span>
-                <span className="text-neutral-400/10 text-xs tracking-[0.25em] font-mono mt-1">HOLLYWOOD HILLS</span>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
             </div>
 
             {/* Top Badges Row */}

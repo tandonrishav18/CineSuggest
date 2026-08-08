@@ -1,5 +1,6 @@
 import { Movie, DigestItem, ReviewItem } from "../types";
 import homelanderJokerImg from "../../public/assets/homelander-joker.png";
+import hollywoodSignImg from "../../public/assets/hollywood-sign.jpg";
 
 export const FEATURED_DUNE: Movie = {
   id: "dune-part-three",
@@ -154,7 +155,7 @@ export const DIGEST_ITEMS: DigestItem[] = [
     id: "ai-hollywood",
     title: "AI in Hollywood: Tool or Threat?",
     subtitle: "Filmmakers are divided as AI starts entering writing rooms, editing suites, and visual effects pipelines.",
-    imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80", // cinematic robotic arm / hollywood visual vibe
+    imageUrl: hollywoodSignImg,
     badge: "HOT DEBATE",
     badgeColor: "bg-rose-500",
     metadata: "actively debating",
