@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LoginPage from "./components/LoginPage";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import HeroSection from "./components/HeroSection";
@@ -12,6 +13,7 @@ import { getTrendingMovies, searchMovies } from "./services/api";
 import { Movie, ReviewItem } from "./types";
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [reviews, setReviews] = useState<ReviewItem[]>(INITIAL_REVIEWS);
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -136,6 +138,10 @@ export default function App() {
   const handleAddReview = (newReview: ReviewItem) => {
     setReviews((prev) => [newReview, ...prev]);
   };
+
+  if (!isAuthenticated) {
+    return <LoginPage onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div id="app-root" className="min-h-screen bg-transparent text-neutral-100 font-sans relative antialiased selection:bg-[#3dd9c8]/30 selection:text-[#3dd9c8] overflow-x-hidden pt-[44px]">
