@@ -1,16 +1,16 @@
 # CineSuggest
 
-A movie suggestion and discovery web app.
+A full-stack AI-powered movie recommendation platform featuring a modern cinematic frontend, personalized ML-based recommendations, community reviews, watchlists, and seamless user interactions, built with HTML, CSS, JavaScript, React, TypeScript, and Node.js.
 
 ## 🚀 Live Production URL
 
-**https://cine-suggest-murex.vercel.app/**
+**[https://cine-suggest-murex.vercel.app/](https://cine-suggest-murex.vercel.app/)**
 
 ## User Flow
 
-1. **Login Page** → https://cine-suggest-murex.vercel.app/
-2. **Home / Trending** → https://cine-suggest-murex.vercel.app/home
-3. **Movie Details** → https://cine-suggest-murex.vercel.app/movie-cards
+1. **Login Page** → [https://cine-suggest-murex.vercel.app/](https://cine-suggest-murex.vercel.app/)
+2. **Home / Trending** → [https://cine-suggest-murex.vercel.app/home](https://cine-suggest-murex.vercel.app/home)
+3. **Movie Details** → [https://cine-suggest-murex.vercel.app/movie-cards](https://cine-suggest-murex.vercel.app/movie-cards)
 
 ## Tech Stack
 
