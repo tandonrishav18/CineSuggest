@@ -211,7 +211,7 @@ export default function MovieDetail({
         </div>
 
         {/* RIGHT COLUMN: Trailer, Title details, Ratings (Spans 7 cols on lg) */}
-        <div className="lg:col-span-7 flex flex-col gap-6">
+        <div className="lg:col-span-7 flex flex-col gap-6 h-full">
           
           {/* Trailer Player Mockup */}
           <motion.div 
@@ -376,12 +376,12 @@ export default function MovieDetail({
 
           </div>
 
-          {/* Three Images in Square Curved Boxes (Adjusted perfectly to fit full column width) */}
-          <div className="grid grid-cols-3 gap-4 mt-2 w-full">
+          {/* Three Images — grow to fill remaining column height */}
+          <div className="flex-1 grid grid-cols-3 gap-4 mt-2 w-full min-h-[200px]">
             {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
               <motion.div 
                 key={idx}
-                className="aspect-[4/3] w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
+                className="w-full h-full min-h-[180px] rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
                 whileHover={{ scale: 1.04, y: -2 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
