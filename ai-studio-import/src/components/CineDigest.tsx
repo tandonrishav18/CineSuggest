@@ -212,7 +212,14 @@ export default function CineDigest() {
                 <img 
                   src={item.imageUrl} 
                   alt={item.title} 
-                  className="w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-all duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.triedFallback) {
+                      target.dataset.triedFallback = 'true';
+                      target.src = './assets/homelander-joker.png';
+                    }
+                  }}
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
                 {/* Specific stylized overlay based on item */}

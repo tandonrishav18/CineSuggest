@@ -1,4 +1,5 @@
 import { Movie, DigestItem, ReviewItem } from "../types";
+import homelanderJokerImg from "../../public/assets/homelander-joker.png";
 
 export const FEATURED_DUNE: Movie = {
   id: "dune-part-three",
@@ -176,7 +177,7 @@ export const DIGEST_ITEMS: DigestItem[] = [
     id: "homelander-joker",
     title: "Homelander - Generational performance since Heath Ledger's Joker",
     subtitle: "Why Anthony Starr's psychopathic portrayal is the gold standard of modern television antagonists.",
-    imageUrl: "/assets/homelander-joker.png",
+    imageUrl: homelanderJokerImg,
     badge: "LORE",
     badgeColor: "bg-teal-500",
     metadata: "Deep dive thread",
