@@ -112,7 +112,7 @@ if (form) {
         },
         { duration: 0.5, easing: "linear" }
       );
-      if (feedback) feedback.textContent = "Enter a 6 digit code.";
+      if (feedback) feedback.textContent = "Enter any 6 digit code.";
       return;
     }
     // Success bounce
