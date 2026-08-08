@@ -176,7 +176,7 @@ export const DIGEST_ITEMS: DigestItem[] = [
     id: "homelander-joker",
     title: "Homelander - Generational performance since Heath Ledger's Joker",
     subtitle: "Why Anthony Starr's psychopathic portrayal is the gold standard of modern television antagonists.",
-    imageUrl: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=800&q=80", // gothic lighting scary portrait look
+    imageUrl: "/assets/homelander-joker.png",
     badge: "LORE",
     badgeColor: "bg-teal-500",
     metadata: "Deep dive thread",
