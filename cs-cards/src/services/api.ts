@@ -1,6 +1,4 @@
-const API_BASE = typeof window !== "undefined" 
-  ? `http://${window.location.hostname || "127.0.0.1"}:4000` 
-  : "http://127.0.0.1:4000";
+const API_BASE = "https://cinesuggest-b2ea.onrender.com";
 
 async function request(path: string) {
   const response = await fetch(`${API_BASE}${path}`);
