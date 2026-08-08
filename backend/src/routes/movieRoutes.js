@@ -13,6 +13,7 @@ const {
   getRecommendations
 } = require("../controllers/movieController");
 
+router.get("/", getTrendingMovies);
 router.get("/trending", getTrendingMovies);
 router.get("/search", searchMovies);
 router.get("/:id/trailer", getMovieTrailer);
