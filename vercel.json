@@ -1,3 +1,11 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/home/assets/(.*)", "destination": "/home/assets/$1" },
+    { "source": "/home/(.*)", "destination": "/home/index.html" },
+    { "source": "/landing/assets/(.*)", "destination": "/landing/assets/$1" },
+    { "source": "/landing/(.*)", "destination": "/landing/index.html" },
+    { "source": "/movie-cards/assets/(.*)", "destination": "/movie-cards/assets/$1" },
+    { "source": "/movie-cards/(.*)", "destination": "/movie-cards/index.html" }
+  ]
 }

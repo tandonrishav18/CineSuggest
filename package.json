@@ -2,7 +2,7 @@
   "name": "cinesuggest",
   "version": "1.0.0",
   "scripts": {
-    "build": "cd cs-cards && npm install && npm run build && cd ../ai-studio-import && npm install && npm run build"
+    "build": "cd cs-cards && npm install && npm run build && cd ../ai-studio-import && npm install && npm run build && cd .. && node build.js"
   },
   "dependencies": {
     "3dsvg": "^0.2.1",
