@@ -7,11 +7,60 @@ interface WhereToWatchProps {
 }
 
 const DEFAULT_STREAM_PROVIDERS: StreamProvider[] = [
-  { name: 'Jio Hotstar', logo: '', watchUrl: '#watch-jio-hotstar' },
-  { name: 'Netflix', logo: '', watchUrl: '#watch-netflix' },
-  { name: 'Amazon Prime Video', logo: '', watchUrl: '#watch-amazon-prime-video' },
-  { name: 'Youtube', logo: '', watchUrl: '#watch-youtube', priceText: 'Rent From Rs. 120' },
+  { name: 'Jio Hotstar', logo: '', watchUrl: 'https://www.hotstar.com/' },
+  { name: 'Netflix', logo: '', watchUrl: 'https://www.netflix.com/' },
+  { name: 'Amazon Prime Video', logo: '', watchUrl: 'https://www.primevideo.com/' },
+  { name: 'Youtube', logo: '', watchUrl: 'https://www.youtube.com/', priceText: 'Rent From Rs. 120' },
 ];
+
+export const getOttWatchUrl = (providerName: string, watchUrl?: string, movieTitle?: string): string => {
+  if (watchUrl && watchUrl.startsWith('http')) {
+    return watchUrl;
+  }
+  const name = providerName.toLowerCase();
+  const titleQuery = movieTitle ? encodeURIComponent(movieTitle) : '';
+
+  if (name.includes('hotstar')) {
+    return titleQuery ? `https://www.hotstar.com/in/search?q=${titleQuery}` : 'https://www.hotstar.com/';
+  }
+  if (name.includes('netflix')) {
+    return titleQuery ? `https://www.netflix.com/search?q=${titleQuery}` : 'https://www.netflix.com/';
+  }
+  if (name.includes('prime') || name.includes('amazon')) {
+    return titleQuery ? `https://www.primevideo.com/search?k=${titleQuery}` : 'https://www.primevideo.com/';
+  }
+  if (name.includes('youtube')) {
+    return titleQuery ? `https://www.youtube.com/results?search_query=${titleQuery}+movie` : 'https://www.youtube.com/';
+  }
+  if (name.includes('apple')) {
+    return 'https://tv.apple.com/';
+  }
+  if (name.includes('zee5')) {
+    return 'https://www.zee5.com/';
+  }
+  if (name.includes('sonyliv')) {
+    return 'https://www.sonyliv.com/';
+  }
+  if (name.includes('hulu')) {
+    return 'https://www.hulu.com/';
+  }
+  if (name.includes('max') || name.includes('hbo')) {
+    return 'https://www.max.com/';
+  }
+  if (name.includes('paramount')) {
+    return 'https://www.paramountplus.com/';
+  }
+  if (name.includes('peacock')) {
+    return 'https://www.peacocktv.com/';
+  }
+  if (name.includes('jiocinema')) {
+    return 'https://www.jiocinema.com/';
+  }
+
+  return movieTitle
+    ? `https://www.google.com/search?q=watch+${titleQuery}+on+${encodeURIComponent(providerName)}`
+    : `https://www.google.com/search?q=${encodeURIComponent(providerName)}+ott`;
+};
 
 export default function WhereToWatch({ movie }: WhereToWatchProps) {
   const isNosferatu = movie.id === 'nosferatu';
@@ -170,54 +219,61 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
             initial="hidden"
             animate="show"
           >
-            {providers.map((provider) => (
-              <motion.div 
-                key={provider.name} 
-                variants={itemVariants}
-                className="flex items-center justify-between gap-4 p-2.5 -mx-2.5 rounded-2xl border border-transparent hover:border-[#112332]/40 hover:bg-slate-950/45 transition-colors duration-300 group"
-              >
-                {/* Logo & Name */}
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    whileHover={{ scale: 1.12, rotate: [0, -3, 3, 0] }}
-                    transition={{
-                      scale: { type: "spring", stiffness: 400, damping: 15 },
-                      rotate: { type: "keyframes", duration: 0.35, ease: "easeInOut" }
-                    }}
+            {providers.map((provider) => {
+              const targetUrl = getOttWatchUrl(provider.name, provider.watchUrl, movie.title);
+              return (
+                <motion.div 
+                  key={provider.name} 
+                  variants={itemVariants}
+                  className="flex items-center justify-between gap-4 p-2.5 -mx-2.5 rounded-2xl border border-transparent hover:border-[#112332]/40 hover:bg-slate-950/45 transition-colors duration-300 group"
+                >
+                  {/* Logo & Name */}
+                  <a
+                    href={targetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 cursor-pointer"
                   >
-                    {provider.logo && provider.logo.startsWith('http') ? (
-                      <img
-                        src={provider.logo}
-                        alt={provider.name}
-                        referrerPolicy="no-referrer"
-                        className="h-11 w-11 shrink-0 rounded-full object-cover border border-[#112332] shadow-lg"
-                      />
-                    ) : (
-                      renderProviderLogo(provider.name)
-                    )}
-                  </motion.div>
-                  <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#4df2d6] transition-colors duration-300">
-                    {provider.name}
-                  </span>
-                </div>
+                    <motion.div
+                      whileHover={{ scale: 1.12, rotate: [0, -3, 3, 0] }}
+                      transition={{
+                        scale: { type: "spring", stiffness: 400, damping: 15 },
+                        rotate: { type: "keyframes", duration: 0.35, ease: "easeInOut" }
+                      }}
+                    >
+                      {provider.logo && provider.logo.startsWith('http') ? (
+                        <img
+                          src={provider.logo}
+                          alt={provider.name}
+                          referrerPolicy="no-referrer"
+                          className="h-11 w-11 shrink-0 rounded-full object-cover border border-[#112332] shadow-lg"
+                        />
+                      ) : (
+                        renderProviderLogo(provider.name)
+                      )}
+                    </motion.div>
+                    <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#4df2d6] transition-colors duration-300">
+                      {provider.name}
+                    </span>
+                  </a>
 
-                {/* Button */}
-                <div>
-                  <motion.a
-                    href={provider.watchUrl}
-                    className="inline-block rounded-full border border-white px-6 py-2 text-sm font-semibold text-white hover:bg-white hover:text-[#03080c] transition-all duration-300 text-center whitespace-nowrap cursor-pointer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                  >
-                    {provider.priceText ? provider.priceText : 'Watch Now'}
-                  </motion.a>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Button */}
+                  <div>
+                    <motion.a
+                      href={targetUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block rounded-full border border-white px-6 py-2 text-sm font-semibold text-white hover:bg-white hover:text-[#03080c] transition-all duration-300 text-center whitespace-nowrap cursor-pointer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 18 }}
+                    >
+                      {provider.priceText ? provider.priceText : 'Watch Now'}
+                    </motion.a>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
 

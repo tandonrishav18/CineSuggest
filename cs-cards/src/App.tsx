@@ -4,31 +4,37 @@ import { getTrendingMovies, searchMovies, getMovieDetails, getMovieTrailer, getW
 import { Review, Movie, StreamProvider } from './types';
 import Header from './components/Header';
 import MovieDetail from './components/MovieDetail';
-import WhereToWatch from './components/WhereToWatch';
-import RateNow from './components/RateNow';
+import WhereToWatch, { getOttWatchUrl } from './components/WhereToWatch';
 import CommunityReviews from './components/CommunityReviews';
+import RateNow from './components/RateNow';
 import Footer from './components/Footer';
 import CineList from './components/CineList';
 
 const DEFAULT_PROVIDERS: StreamProvider[] = [
-  { name: 'Jio Hotstar', logo: '', watchUrl: '#watch-jio-hotstar' },
-  { name: 'Netflix', logo: '', watchUrl: '#watch-netflix' },
-  { name: 'Amazon Prime Video', logo: '', watchUrl: '#watch-amazon-prime-video' },
-  { name: 'Youtube', logo: '', watchUrl: '#watch-youtube', priceText: 'Rent From Rs. 120' },
+  { name: 'Jio Hotstar', logo: '', watchUrl: 'https://www.hotstar.com/' },
+  { name: 'Netflix', logo: '', watchUrl: 'https://www.netflix.com/' },
+  { name: 'Amazon Prime Video', logo: '', watchUrl: 'https://www.primevideo.com/' },
+  { name: 'Youtube', logo: '', watchUrl: 'https://www.youtube.com/', priceText: 'Rent From Rs. 120' },
 ];
 
-const createWatchProviders = (providers: Array<any>): StreamProvider[] => {
+const createWatchProviders = (providers: Array<any>, movieTitle?: string): StreamProvider[] => {
   if (!Array.isArray(providers) || providers.length === 0) {
-    return DEFAULT_PROVIDERS;
+    return DEFAULT_PROVIDERS.map((p) => ({
+      ...p,
+      watchUrl: getOttWatchUrl(p.name, p.watchUrl, movieTitle),
+    }));
   }
-  return providers.map((provider) => ({
-    name: provider.provider_name || 'Unknown',
-    logo: provider.logo_path
-      ? `https://image.tmdb.org/t/p/w92${provider.logo_path}`
-      : '',
-    watchUrl: '#watch-' + String(provider.provider_name || 'provider').toLowerCase().replace(/\s+/g, '-'),
-    priceText: provider.display_priority ? '' : undefined,
-  }));
+  return providers.map((provider) => {
+    const name = provider.provider_name || 'Unknown';
+    return {
+      name,
+      logo: provider.logo_path
+        ? `https://image.tmdb.org/t/p/w92${provider.logo_path}`
+        : '',
+      watchUrl: getOttWatchUrl(name, undefined, movieTitle),
+      priceText: provider.display_priority ? '' : undefined,
+    };
+  });
 };
 
 const formatSummaryMovie = (movie: any): Movie => ({
@@ -66,7 +72,7 @@ const formatDetailMovie = (movie: any, trailerKey?: string, providers: Array<any
   imdbRating: movie.vote_average ? `${movie.vote_average.toFixed(1)}/10` : '0.0/10',
   rottenTomatoesRating: movie.vote_average ? `${Math.round(movie.vote_average * 10)}% Fresh` : '0% Fresh',
   rewatchValue: movie.vote_average ? Math.min(100, Math.max(70, Math.round(movie.vote_average * 10))) : 80,
-  streamProviders: createWatchProviders(providers),
+  streamProviders: createWatchProviders(providers, movie.title || movie.name),
   reviews: [],
   stillUrl: movie.backdrop_path ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '',
   trailerKey,
