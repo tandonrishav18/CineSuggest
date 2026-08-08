@@ -111,7 +111,10 @@ export default function Navbar({ onSearch }: NavbarProps) {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  onSearch(e.target.value);
+                  // Only reset the section results when field is cleared
+                  if (!e.target.value.trim()) {
+                    onSearch("");
+                  }
                 }}
                 onFocus={() => {
                   if (searchResults.length > 0) setShowDropdown(true);
