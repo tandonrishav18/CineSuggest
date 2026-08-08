@@ -381,7 +381,7 @@ export default function MovieDetail({
             {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
               <motion.div 
                 key={idx}
-                className="aspect-[16/10] w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
+                className="aspect-[4/3] w-full rounded-2xl border border-[#112332] bg-[#071118] overflow-hidden group cursor-pointer shadow-lg"
                 whileHover={{ scale: 1.04, y: -2 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
