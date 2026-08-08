@@ -65,10 +65,10 @@ export default function Navbar({ onSearch }: NavbarProps) {
 
   return (
     <header id="app-navbar" className="fixed top-0 left-0 right-0 z-50 w-full bg-black/16 backdrop-blur-md border-b border-white/5 py-3 px-6 md:px-10 transition-all duration-300">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 min-w-0">
         {/* Logo Section */}
         <motion.div 
-          className="flex items-center"
+          className="flex items-center shrink-0"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -85,7 +85,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
 
         {/* Right Section: Search & Filter */}
         <motion.div 
-          className="flex items-center gap-3 relative"
+          className="flex items-center gap-2 relative shrink-0"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
@@ -94,7 +94,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
           <div ref={searchContainerRef} className="relative">
             <form 
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 bg-[#111820] border border-[#1e2d3d] rounded-full p-1 pl-1 pr-5 transition-all duration-300 focus-within:border-[#3dd9c8]/40 focus-within:shadow-[0_0_15px_rgba(61,217,200,0.1)]"
+              className="flex items-center gap-2 bg-[#111820] border border-[#1e2d3d] rounded-full p-1 pl-1 pr-4 transition-all duration-300 focus-within:border-[#3dd9c8]/40 focus-within:shadow-[0_0_15px_rgba(61,217,200,0.1)]"
             >
               {/* Circular Search Icon Button */}
               <button 
@@ -119,7 +119,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
                 onFocus={() => {
                   if (searchResults.length > 0) setShowDropdown(true);
                 }}
-                className="bg-transparent text-sm text-neutral-300 placeholder-neutral-600 outline-none w-32 font-sans tracking-wide"
+                className="bg-transparent text-sm text-neutral-300 placeholder-neutral-600 outline-none w-24 sm:w-32 font-sans tracking-wide"
               />
             </form>
 
