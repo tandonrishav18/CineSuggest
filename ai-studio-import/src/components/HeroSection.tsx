@@ -28,15 +28,15 @@ interface SlotConfig {
 }
 
 const SLOTS: SlotConfig[] = [
-  { width: 130, height: 190, top: 100, left: 0, zIndex: 10 },
-  { width: 130, height: 190, top: 305, left: 0, zIndex: 10 },
-  { width: 270, height: 390, top: 0, left: 146, zIndex: 20 }, // Stranger Things 5 center tall
-  { width: 130, height: 190, top: 406, left: 146, zIndex: 10 },
-  { width: 130, height: 190, top: 406, left: 286, zIndex: 10 },
-  { width: 130, height: 190, top: 100, left: 432, zIndex: 10 },
-  { width: 130, height: 190, top: 100, left: 578, zIndex: 10 },
-  { width: 130, height: 190, top: 305, left: 432, zIndex: 10 },
-  { width: 190, height: 270, top: 305, left: 578, zIndex: 15 },
+  { width: 130, height: 190, top: 90,  left: 0,   zIndex: 10 },
+  { width: 130, height: 190, top: 290, left: 0,   zIndex: 10 },
+  { width: 270, height: 390, top: 0,   left: 146,  zIndex: 20 }, // Stranger Things 5 center tall
+  { width: 130, height: 190, top: 396, left: 146,  zIndex: 10 },
+  { width: 130, height: 190, top: 396, left: 286,  zIndex: 10 },
+  { width: 130, height: 190, top: 90,  left: 432,  zIndex: 10 },
+  { width: 130, height: 190, top: 90,  left: 568,  zIndex: 10 },
+  { width: 130, height: 190, top: 290, left: 432,  zIndex: 10 },
+  { width: 190, height: 270, top: 290, left: 568,  zIndex: 15 },
 ];
 
 const MASTER_MOVIES: Movie[] = [
@@ -258,7 +258,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative flex items-start pt-1 pb-8 px-6 md:px-12 lg:pl-32 overflow-hidden"
+      className="relative flex items-start pt-1 pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />
