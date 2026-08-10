@@ -294,7 +294,13 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           >
             <motion.button
-              onClick={onStartExploring}
+              onClick={(e) => {
+                if (onStartExploring) onStartExploring();
+                const trendingElement = document.getElementById("trending");
+                if (trendingElement) {
+                  trendingElement.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
               initial={{ backgroundColor: "#75D4CB" }}
               animate={{ backgroundColor: "#75D4CB" }}
               whileHover={{ 
