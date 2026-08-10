@@ -258,7 +258,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative flex items-start pt-[104px] pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
+      className="relative flex items-start pt-[54px] pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />
@@ -312,7 +312,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
         </div>
 
         {/* Right Column: Dynamic Cinematic Movie Poster Collage */}
-        <div className="lg:col-span-7 relative w-full flex items-center justify-center select-none overflow-visible min-h-[500px] lg:min-h-[610px]">
+        <div className="lg:col-span-7 relative w-full flex items-center justify-center select-none overflow-visible min-h-[500px] lg:min-h-[610px] lg:-ml-[100px]">
           {/* Responsive scale wrapper to resize the absolute grid cleanly across all screen sizes */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
