@@ -3,7 +3,6 @@ import {
   LayoutGrid, 
   PlaySquare, 
   Radio, 
-  User,
   Heart
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -28,29 +27,8 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <aside 
       id="side-nav" 
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-3 px-6 lg:py-6 lg:px-3.5 bg-[#071118]/60 backdrop-blur-3xl backdrop-saturate-150 border border-white/15 rounded-full lg:rounded-[2rem] gap-6 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] w-auto max-w-[90vw] lg:max-w-none transition-all duration-300"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-2.5 px-4 sm:px-5 lg:py-6 lg:px-3.5 bg-[#071118]/60 backdrop-blur-3xl backdrop-saturate-150 border border-white/15 rounded-full lg:rounded-[2rem] gap-2.5 sm:gap-4 lg:gap-6 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] w-auto max-w-[95vw] lg:max-w-none transition-all duration-300"
     >
-      {/* Profile Avatar / Top Icon */}
-      <motion.div 
-        whileHover={{ scale: 1.08 }}
-        className="relative group cursor-pointer"
-        onClick={() => onNavigate("hero")}
-      >
-        <div className="w-10 h-10 rounded-full bg-cyan-950/40 border border-[#22d3ee]/30 flex items-center justify-center text-[#22d3ee] transition-all duration-300 group-hover:border-[#36ffdb] group-hover:shadow-[0_0_12px_rgba(34,211,238,0.4)] relative">
-          <User className="w-5 h-5" />
-          {/* Active green indicator status dot */}
-          <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-[#050b13] rounded-full" />
-        </div>
-        
-        {/* Tooltip */}
-        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 lg:left-14 lg:top-1/2 lg:-translate-y-1/2 lg:bottom-auto lg:translate-x-0 px-2.5 py-1 rounded bg-neutral-950 border border-[#14273f] text-xs text-neutral-300 font-sans whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
-          User Profile
-        </div>
-      </motion.div>
-
-      {/* Divider */}
-      <div className="w-[1px] h-6 lg:w-6 lg:h-[1px] bg-neutral-800/60" />
-
       {/* Navigation Icons */}
       <div className="flex flex-row lg:flex-col gap-4">
         {menuItems.map((item) => {
