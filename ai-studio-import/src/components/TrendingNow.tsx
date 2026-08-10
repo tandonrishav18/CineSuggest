@@ -205,6 +205,15 @@ const DOOMSDAY_SHOWCASE_MOVIE: Movie = {
 export default function TrendingNow({ movies, sectionTitle = "Trending Now", isLoading = false, noResultsText = "No movies are available right now." }: TrendingNowProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isReminded, setIsReminded] = useState<boolean>(false);
+  const [isPhone, setIsPhone] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsPhone(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const currentSelectedMovie = DOOMSDAY_SHOWCASE_MOVIE;
 
   if (!currentSelectedMovie) {
@@ -372,10 +381,10 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
           </AnimatePresence>
         </div>
 
-        {/* Right Column: Grid of 15 Movies (3 rows of 5 cards) */}
+        {/* Right Column: Grid of Movies (16 on phone [8x2], 15 on desktop [3x5]) */}
         <div className="lg:col-span-7 flex flex-col gap-4">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
-            {movies.slice(0, 15).map((movie) => {
+            {movies.slice(0, isPhone ? 16 : 15).map((movie) => {
               const isCurrent = movie.id === currentSelectedMovie.id;
 
               return (

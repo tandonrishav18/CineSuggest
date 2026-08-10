@@ -147,6 +147,15 @@ export const TRENDING_MOVIES: Movie[] = [
     rating: "U/A 13+",
     description: "Cobb, a skilled thief who steals corporate secrets through dream-sharing technology, is given the inverse task of planting an idea into the mind of a C.E.O. in exchange for his redemption.",
     wikipediaUrl: "https://en.wikipedia.org/wiki/Inception"
+  },
+  {
+    id: "the-death-of-robin-hood",
+    title: "The Death of Robin Hood",
+    posterUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=500&q=80",
+    backdropUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    rating: "A 18+",
+    description: "A battle-weary Robin Hood grapples with his past after a life of crime and violence, finding himself gravely injured in the care of a mysterious woman who offers redemption.",
+    wikipediaUrl: "https://en.wikipedia.org/wiki/Robin_Hood"
   }
 ];
 
