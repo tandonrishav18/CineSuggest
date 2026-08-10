@@ -260,13 +260,13 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative flex items-start pt-[54px] pb-8 px-6 md:px-12 lg:pl-32 lg:pr-8 overflow-visible w-full"
+      className="relative flex items-start pt-[54px] pb-8 px-6 md:px-12 lg:pl-32 lg:pr-10 overflow-visible w-full"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-rose-500/5 rounded-full blur-[150px] pointer-events-none" />
       
-      <div className="w-full max-w-7xl lg:max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[100px] items-center relative z-10">
+      <div className="w-full max-w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[100px] items-center relative z-10">
         
         {/* Left Column Description */}
         <div className="lg:col-span-5 flex flex-col items-start gap-6 text-left shrink-0">
