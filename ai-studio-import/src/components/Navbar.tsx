@@ -99,7 +99,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
               {/* Circular Search Icon Button */}
               <button 
                 type="submit"
-                className="w-9 h-9 rounded-full bg-[#1a3040] border border-[#3dd9c8]/30 hover:bg-[#1e3a4a] flex items-center justify-center text-[#3dd9c8] transition-colors duration-200 cursor-pointer shrink-0"
+                className="w-9 h-9 min-w-[2.25rem] min-h-[2.25rem] aspect-square rounded-full bg-[#1a3040] border border-[#3dd9c8]/30 hover:bg-[#1e3a4a] flex items-center justify-center text-[#3dd9c8] transition-colors duration-200 cursor-pointer shrink-0"
               >
                 <Search className="w-4 h-4 stroke-[2]" />
               </button>

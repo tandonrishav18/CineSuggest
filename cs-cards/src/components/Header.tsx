@@ -72,7 +72,7 @@ export default function Header({
             <div className="flex h-10 w-44 sm:w-64 items-center rounded-full bg-[#0a1217] border border-[#112332] px-1 focus-within:border-teal-500/50 transition-colors">
               {/* Teal circle containing search icon */}
               <button 
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4df2d6] text-[#03080c] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+                className="flex h-8 w-8 min-w-[2rem] min-h-[2rem] shrink-0 aspect-square items-center justify-center rounded-full bg-[#4df2d6] text-[#03080c] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                 aria-label="Search button"
               >
                 <Search size={16} strokeWidth={2.5} />

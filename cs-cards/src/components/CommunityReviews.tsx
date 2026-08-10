@@ -88,11 +88,7 @@ export default function CommunityReviews({
                 </div>
               </div>
 
-              {/* Vibe Tag Badge */}
-              <div className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold select-none ${getBadgeStyle(review.vibeType)}`}>
-                {renderBadgeIcon(review.vibeType)}
-                <span>{cleanVibeTag(review.vibeTag)}</span>
-              </div>
+
 
             </div>
 

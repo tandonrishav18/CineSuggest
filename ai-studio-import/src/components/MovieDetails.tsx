@@ -690,10 +690,7 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
                     <p className="text-[11px] text-neutral-500">2 days ago</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0e1f30] border border-cyan-500/25 text-cyan-400 text-[11px] font-medium">
-                  <Star className="w-3 h-3 fill-current" />
-                  98% Mind Blow
-                </div>
+
               </div>
 
               <div className="text-[12.5px] text-neutral-300 leading-relaxed font-light flex flex-col gap-2.5">
@@ -730,10 +727,7 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
                     <p className="text-[11px] text-neutral-500">1 week ago</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1e0f10] border border-rose-500/25 text-rose-400 text-[11px] font-medium">
-                  <Flame className="w-3 h-3 fill-current" />
-                  95% Emotional Damage
-                </div>
+
               </div>
 
               <div className="text-[12.5px] text-neutral-300 leading-relaxed font-light flex flex-col gap-2.5">
