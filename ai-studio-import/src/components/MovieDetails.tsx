@@ -283,8 +283,8 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
         {/* ── two-column hero ─────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 items-start">
 
-          {/* LEFT: poster + description + scene */}
-          <div className="flex flex-col gap-5">
+          {/* LEFT: poster + description + scene (displays below buttons on phone view) */}
+          <div className="flex flex-col gap-5 order-2 lg:order-1">
             {/* poster */}
             <div className="w-full rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-neutral-900 aspect-[2/3]">
               <img
@@ -309,8 +309,8 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
             </div>
           </div>
 
-          {/* RIGHT: trailer + meta + platforms */}
-          <div className="flex flex-col gap-6">
+          {/* RIGHT: trailer + meta + platforms (displays above poster on phone view) */}
+          <div className="flex flex-col gap-6 order-1 lg:order-2">
 
             {/* trailer card */}
             <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-neutral-900 aspect-video group">

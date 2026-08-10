@@ -193,8 +193,8 @@ export default function MovieDetail({
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         
-        {/* LEFT COLUMN: Poster, Description (Spans 5 cols on lg) */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
+        {/* LEFT COLUMN: Poster, Description (Spans 5 cols on lg; displays below buttons on phone view) */}
+        <div className="lg:col-span-5 flex flex-col gap-6 order-2 lg:order-1">
           {/* Poster Image Card with Perfect 2:3 Movie Poster Aspect Ratio */}
           <motion.div 
             className="relative aspect-[2/3] w-full group cursor-pointer"
@@ -219,8 +219,8 @@ export default function MovieDetail({
           </p>
         </div>
 
-        {/* RIGHT COLUMN: Trailer, Title details, Ratings (Spans 7 cols on lg) */}
-        <div className="lg:col-span-7 flex flex-col gap-6 h-full">
+        {/* RIGHT COLUMN: Trailer, Title details, Ratings (Spans 7 cols on lg; displays above poster on phone view) */}
+        <div className="lg:col-span-7 flex flex-col gap-6 h-full order-1 lg:order-2">
           
           {/* Trailer Player Mockup */}
           <motion.div 
