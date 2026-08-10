@@ -52,20 +52,29 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                 }}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer relative ${
+                className={`w-10 h-10 rounded-2xl flex items-center justify-center cursor-pointer relative transition-colors duration-300 ${
                   isActive 
-                    ? "bg-[#36ffdb]/15 text-[#36ffdb] border border-[#36ffdb]/40 shadow-[0_0_15px_rgba(54,255,219,0.15)]" 
-                    : "text-neutral-400 hover:text-neutral-200 hover:bg-[#14273f]/30 border border-transparent"
+                    ? "text-[#36ffdb]" 
+                    : "text-neutral-400 hover:text-neutral-200"
                 }`}
               >
-                <Icon className="w-5 h-5 stroke-[2]" />
+                {/* Smooth Sliding Active Pill Background */}
+                {isActive && (
+                  <motion.div
+                    layoutId="active-pill-bg"
+                    className="absolute inset-0 bg-[#36ffdb]/15 border border-[#36ffdb]/40 rounded-2xl shadow-[0_0_15px_rgba(54,255,219,0.15)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.6 }}
+                  />
+                )}
 
-                {/* Glow Indicator */}
+                <Icon className="w-5 h-5 stroke-[2] relative z-10" />
+
+                {/* Smooth Sliding Glow Indicator */}
                 {isActive && (
                   <motion.div 
                     layoutId="active-indicator"
-                    className="absolute lg:-left-1.5 lg:top-1/2 lg:-translate-y-1/2 lg:w-1 lg:h-4 -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#36ffdb] rounded-t-full lg:rounded-r-full lg:rounded-t-none shadow-[0_0_8px_#36ffdb]"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="absolute lg:-left-1.5 lg:top-1/2 lg:-translate-y-1/2 lg:w-1 lg:h-4 -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#36ffdb] rounded-t-full lg:rounded-r-full lg:rounded-t-none shadow-[0_0_8px_#36ffdb] z-10"
+                    transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.6 }}
                   />
                 )}
               </motion.button>
