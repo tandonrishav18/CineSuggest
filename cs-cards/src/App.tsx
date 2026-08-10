@@ -90,6 +90,12 @@ export default function App() {
     const params = new URLSearchParams(window.location.search);
     return params.get('view') === 'cinelist' ? 'cinelist' : 'discover';
   });
+  const [previousView, setPreviousView] = useState<'discover' | 'cinelist' | null>(null);
+
+  const handleViewChange = (newView: 'discover' | 'cinelist') => {
+    setPreviousView(activeView);
+    setActiveView(newView);
+  };
   const [currentMovieDetails, setCurrentMovieDetails] = useState<Movie | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -278,7 +284,7 @@ export default function App() {
         selectedMovie={currentMovie || { id: '', title: '', description: '', year: 0, duration: '', rating: '', certificateDetails: '', posterUrl: '', trailerThumbUrl: '', categories: [], imdbRating: '0.0/10', rottenTomatoesRating: '0% Fresh', rewatchValue: 0, streamProviders: [], reviews: [], stillUrl: '' }}
         onSelectMovie={handleSelectMovie}
         activeView={activeView}
-        onViewChange={setActiveView}
+        onViewChange={handleViewChange}
         cineListCount={cineList.length}
         onSearch={handleSearch}
         searchQuery={searchQuery}
@@ -312,7 +318,13 @@ export default function App() {
                 }}
                 onRemoveMovie={handleToggleCineList}
                 onBrowseMovies={() => {
-                  window.location.href = '../home/#trending';
+                  if (previousView === 'discover' && currentMovie) {
+                    setActiveView('discover');
+                  } else if (window.history.length > 1 && document.referrer && !document.referrer.includes('/movie-cards/?view=cinelist')) {
+                    window.history.back();
+                  } else {
+                    window.location.href = '../home/#trending';
+                  }
                 }}
               />
             </motion.div>
