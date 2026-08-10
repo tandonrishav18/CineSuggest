@@ -211,7 +211,7 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
     return (
       <section
         id="trending"
-        className="py-16 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
+        className="pt-2 pb-16 sm:py-16 -mt-24 sm:mt-0 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
       >
         <div className="text-center text-neutral-400 text-sm py-32">
           {isLoading ? "Loading movies..." : noResultsText}
@@ -223,7 +223,7 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
   return (
     <section
       id="trending"
-      className="py-16 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
+      className="pt-2 pb-16 sm:py-16 -mt-24 sm:mt-0 px-6 md:px-12 lg:pl-32 max-w-7xl mx-auto w-full relative border-t border-neutral-900/50"
     >
       {/* Decorative side leak */}
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
