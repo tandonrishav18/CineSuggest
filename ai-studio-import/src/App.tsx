@@ -154,7 +154,7 @@ export default function App() {
       <Navbar onSearch={(query) => setSearchQuery(query)} />
 
       {/* Primary Grid Layout holding side navigation + page contents */}
-      <div className="relative w-full max-w-7xl mx-auto z-10">
+      <div className="relative w-full max-w-7xl lg:max-w-[1440px] mx-auto z-10">
 
         {/* Floating Sidebar (Hidden on mobile, elegantly floats on desktop) */}
         <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />

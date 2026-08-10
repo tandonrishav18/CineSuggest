@@ -260,16 +260,16 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative flex items-start pt-[54px] pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
+      className="relative flex items-start pt-[54px] pb-8 px-6 md:px-12 lg:pl-32 lg:pr-8 overflow-visible w-full"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-rose-500/5 rounded-full blur-[150px] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center relative z-10 w-full">
+      <div className="w-full max-w-7xl lg:max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[100px] items-center relative z-10">
         
         {/* Left Column Description */}
-        <div className="lg:col-span-5 flex flex-col items-start gap-6 text-left">
+        <div className="lg:col-span-5 flex flex-col items-start gap-6 text-left shrink-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -324,7 +324,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
         </div>
 
         {/* Right Column: Dynamic Cinematic Movie Poster Collage */}
-        <div className="lg:col-span-7 relative w-full flex items-center justify-center select-none overflow-visible min-h-[270px] sm:min-h-[360px] md:min-h-[460px] lg:min-h-[610px] -mt-[114px] sm:mt-0 lg:-ml-[100px]">
+        <div className="lg:col-span-7 relative w-full flex items-center justify-center select-none overflow-visible min-h-[270px] sm:min-h-[360px] md:min-h-[460px] lg:min-h-[610px] -mt-[114px] sm:mt-0">
           {/* Responsive scale wrapper to resize the absolute grid cleanly across all screen sizes */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
