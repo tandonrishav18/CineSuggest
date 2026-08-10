@@ -258,7 +258,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   return (
     <section 
       id="hero" 
-      className="relative flex items-start pt-[254px] pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
+      className="relative flex items-start pt-[104px] pb-8 px-6 md:px-12 lg:pl-32 overflow-visible"
     >
       {/* Decorative ambient glowing lights */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#36ffdb]/5 rounded-full blur-[120px] pointer-events-none" />
