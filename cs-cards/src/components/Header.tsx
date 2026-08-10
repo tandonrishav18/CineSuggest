@@ -146,9 +146,9 @@ export default function Header({
           </div>
 
 
-          {/* Filter Icon */}
+          {/* Filter Icon — hidden on phone */}
           <button 
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#112332] bg-[#0a1217] text-slate-200 transition-all hover:bg-[#0d1f2d] hover:text-[#4df2d6] cursor-pointer"
+            className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-[#112332] bg-[#0a1217] text-slate-200 transition-all hover:bg-[#0d1f2d] hover:text-[#4df2d6] cursor-pointer"
             onClick={() => {
               // Toggle random selection for fun as visual filter effect
               const nextIndex = (movies.findIndex(m => m.id === selectedMovie.id) + 1) % movies.length;
