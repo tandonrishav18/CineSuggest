@@ -64,7 +64,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
   };
 
   return (
-    <header id="app-navbar" className="fixed top-0 left-0 right-0 z-50 w-full bg-black/16 backdrop-blur-md border-b border-white/5 py-3 px-6 md:px-10 transition-all duration-300">
+    <header id="app-navbar" className="fixed top-0 left-0 right-0 z-50 w-full bg-black/16 backdrop-blur-md border-b border-white/5 py-3 px-4 md:px-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 min-w-0">
         {/* Logo Section */}
         <motion.div 
@@ -158,14 +158,14 @@ export default function Navbar({ onSearch }: NavbarProps) {
             )}
           </div>
 
-          {/* Login Link Button */}
+          {/* Login Link Button — hidden on mobile */}
           <motion.a
             initial={{ backgroundColor: "#75D4CB" }}
             animate={{ backgroundColor: "#75D4CB" }}
             whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
             whileTap={{ scale: 0.95 }}
             href="../"
-            className="px-4 py-1.5 rounded-full text-[#03080c] text-xs font-sans font-normal tracking-wide transition-colors duration-200 cursor-pointer shrink-0 select-none shadow-md"
+            className="hidden sm:inline-flex px-4 py-1.5 rounded-full text-[#03080c] text-xs font-sans font-normal tracking-wide transition-colors duration-200 cursor-pointer shrink-0 select-none shadow-md"
           >
             Login
           </motion.a>
