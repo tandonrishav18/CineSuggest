@@ -29,12 +29,15 @@ export default function Header({
   isLoading = false,
 }: HeaderProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
+        setIsMobileSearchOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -69,15 +72,26 @@ export default function Header({
         {/* Search & Filter */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="relative" ref={searchContainerRef}>
-            <div className="flex h-10 w-10 sm:w-64 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-300">
+            <div className={`flex h-10 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-300 ${isMobileSearchOpen ? 'w-44 sm:w-64' : 'w-10 sm:w-64'}`}>
               {/* Teal circle containing search icon */}
               <button 
+                onClick={() => {
+                  setIsMobileSearchOpen((prev) => {
+                    const next = !prev;
+                    if (next) {
+                      setTimeout(() => inputRef.current?.focus(), 50);
+                    }
+                    return next;
+                  });
+                  setIsDropdownOpen(true);
+                }}
                 className="flex h-8 w-8 min-w-[2rem] min-h-[2rem] shrink-0 aspect-square items-center justify-center rounded-full bg-[#4df2d6] text-[#03080c] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                 aria-label="Search button"
               >
                 <Search size={16} strokeWidth={2.5} />
               </button>
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="Search movies..."
                 value={searchQuery}
@@ -86,7 +100,7 @@ export default function Header({
                   setIsDropdownOpen(true);
                 }}
                 onFocus={() => setIsDropdownOpen(true)}
-                className="hidden sm:block h-full flex-1 bg-transparent px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                className={`h-full flex-1 bg-transparent px-2.5 text-sm text-slate-100 outline-none placeholder:text-slate-500 ${isMobileSearchOpen ? 'block' : 'hidden sm:block'}`}
               />
             </div>
 
