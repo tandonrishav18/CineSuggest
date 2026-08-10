@@ -255,15 +255,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
     return () => clearInterval(interval);
   }, [movies]);
 
-  const handleScrollToTrending = (e?: React.MouseEvent | React.TouchEvent) => {
-    if (onStartExploring) onStartExploring();
-    const trendingElement = document.getElementById("trending");
-    if (trendingElement) {
-      const yOffset = -60;
-      const y = trendingElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
+
 
   return (
     <section 
@@ -303,9 +295,18 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           >
-            <motion.button
-              onClick={handleScrollToTrending}
-              onTouchEnd={handleScrollToTrending}
+            <motion.a
+              href="#trending"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onStartExploring) onStartExploring();
+                const trendingElement = document.getElementById("trending");
+                if (trendingElement) {
+                  trendingElement.scrollIntoView({ behavior: "smooth", block: "start" });
+                } else {
+                  window.location.hash = "trending";
+                }
+              }}
               initial={{ backgroundColor: "#75D4CB" }}
               animate={{ backgroundColor: "#75D4CB" }}
               whileHover={{ 
@@ -318,7 +319,7 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
               <span className="tracking-wide flex items-center gap-1">
                 Start Exploring <span className="font-sans font-normal transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
               </span>
-            </motion.button>
+            </motion.a>
           </motion.div>
         </div>
 
