@@ -215,10 +215,10 @@ button {
   position: relative;
   z-index: 5;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  min-height: 100svh;
-  padding: clamp(188px, 28.125vh, 288px) 24px 48px;
+  min-height: 100vh;
+  padding: 95px 24px 32px;
 }
 
 .verification-card {
@@ -439,7 +439,8 @@ button {
   }
 
   .verification-shell {
-    padding-top: 170px;
+    align-items: flex-start;
+    padding-top: 150px;
   }
 
   .verification-card {
