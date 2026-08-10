@@ -385,8 +385,8 @@ export default function MovieDetail({
 
           </div>
 
-          {/* Three Images — grow to fill remaining column height */}
-          <div className="flex-1 grid grid-cols-3 gap-4 mt-2 w-full min-h-[200px]">
+          {/* Three Images — hidden on mobile phone view, visible on desktop */}
+          <div className="hidden sm:grid flex-1 grid-cols-3 gap-4 mt-2 w-full min-h-[200px]">
             {displayGalleryImages.slice(0, 3).map((imgUrl, idx) => (
               <motion.div 
                 key={idx}
