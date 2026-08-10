@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trash2, ChevronRight, Film, Star } from 'lucide-react';
+import { Trash2, ChevronRight, Film, Star, ArrowLeft } from 'lucide-react';
 import { Movie } from '../types';
 
 interface CineListProps {
@@ -25,15 +25,25 @@ export default function CineList({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 md:px-8">
-      {/* Title Header with Total Count */}
+      {/* Title Header with Back Button and Total Count */}
       <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h2 className="font-share text-2xl md:text-3xl font-black text-white tracking-tight">
-            CineList
-          </h2>
-          <p className="text-sm text-slate-400 mt-1">
-            {savedMovies.length} {savedMovies.length === 1 ? 'Saved Movie' : 'Saved Movies'}
-          </p>
+        <div className="flex items-center gap-3 md:gap-4">
+          <button
+            onClick={onBrowseMovies}
+            aria-label="Back to Discover"
+            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-[#112332] bg-[#0a1217] text-slate-300 transition-all hover:bg-[#0d1f2d] hover:text-[#4df2d6] hover:border-[#4df2d6]/40 cursor-pointer shrink-0 shadow-sm"
+          >
+            <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 stroke-[2.5]" />
+          </button>
+
+          <div>
+            <h2 className="font-share text-2xl md:text-3xl font-black text-white tracking-tight">
+              CineList
+            </h2>
+            <p className="text-sm text-slate-400 mt-0.5">
+              {savedMovies.length} {savedMovies.length === 1 ? 'Saved Movie' : 'Saved Movies'}
+            </p>
+          </div>
         </div>
         
         {savedMovies.length > 0 && (
