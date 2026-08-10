@@ -180,8 +180,8 @@ export default function MovieDetail({
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-6 md:px-8">
-      {/* Back button */}
-      <div className="mb-6">
+      {/* Back button — hidden on phone view */}
+      <div className="mb-6 hidden sm:block">
         <button
           onClick={onBackToDiscover}
           className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-700 bg-transparent text-slate-300 hover:border-[#4df2d6] hover:text-[#4df2d6] cursor-pointer"

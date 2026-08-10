@@ -272,10 +272,10 @@ export default function MovieDetails({ movie, onClose }: MovieDetailsProps) {
       {/* ── page body ─────────────────────────────────────────── */}
       <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-10 pt-[90px] pb-20">
 
-        {/* back button */}
+        {/* back button — hidden on phone view */}
         <button
           onClick={onClose}
-          className="mb-7 w-10 h-10 rounded-full border border-neutral-800 bg-[#0b1622]/80 flex items-center justify-center text-neutral-300 hover:text-white hover:bg-neutral-800 transition-all cursor-pointer shadow"
+          className="mb-7 hidden sm:flex w-10 h-10 rounded-full border border-neutral-800 bg-[#0b1622]/80 items-center justify-center text-neutral-300 hover:text-white hover:bg-neutral-800 transition-all cursor-pointer shadow"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
