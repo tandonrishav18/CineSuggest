@@ -72,14 +72,14 @@ export default function Header({
         {/* Search & Filter */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="relative" ref={searchContainerRef}>
-            <div className={`flex h-10 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-300 ${isMobileSearchOpen ? 'w-44 sm:w-64' : 'w-10 sm:w-64'}`}>
+            <div className={`flex h-10 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-500 ease-in-out overflow-hidden ${isMobileSearchOpen ? 'w-44 sm:w-64' : 'w-10 sm:w-64'}`}>
               {/* Teal circle containing search icon */}
               <button 
                 onClick={() => {
                   setIsMobileSearchOpen((prev) => {
                     const next = !prev;
                     if (next) {
-                      setTimeout(() => inputRef.current?.focus(), 50);
+                      setTimeout(() => inputRef.current?.focus(), 150);
                     }
                     return next;
                   });
@@ -100,7 +100,7 @@ export default function Header({
                   setIsDropdownOpen(true);
                 }}
                 onFocus={() => setIsDropdownOpen(true)}
-                className={`h-full flex-1 bg-transparent px-2.5 text-sm text-slate-100 outline-none placeholder:text-slate-500 ${isMobileSearchOpen ? 'block' : 'hidden sm:block'}`}
+                className={`h-full flex-1 bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500 transition-all duration-500 ease-in-out ${isMobileSearchOpen ? 'px-2.5 opacity-100 w-auto' : 'px-0 opacity-0 w-0 pointer-events-none sm:px-2.5 sm:opacity-100 sm:w-auto sm:pointer-events-auto'}`}
               />
             </div>
 
