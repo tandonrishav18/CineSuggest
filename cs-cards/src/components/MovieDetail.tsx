@@ -50,6 +50,15 @@ export default function MovieDetail({
   const [recommendationsList, setRecommendationsList] = useState<Array<{ id: string; title: string; posterUrl: string; rating?: string }>>([]);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
+  const [isPhone, setIsPhone] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsPhone(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useEffect(() => {
     if (!movie.id) return;
     const fetchMovieData = async () => {
@@ -63,7 +72,7 @@ export default function MovieDetail({
           try {
             const recRes = await getRecommendations(numId);
             if (Array.isArray(recRes?.results)) {
-              const formattedRecs = recRes.results.slice(0, 5).map((m: any) => ({
+              const formattedRecs = recRes.results.slice(0, 6).map((m: any) => ({
                 id: String(m.id),
                 title: m.title || m.name || "Untitled",
                 posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : m.backdrop_path ? `https://image.tmdb.org/t/p/w780${m.backdrop_path}` : '',
@@ -433,7 +442,7 @@ export default function MovieDetail({
             Recommended Movies:
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            {recommendationsList.map((rec) => (
+            {recommendationsList.slice(0, isPhone ? 6 : 5).map((rec) => (
               <div 
                 key={rec.id} 
                 onClick={() => {
