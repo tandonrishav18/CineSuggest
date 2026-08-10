@@ -255,6 +255,16 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
     return () => clearInterval(interval);
   }, [movies]);
 
+  const handleScrollToTrending = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (onStartExploring) onStartExploring();
+    const trendingElement = document.getElementById("trending");
+    if (trendingElement) {
+      const yOffset = -60;
+      const y = trendingElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <section 
       id="hero" 
@@ -294,13 +304,8 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           >
             <motion.button
-              onClick={(e) => {
-                if (onStartExploring) onStartExploring();
-                const trendingElement = document.getElementById("trending");
-                if (trendingElement) {
-                  trendingElement.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
+              onClick={handleScrollToTrending}
+              onTouchEnd={handleScrollToTrending}
               initial={{ backgroundColor: "#75D4CB" }}
               animate={{ backgroundColor: "#75D4CB" }}
               whileHover={{ 
