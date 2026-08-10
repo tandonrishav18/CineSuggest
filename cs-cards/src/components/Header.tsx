@@ -48,28 +48,28 @@ export default function Header({
       );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-black/16 backdrop-blur-md px-4 py-4 md:px-8 border-b border-[#112332]/40">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-4">
+    <header className="sticky top-0 z-50 w-full bg-black/16 backdrop-blur-md px-3 py-3 sm:px-8 border-b border-[#112332]/40">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 sm:gap-4">
         {/* Left Brand logo only */}
-        <div className="flex items-center">
+        <div className="flex items-center shrink-0">
           {/* Brand Logo */}
           <a
             href="../home/"
             className="flex cursor-pointer items-center gap-1 select-none normal-case"
           >
-            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-white">
+            <span className="font-jaro text-xl sm:text-3xl font-black tracking-wider text-white">
               Cine
             </span>
-            <span className="font-jaro text-2xl md:text-3xl font-black tracking-wider text-[#4df2d6]">
+            <span className="font-jaro text-xl sm:text-3xl font-black tracking-wider text-[#4df2d6]">
               Suggest
             </span>
           </a>
         </div>
 
         {/* Search & Filter */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="relative" ref={searchContainerRef}>
-            <div className="flex h-10 w-44 sm:w-64 items-center rounded-full bg-[#0a1217] border border-[#112332] px-1 focus-within:border-teal-500/50 transition-colors">
+            <div className="flex h-10 w-10 sm:w-64 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-300">
               {/* Teal circle containing search icon */}
               <button 
                 className="flex h-8 w-8 min-w-[2rem] min-h-[2rem] shrink-0 aspect-square items-center justify-center rounded-full bg-[#4df2d6] text-[#03080c] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
@@ -86,7 +86,7 @@ export default function Header({
                   setIsDropdownOpen(true);
                 }}
                 onFocus={() => setIsDropdownOpen(true)}
-                className="h-full flex-1 bg-transparent px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                className="hidden sm:block h-full flex-1 bg-transparent px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
               />
             </div>
 
