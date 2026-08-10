@@ -63,7 +63,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                   <motion.div
                     layoutId="active-pill-bg"
                     className="absolute inset-0 bg-[#36ffdb]/15 border border-[#36ffdb]/40 rounded-2xl shadow-[0_0_15px_rgba(54,255,219,0.15)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.6 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
                   />
                 )}
 
@@ -74,7 +74,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                   <motion.div 
                     layoutId="active-indicator"
                     className="absolute lg:-left-1.5 lg:top-1/2 lg:-translate-y-1/2 lg:w-1 lg:h-4 -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#36ffdb] rounded-t-full lg:rounded-r-full lg:rounded-t-none shadow-[0_0_8px_#36ffdb] z-10"
-                    transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.6 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
                   />
                 )}
               </motion.button>
