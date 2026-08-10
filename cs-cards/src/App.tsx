@@ -311,7 +311,9 @@ export default function App() {
                   setActiveView('discover');
                 }}
                 onRemoveMovie={handleToggleCineList}
-                onBrowseMovies={() => setActiveView('discover')}
+                onBrowseMovies={() => {
+                  window.location.href = '../home/#trending';
+                }}
               />
             </motion.div>
           ) : (

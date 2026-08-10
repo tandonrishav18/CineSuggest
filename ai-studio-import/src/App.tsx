@@ -110,6 +110,15 @@ export default function App() {
     }
   };
 
+  // Auto-scroll to #trending if URL hash specifies #trending
+  useEffect(() => {
+    if (window.location.hash === "#trending") {
+      setTimeout(() => {
+        handleNavigate("trending");
+      }, 250);
+    }
+  }, []);
+
   // Scroll spy to highlight active section on side navigation
   useEffect(() => {
     const handleScroll = () => {
