@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import HeroSection from "./components/HeroSection";
@@ -7,19 +7,22 @@ import CineDigest from "./components/CineDigest";
 import HotReviews from "./components/HotReviews";
 import WriteReviewModal from "./components/WriteReviewModal";
 import Footer from "./components/Footer";
-import { INITIAL_REVIEWS } from "./data/movies";
+import { INITIAL_REVIEWS, TRENDING_MOVIES } from "./data/movies";
 import { getTrendingMovies, searchMovies } from "./services/api";
 import { Movie, ReviewItem } from "./types";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [reviews, setReviews] = useState<ReviewItem[]>(INITIAL_REVIEWS);
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<Movie[]>(TRENDING_MOVIES);
   const [searchResults, setSearchResults] = useState<Movie[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const isManualNavigating = useRef(false);
+  const navTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const formatMovie = (movie: any): Movie => {
     let poster = movie.posterUrl || "";
@@ -104,6 +107,13 @@ export default function App() {
   // Smooth scroll handler
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
+    isManualNavigating.current = true;
+
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+    navTimeoutRef.current = setTimeout(() => {
+      isManualNavigating.current = false;
+    }, 800);
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -122,8 +132,10 @@ export default function App() {
   // Scroll spy to highlight active section on side navigation
   useEffect(() => {
     const handleScroll = () => {
+      if (isManualNavigating.current) return;
+
       const sections = ["hero", "trending", "digest", "reviews"];
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 250;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -138,7 +150,7 @@ export default function App() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

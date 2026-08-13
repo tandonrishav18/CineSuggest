@@ -38,187 +38,39 @@ const SLOTS: SlotConfig[] = [
   { width: 130, height: 190, top: 290, left: 432,  zIndex: 10 },
   { width: 190, height: 270, top: 290, left: 568,  zIndex: 15 },
 ];
+import { TRENDING_MOVIES } from "../data/movies";
 
-const MASTER_MOVIES: Movie[] = [
-  {
-    id: "spider-man",
-    title: "Spider-Man: Brand New Day",
-    url: "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
+const mapMoviesToHero = (list: any[]): Movie[] => {
+  const source = Array.isArray(list) && list.length > 0 ? list : TRENDING_MOVIES;
+  return source.map((m) => ({
+    id: m.id,
+    title: m.title,
+    url: m.posterUrl || m.backdropUrl || m.url || "",
     watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/30 to-black/40">
+      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
         <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
-          MARVEL STUDIOS
-        </div>
-        <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-wider text-red-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">SPIDER-MAN</span>
-          <span className="text-[5px] font-sans text-neutral-400 tracking-[0.2em] font-medium uppercase mt-0.5">BRAND NEW DAY</span>
+          TRENDING
         </div>
       </div>
     )
-  },
-  {
-    id: "the-odyssey",
-    title: "The Odyssey",
-    url: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-black/20 to-black/40">
-        <div className="text-[5px] font-mono tracking-widest text-amber-500 text-center uppercase font-bold">
-          WARNER BROS
-        </div>
-        <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-black text-xs tracking-wide text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-none font-sans">THE ODYSSEY</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "the-last-house",
-    title: "The Last House",
-    url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-4 py-6 select-none pointer-events-none z-10 bg-gradient-to-t from-black/95 via-transparent to-black/60">
-        <div className="text-[7px] font-mono tracking-[0.35em] text-neutral-400 text-center uppercase font-bold">
-          CINEMA ORIGINAL
-        </div>
-        <div className="my-auto flex flex-col items-center">
-          <span className="font-display font-black text-2xl tracking-[0.15em] text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">THE LAST HOUSE</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "evil-dead-burn",
-    title: "Evil Dead Burn",
-    url: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-red-950/90 via-transparent to-black/30">
-        <div className="text-[5px] font-mono tracking-widest text-red-500 text-center uppercase font-bold">
-          HORROR NIGHTS
-        </div>
-        <div className="text-center mt-auto flex flex-col items-center pb-2">
-          <span className="font-display font-bold text-xs tracking-widest text-red-600">EVIL DEAD BURN</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "obsession",
-    title: "Obsession",
-    url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-blue-950/95 via-transparent to-black/30">
-        <div className="text-center mt-auto flex flex-col items-center pb-2">
-          <span className="font-display font-black text-xs tracking-widest text-white italic">OBSESSION</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "supergirl",
-    title: "Supergirl",
-    url: "https://upload.wikimedia.org/wikipedia/en/1/1a/Supergirl_Woman_of_Tomorrow_poster.jpg",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/90 via-transparent to-black/30">
-        <div className="text-[5px] font-mono tracking-widest text-sky-400 text-center uppercase">
-          DC STUDIOS
-        </div>
-        <div className="text-center mt-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-[0.25em] text-sky-300">SUPERGIRL</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "disclosure-day",
-    title: "Disclosure Day",
-    url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-neutral-950/95 via-transparent to-black/45">
-        <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-[0.2em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">DISCLOSURE DAY</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "soulm8te",
-    title: "Soulm8te",
-    url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/95 via-black/20 to-black/45">
-        <div className="text-center my-auto flex flex-col items-center">
-          <span className="font-display font-bold text-xs tracking-[0.2em] text-pink-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">SOULM8TE</span>
-        </div>
-      </div>
-    )
-  },
-  {
-    id: "avatar-aang",
-    title: "Avatar Aang",
-    url: "https://images.unsplash.com/photo-1568849676085-51415703900f?auto=format&fit=crop&w=400&q=80",
-    watermark: (
-      <div className="absolute inset-0 flex flex-col justify-between p-3 py-4 select-none pointer-events-none z-10 bg-gradient-to-t from-amber-950/90 via-orange-900/40 to-transparent">
-        <div className="text-center mt-auto flex flex-col items-center">
-          <span className="font-sans font-bold text-xs tracking-wide text-amber-400">AVATAR AANG</span>
-        </div>
-      </div>
-    )
-  }
-];
+  }));
+};
 
 export default function HeroSection({ onStartExploring, movies = [] }: HeroSectionProps) {
   const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => {
-    if (movies && movies.length >= 9) {
-      return movies.slice(0, 9).map((m) => ({
-        id: m.id,
-        title: m.title,
-        url: m.posterUrl || m.backdropUrl || "",
-        watermark: (
-          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
-            <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
-              TRENDING
-            </div>
-          </div>
-        )
-      }));
-    }
-    return MASTER_MOVIES.slice(0, 9);
+    return mapMoviesToHero(movies).slice(0, 9);
   });
 
   useEffect(() => {
-    if (movies && movies.length > 0) {
-      const heroList: Movie[] = movies.map((m) => ({
-        id: m.id,
-        title: m.title,
-        url: m.posterUrl || m.backdropUrl || "",
-        watermark: (
-          <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
-            <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
-              TRENDING
-            </div>
-          </div>
-        )
-      }));
+    const heroList = mapMoviesToHero(movies);
+    if (heroList.length > 0) {
       setCurrentMovies(heroList.slice(0, 9));
     }
   }, [movies]);
 
   // Gently transitions and shuffles active movies on the slots over time
   useEffect(() => {
-    const sourcePool = movies && movies.length >= 9
-      ? movies.map((m) => ({
-          id: m.id,
-          title: m.title,
-          url: m.posterUrl || m.backdropUrl || "",
-          watermark: (
-            <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
-              <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
-                TRENDING
-              </div>
-            </div>
-          )
-        }))
-      : MASTER_MOVIES;
+    const sourcePool = mapMoviesToHero(movies);
 
     const interval = setInterval(() => {
       const slotsToSwap: number[] = [];

@@ -27,7 +27,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <aside 
       id="side-nav" 
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-2.5 px-4 sm:px-5 lg:py-6 lg:px-3.5 bg-[#071118]/60 backdrop-blur-3xl backdrop-saturate-150 border border-white/15 rounded-full lg:rounded-[2rem] gap-2.5 sm:gap-4 lg:gap-6 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] w-auto max-w-[95vw] lg:max-w-none transition-all duration-300"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:bottom-auto lg:left-6 lg:top-[25%] lg:translate-x-0 z-40 flex flex-row lg:flex-col items-center py-2.5 px-4 sm:px-5 lg:py-6 lg:px-3.5 bg-[#071118]/60 backdrop-blur-3xl backdrop-saturate-150 border border-white/15 rounded-full lg:rounded-[2rem] gap-2.5 sm:gap-4 lg:gap-6 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] w-auto max-w-[95vw] lg:max-w-none"
     >
       {/* Navigation Icons */}
       <div className="flex flex-row lg:flex-col gap-4">
@@ -42,7 +42,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
-              <motion.button
+              <button
                 onClick={() => {
                   if ((item as any).href) {
                     window.location.href = (item as any).href;
@@ -50,34 +50,38 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                     onNavigate(item.id);
                   }
                 }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                className={`w-10 h-10 rounded-2xl flex items-center justify-center cursor-pointer relative transition-colors duration-300 ${
+                className={`w-10 h-10 rounded-2xl flex items-center justify-center cursor-pointer relative transition-colors duration-200 ${
                   isActive 
                     ? "text-[#36ffdb]" 
                     : "text-neutral-400 hover:text-neutral-200"
                 }`}
               >
-                {/* Smooth Sliding Active Pill Background */}
+                {/* Smooth Gliding Hover Pill */}
+                {hoveredId === item.id && !isActive && (
+                  <motion.div
+                    layoutId="hover-pill"
+                    className="absolute inset-0 bg-white/10 rounded-2xl pointer-events-none"
+                    transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.5 }}
+                  />
+                )}
+
+                {/* Single Unified Smooth Sliding Active Element */}
                 {isActive && (
                   <motion.div
-                    layoutId="active-pill-bg"
-                    className="absolute inset-0 bg-[#36ffdb]/15 border border-[#36ffdb]/40 rounded-2xl shadow-[0_0_15px_rgba(54,255,219,0.15)]"
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                  />
+                    layoutId="active-pill"
+                    className="absolute inset-0 pointer-events-none"
+                    transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.5 }}
+                  >
+                    {/* Active Pill Box */}
+                    <div className="absolute inset-0 bg-[#36ffdb]/15 border border-[#36ffdb]/40 rounded-2xl shadow-[0_0_15px_rgba(54,255,219,0.15)]" />
+
+                    {/* Active Glow Pill Indicator */}
+                    <div className="absolute lg:-left-1.5 lg:top-1/2 lg:-translate-y-1/2 lg:w-1 lg:h-4 -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#36ffdb] rounded-t-full lg:rounded-r-full lg:rounded-t-none shadow-[0_0_8px_#36ffdb]" />
+                  </motion.div>
                 )}
 
-                <Icon className="w-5 h-5 stroke-[2] relative z-10" />
-
-                {/* Smooth Sliding Glow Indicator */}
-                {isActive && (
-                  <motion.div 
-                    layoutId="active-indicator"
-                    className="absolute lg:-left-1.5 lg:top-1/2 lg:-translate-y-1/2 lg:w-1 lg:h-4 -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-[#36ffdb] rounded-t-full lg:rounded-r-full lg:rounded-t-none shadow-[0_0_8px_#36ffdb] z-10"
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                  />
-                )}
-              </motion.button>
+                <Icon className="w-5 h-5 stroke-[2] relative z-10 transition-transform duration-200 hover:scale-110" />
+              </button>
 
               {/* Tooltip */}
               <AnimatePresence>
