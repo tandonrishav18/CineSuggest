@@ -40,12 +40,19 @@ const SLOTS: SlotConfig[] = [
 ];
 import { TRENDING_MOVIES } from "../data/movies";
 
+const getFastImageUrl = (url: string): string => {
+  if (!url) return "";
+  if (url.startsWith("./") || url.startsWith("/") || url.startsWith("data:")) return url;
+  if (url.includes("images.weserv.nl")) return url;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&w=600&output=webp&q=85`;
+};
+
 const mapMoviesToHero = (list: any[]): Movie[] => {
   const source = Array.isArray(list) && list.length > 0 ? list : TRENDING_MOVIES;
   return source.map((m) => ({
     id: m.id,
     title: m.title,
-    url: m.posterUrl || m.backdropUrl || m.url || "",
+    url: getFastImageUrl(m.posterUrl || m.backdropUrl || m.url || ""),
     watermark: (
       <div className="absolute inset-0 flex flex-col justify-between p-3 select-none pointer-events-none z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40">
         <div className="text-[5px] font-mono tracking-widest text-[#3dd9c8] text-center uppercase font-semibold">
@@ -60,6 +67,17 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
   const [currentMovies, setCurrentMovies] = useState<Movie[]>(() => {
     return mapMoviesToHero(movies).slice(0, 9);
   });
+
+  // Preload all poster images in browser memory immediately for instant 0-lag rendering
+  useEffect(() => {
+    const sourcePool = mapMoviesToHero(movies);
+    sourcePool.forEach((m) => {
+      if (m.url) {
+        const img = new Image();
+        img.src = m.url;
+      }
+    });
+  }, [movies]);
 
   useEffect(() => {
     const heroList = mapMoviesToHero(movies);
@@ -241,6 +259,15 @@ export default function HeroSection({ onStartExploring, movies = [] }: HeroSecti
                         <img 
                           src={movie.url} 
                           alt={movie.title} 
+                          loading="eager"
+                          fetchPriority="high"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            if (!target.dataset.triedFallback) {
+                              target.dataset.triedFallback = 'true';
+                              target.src = 'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9vKoWRwwoW.jpg';
+                            }
+                          }}
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                           referrerPolicy="no-referrer"
                         />

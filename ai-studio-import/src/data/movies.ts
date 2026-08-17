@@ -16,7 +16,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "the-boys",
     title: "The Boys",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/e/e5/The_Boys_season_1_poster.jpg", // majestic superhero posture with cape
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/e/e5/The_Boys_season_1_poster.jpg&w=600&output=webp&q=85", // majestic superhero posture with cape
     backdropUrl: "https://images.unsplash.com/photo-1568849676085-51415703900f?auto=format&fit=crop&w=1200&q=80", // action neon blue/teal background
     rating: "18+ Adults",
     description: "In a world where superheroes embrace the darker side of their massive celebrity and fame, an informal group of vigilantes known colloquially as 'The Boys' embark on a heroic quest to expose the truth about 'The Seven' and Vought.",
@@ -25,7 +25,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "sanju",
     title: "Sanju",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/7/70/Sanju_poster.jpg", // official theatrical poster with 5 looks of Ranbir Kapoor
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/7/70/Sanju_poster.jpg&w=600&output=webp&q=85", // official theatrical poster with 5 looks of Ranbir Kapoor
     backdropUrl: "https://images.unsplash.com/photo-1542204172-e7052809a862?auto=format&fit=crop&w=1200&q=80", // dramatic urban street
     rating: "U/A 13+",
     description: "Sanju is a biographical drama that traces the dramatic and highly controversial real life of actor Sanjay Dutt, detailing his battles with addiction, legal turmoils, family bonds, and ultimate redemption.",
@@ -34,7 +34,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "mortal-kombat",
     title: "Mortal Kombat",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/7/77/Mortal_Kombat_%282021_film%29_poster.jpg", // martial arts / warrior in golden fire
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/7/77/Mortal_Kombat_%282021_film%29_poster.jpg&w=600&output=webp&q=85", // martial arts / warrior in golden fire
     backdropUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80", // gaming dark crimson fire
     rating: "A 18+",
     description: "MMA fighter Cole Young seeks out Earth's greatest champions in order to stand against the forces of Outworld in a high-stakes, action-packed battle for the universe.",
@@ -43,7 +43,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "sky-force",
     title: "Sky Force",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/9/96/Sky_Force_film_poster.jpg", // aircraft pilot cockpit and jet controls
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/9/96/Sky_Force_film_poster.jpg&w=600&output=webp&q=85", // aircraft pilot cockpit and jet controls
     backdropUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80", // dark high-altitude cockpit
     rating: "U/A 13+",
     description: "Sky Force tells the epic story of aviation warfare, featuring a group of elite jet fighter pilots navigating extreme geopolitical tensions, supersonic aerial battles, and unmatched bravery.",
@@ -52,7 +52,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "avengers-endgame",
     title: "Avengers: Endgame",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg", // official poster
+    posterUrl: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9vKoWRwwoW.jpg", // official poster
     backdropUrl: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80", // deep cosmos galaxy nebula
     rating: "U/A 13+",
     description: "After the devastating events of Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more to reverse Thanos' actions and restore balance to the universe.",
@@ -61,7 +61,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "sinners",
     title: "Sinners",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/b/b2/Sinners_2025_poster.jpg", // blood-red sunset / orb backdrop
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/b/b2/Sinners_2025_poster.jpg&w=600&output=webp&q=85", // blood-red sunset / orb backdrop
     backdropUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80", // dark gothic red mist
     rating: "A 18+",
     description: "In a quiet, religious township, a series of mysterious occurrences and moral downfalls reveal hidden sins. Two brothers find themselves caught in a terrifying supernatural battle against ancient, gothic forces.",
@@ -70,7 +70,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "moonlight",
     title: "Moonlight",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/8/84/Moonlight_%282016_film%29_poster.jpg", // intense artistic male portrait
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/8/84/Moonlight_%282016_film%29_poster.jpg&w=600&output=webp&q=85", // intense artistic male portrait
     backdropUrl: "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?auto=format&fit=crop&w=1200&q=80", // quiet blue ocean under full moon
     rating: "A 18+",
     description: "A look at three defining chapters in the life of Chiron, a young black man growing up in Miami. His epic journey to manhood is guided by the support, love, and pain of those who help shape his path.",
@@ -79,7 +79,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "modern-family",
     title: "Modern Family",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/3/3d/Modern_Family_season_1_poster.jpg", // family photo / grid photo warm
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/3/3d/Modern_Family_season_1_poster.jpg&w=600&output=webp&q=85", // family photo / grid photo warm
     backdropUrl: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80", // cozy bright living room light
     rating: "U/A 13+",
     description: "Three different but related families face trials and tribulations in their own uniquely comedic and heartwarming ways, captured through a hilarious mockumentary camera lens.",
@@ -88,7 +88,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "the-backrooms",
     title: "The Backrooms",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/2/23/The_Backrooms_model.png", // empty eerie yellow hallway
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/2/23/The_Backrooms_model.png&w=600&output=webp&q=85", // empty eerie yellow hallway
     backdropUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80", // desolate creepy light
     rating: "U/A 16+",
     description: "Lost in an infinite maze of empty, yellow office rooms with buzzing fluorescent lights, a lost wanderer tries to escape the terrifying anomalies that live within the fabric of this non-euclidean reality.",
@@ -97,7 +97,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "dhurandhar",
     title: "Dhurandhar",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/c/ce/Dhurandhar_poster.jpg", // official poster
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/c/ce/Dhurandhar_poster.jpg&w=600&output=webp&q=85", // official poster
     backdropUrl: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=80", // spotlight in dark theatre room
     rating: "U/A 16+",
     description: "Dhurandhar is an intense, monochromatic neo-noir crime thriller set in the underbelly of a bustling metropolis, exploring a police detective's descent into madness while chasing a clever serial mastermind.",
@@ -106,7 +106,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "supergirl",
     title: "Supergirl",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/1/1a/Supergirl_Woman_of_Tomorrow_poster.jpg",
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/1/1a/Supergirl_Woman_of_Tomorrow_poster.jpg&w=600&output=webp&q=85",
     backdropUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80",
     rating: "U/A 13+",
     description: "When an unexpected and ruthless adversary strikes too close to home, Kara Zor-El, aka Supergirl, reluctantly joins forces with an unlikely companion on an epic, interstellar journey of vengeance and justice.",
@@ -115,7 +115,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "soulm8te",
     title: "Soulm8te",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/b/b5/Soulm8te_poster.jpg",
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/b/b5/Soulm8te_poster.jpg&w=600&output=webp&q=85",
     backdropUrl: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
     rating: "A 18+",
     description: "A grieving engineer attempts to reprogram an artificial intelligence companion to become a truly sentient soulmate, unwittingly unleashing a relentless spree of precision-engineered mayhem.",
@@ -124,7 +124,7 @@ export const TRENDING_MOVIES: Movie[] = [
   {
     id: "disclosure-day",
     title: "Disclosure Day",
-    posterUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Disclosure_Day_poster.jpg",
+    posterUrl: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/en/d/d4/Disclosure_Day_poster.jpg&w=600&output=webp&q=85",
     backdropUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
     rating: "U/A 13+",
     description: "A cybersecurity expert becomes a whistleblower after uncovering secrets about alien visitations, putting him on the run from a shadow corporation desperate to keep humanity in the dark.",

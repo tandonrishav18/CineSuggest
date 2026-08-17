@@ -408,6 +408,15 @@ export default function TrendingNow({ movies, sectionTitle = "Trending Now", isL
                   <img
                     src={movie.posterUrl}
                     alt={movie.title}
+                    loading="eager"
+                    fetchPriority="high"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.dataset.triedFallback) {
+                        target.dataset.triedFallback = 'true';
+                        target.src = 'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9vKoWRwwoW.jpg';
+                      }
+                    }}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
                     referrerPolicy="no-referrer"
                   />
