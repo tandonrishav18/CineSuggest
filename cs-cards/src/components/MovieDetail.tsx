@@ -163,13 +163,13 @@ export default function MovieDetail({
           {/* Left Half */}
           <div 
             className={`absolute top-0 left-0 h-full w-[50%] ${
-              leftFilled ? 'bg-[#e50914]' : 'bg-transparent'
+              leftFilled ? 'bg-[#4df2d6]' : 'bg-transparent'
             }`} 
           />
           {/* Right Half */}
           <div 
             className={`absolute top-0 right-0 h-full w-[50%] ${
-              rightFilled ? 'bg-[#e50914]' : 'bg-transparent'
+              rightFilled ? 'bg-[#4df2d6]' : 'bg-transparent'
             }`} 
           />
         </div>
@@ -184,7 +184,7 @@ export default function MovieDetail({
       <div className="mb-6 hidden sm:block">
         <button
           onClick={onBackToDiscover}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-700 bg-transparent text-slate-300 hover:border-[#e50914] hover:text-[#e50914] cursor-pointer"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-700 bg-transparent text-slate-300 hover:border-[#4df2d6] hover:text-[#4df2d6] cursor-pointer"
           aria-label="Go back"
         >
           <ChevronLeft size={24} />
@@ -226,15 +226,15 @@ export default function MovieDetail({
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="group flex flex-col gap-2 rounded-2xl border border-red-600/40 bg-gradient-to-r from-red-950/70 via-red-900/30 to-black p-4 shadow-xl transition-all hover:border-red-500 hover:shadow-red-900/50"
+              className="group flex flex-col gap-2 rounded-2xl border border-teal-500/40 bg-gradient-to-r from-teal-950/70 via-[#071926]/40 to-black p-4 shadow-xl transition-all hover:border-teal-400 hover:shadow-teal-900/50"
             >
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-red-400">
-                <span className="inline-block h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-400">
+                <span className="inline-block h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
                 {movie.featuredArticle.source || 'Featured Article'}
               </div>
-              <div className="text-sm font-bold text-white group-hover:text-red-300 transition-colors flex items-center justify-between gap-2">
+              <div className="text-sm font-bold text-white group-hover:text-[#4df2d6] transition-colors flex items-center justify-between gap-2">
                 <span>{movie.featuredArticle.title}</span>
-                <span className="text-red-400 text-lg font-normal transition-transform group-hover:translate-x-1">→</span>
+                <span className="text-[#4df2d6] text-lg font-normal transition-transform group-hover:translate-x-1">→</span>
               </div>
             </motion.a>
           )}
@@ -265,12 +265,12 @@ export default function MovieDetail({
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div 
-                className="flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-[1.5px] transition-colors group-hover:border-[#e50914] group-hover:bg-black/60"
+                className="flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-[1.5px] transition-colors group-hover:border-[#4df2d6] group-hover:bg-black/60"
                 whileHover={{ scale: 1.12 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
-                <Play size={32} className="fill-[#e50914] text-[#e50914] ml-1.5" />
+                <Play size={32} className="fill-[#4df2d6] text-[#4df2d6] ml-1.5" />
               </motion.div>
             </div>
           </motion.div>
@@ -281,7 +281,7 @@ export default function MovieDetail({
             {/* Title Line & Category pills */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <h2 className="font-share text-4xl font-extrabold text-[#ff2a3b] tracking-tight">
+                <h2 className="font-share text-4xl font-extrabold text-[#4df2d6] tracking-tight">
                   {movie.title}
                 </h2>
                 
@@ -290,8 +290,8 @@ export default function MovieDetail({
                   onClick={() => setHasLiked(!hasLiked)}
                   className={`flex h-10 w-10 items-center justify-center rounded-full border cursor-pointer transition-colors duration-300 ${
                     hasLiked
-                      ? 'bg-[#e50914] border-[#e50914] text-white'
-                      : 'border-slate-700 bg-transparent text-white hover:border-[#e50914] hover:text-[#e50914]'
+                      ? 'bg-[#4df2d6] border-[#4df2d6] text-[#001017]'
+                      : 'border-slate-700 bg-transparent text-white hover:border-[#4df2d6] hover:text-[#4df2d6]'
                   }`}
                   aria-label="Like movie"
                   whileHover={{ scale: 1.15 }}
@@ -349,11 +349,11 @@ export default function MovieDetail({
               <div className="flex flex-wrap items-center gap-3">
                 <motion.button
                   onClick={onScrollToRate}
-                  initial={{ backgroundColor: "#e50914" }}
-                  animate={{ backgroundColor: "#e50914" }}
-                  whileHover={{ scale: 1.05, backgroundColor: "#b80710" }}
+                  initial={{ backgroundColor: "#75D4CB" }}
+                  animate={{ backgroundColor: "#75D4CB" }}
+                  whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-sans font-normal text-white shadow-md cursor-pointer whitespace-nowrap select-none"
+                  className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-sans font-normal text-[#001017] shadow-md cursor-pointer whitespace-nowrap select-none"
                 >
                   <span>Rate now</span>
                   <motion.span 
@@ -369,8 +369,8 @@ export default function MovieDetail({
                   onClick={() => onToggleCineList(movie.id)}
                   className={`flex h-11 items-center justify-center rounded-full text-sm font-semibold select-none cursor-pointer whitespace-nowrap transition-colors duration-300 ${
                     isInCineList
-                      ? 'w-48 bg-[#e50914] text-white border border-transparent shadow-[0_0_18px_rgba(229,9,20,0.75)]'
-                      : 'w-48 bg-transparent text-white border border-slate-600 hover:bg-[#b80710] hover:text-white hover:border-transparent'
+                      ? 'w-48 bg-[#4df2d6] text-black border border-transparent shadow-[0_0_18px_rgba(77,242,214,0.75)]'
+                      : 'w-48 bg-transparent text-white border border-slate-600 hover:bg-[#5ce1cb] hover:text-black hover:border-transparent'
                   }`}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
@@ -502,7 +502,7 @@ export default function MovieDetail({
                 <div className="p-3 flex flex-col gap-1">
                   <div className="font-bold text-slate-100 text-xs leading-tight line-clamp-1">{rec.title}</div>
                   {rec.rating && (
-                    <div className="text-[10px] font-mono text-[#ff2a3b]">{rec.rating}</div>
+                    <div className="text-[10px] font-mono text-[#4df2d6]">{rec.rating}</div>
                   )}
                 </div>
               </div>
@@ -533,7 +533,7 @@ export default function MovieDetail({
                 />
               ) : (
                 <div className="aspect-video w-full flex flex-col items-center justify-center p-8 bg-slate-950 text-center gap-4">
-                  <Play size={48} className="text-[#e50914]" />
+                  <Play size={48} className="text-[#4df2d6]" />
                   <p className="text-slate-400 font-mono text-sm">TRAILER NOT AVAILABLE FOR {movie.title.toUpperCase()}</p>
                 </div>
               )}

@@ -108,7 +108,7 @@ export default function CommunityReviews({
                   onClick={() => onHelpfulClick(review.id)}
                   className={`flex items-center gap-2 transition-colors py-1 cursor-pointer select-none ${
                     review.userLiked 
-                      ? 'text-[#ff2a3b]' 
+                      ? 'text-[#4df2d6]' 
                       : 'hover:text-slate-300'
                   }`}
                 >
@@ -131,7 +131,7 @@ export default function CommunityReviews({
                     href={review.articleUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-red-400 hover:text-red-300 font-semibold transition-colors py-1"
+                    className="flex items-center gap-1.5 text-[#4df2d6] hover:text-[#5ce1cb] font-semibold transition-colors py-1"
                   >
                     <span>Read Article on IMDb</span>
                     <span>→</span>
@@ -159,7 +159,7 @@ export default function CommunityReviews({
       </div>
 
       {/* Share your Vibe Check Call-to-action */}
-      <div className="rounded-2xl border border-red-950/60 bg-gradient-to-r from-[#150406] to-[#090203] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-8 shadow-xl">
+      <div className="rounded-2xl border border-[#112332] bg-gradient-to-r from-[#071118] to-[#0a1824] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-8 shadow-xl">
         <div>
           <h4 className="font-share text-lg font-bold text-white select-none">
             Share your Vibe Check
@@ -172,9 +172,9 @@ export default function CommunityReviews({
         <div>
           <motion.button
             onClick={onScrollToRateInput}
-            whileHover={{ scale: 1.05, backgroundColor: "#ff2a3b" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
             whileTap={{ scale: 0.95 }}
-            className="rounded-full bg-[#e50914] hover:bg-[#ff2a3b] text-white px-6 py-2.5 text-sm font-sans font-medium transition-all cursor-pointer whitespace-nowrap select-none shadow-md"
+            className="rounded-full bg-[#75D4CB] hover:bg-[#22A498] text-[#001017] px-6 py-2.5 text-sm font-sans font-medium transition-all cursor-pointer whitespace-nowrap select-none shadow-md"
           >
             Write a Review →
           </motion.button>

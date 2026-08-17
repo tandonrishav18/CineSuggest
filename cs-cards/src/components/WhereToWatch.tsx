@@ -252,7 +252,7 @@ export default function WhereToWatch({ movie }: WhereToWatchProps) {
                         renderProviderLogo(provider.name)
                       )}
                     </motion.div>
-                    <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#ff2a3b] transition-colors duration-300">
+                    <span className="font-sans text-base md:text-lg font-semibold text-white group-hover:text-[#4df2d6] transition-colors duration-300">
                       {provider.name}
                     </span>
                   </a>
