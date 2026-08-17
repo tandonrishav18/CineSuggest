@@ -131,13 +131,13 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
           {/* Left Half Visual representation */}
           <div 
             className={`absolute top-0 left-0 h-full w-[50%] transition-colors ${
-              leftFilled ? 'bg-[#4df2d6]' : 'bg-transparent'
+              leftFilled ? 'bg-[#e50914]' : 'bg-transparent'
             }`} 
           />
           {/* Right Half Visual representation */}
           <div 
             className={`absolute top-0 right-0 h-full w-[50%] transition-colors ${
-              rightFilled ? 'bg-[#4df2d6]' : 'bg-transparent'
+              rightFilled ? 'bg-[#e50914]' : 'bg-transparent'
             }`} 
           />
 
@@ -174,7 +174,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
         <h3 className="font-share text-4xl font-bold tracking-tight text-white">
           Rate Now
         </h3>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-teal-500/30 text-[#4df2d6] hover:border-[#4df2d6] transition-all cursor-pointer">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-red-500/30 text-[#ff2a3b] hover:border-[#ff2a3b] transition-all cursor-pointer">
           <ChevronRight size={18} />
         </div>
       </div>
@@ -182,10 +182,10 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
       <div className="flex flex-col lg:flex-row gap-6 items-stretch">
         
         {/* LEFT CARD: REWATCH VALUE CARD */}
-        <div className="lg:w-[280px] w-full shrink-0 flex flex-col justify-between items-center rounded-2xl border border-neutral-800/80 bg-[#071118]/60 p-6 text-center shadow-lg h-full">
+        <div className="lg:w-[280px] w-full shrink-0 flex flex-col justify-between items-center rounded-2xl border border-red-950/60 bg-[#0d0203]/80 p-6 text-center shadow-lg h-full">
           {/* Rewatch icon */}
-          <div className="text-teal-400 mt-2 select-none">
-            <RotateCw size={36} className="transform -scale-x-100 rotate-[45deg] text-[#4df2d6]" />
+          <div className="text-red-400 mt-2 select-none">
+            <RotateCw size={36} className="transform -scale-x-100 rotate-[45deg] text-[#e50914]" />
           </div>
 
           {/* Value numbers */}
@@ -207,10 +207,10 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
               initial={false}
               animate={{
                 width: personalRewatchCount > 0 ? 44 : 192,
-                backgroundColor: personalRewatchCount > 0 ? "#5ce1cb" : "rgba(0, 0, 0, 0)",
-                color: personalRewatchCount > 0 ? "#000000" : "#ffffff",
+                backgroundColor: personalRewatchCount > 0 ? "#e50914" : "rgba(0, 0, 0, 0)",
+                color: personalRewatchCount > 0 ? "#ffffff" : "#ffffff",
                 borderColor: personalRewatchCount > 0 ? "transparent" : "rgb(71, 85, 105)",
-                boxShadow: personalRewatchCount > 0 ? "0 0 18px rgba(92,225,203,0.75)" : "0 0 0px rgba(0,0,0,0)"
+                boxShadow: personalRewatchCount > 0 ? "0 0 18px rgba(229,9,20,0.75)" : "0 0 0px rgba(0,0,0,0)"
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.92 }}
@@ -248,7 +248,7 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
         </div>
 
         {/* RIGHT CARD: RATE & REVIEW CONTAINER */}
-        <div className="flex-1 rounded-2xl border border-neutral-800/80 bg-[#071118]/60 p-6 flex flex-col justify-between shadow-lg gap-8">
+        <div className="flex-1 rounded-2xl border border-red-950/60 bg-[#0d0203]/80 p-6 flex flex-col justify-between shadow-lg gap-8">
           
           {/* Split Rating circles row */}
           <div className="flex flex-wrap items-center gap-4 py-2 pb-6">
@@ -261,8 +261,8 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="flex items-center gap-4">
               {/* Profile Avatar */}
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1a2d3d]/40 text-[#4df2d6] border border-neutral-800/80">
-                <User size={22} className="fill-[#4df2d6]" />
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-950/40 text-[#ff2a3b] border border-red-950/60">
+                <User size={22} className="fill-[#ff2a3b]" />
               </div>
 
               {/* TextInput with underline */}
@@ -338,9 +338,9 @@ export default function RateNow({ movie, onSubmitReview, rateNowRef }: RateNowPr
             {/* CTA Submit Button */}
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.05, backgroundColor: "#22A498" }}
+              whileHover={{ scale: 1.05, backgroundColor: "#ff2a3b" }}
               whileTap={{ scale: 0.95 }}
-              className="rounded-full bg-[#75D4CB] hover:bg-[#22A498] px-6 py-2.5 text-sm font-sans font-normal text-[#03080c] transition-all cursor-pointer self-start select-none shadow-md"
+              className="rounded-full bg-[#e50914] hover:bg-[#ff2a3b] px-6 py-2.5 text-sm font-sans font-medium text-white transition-all cursor-pointer self-start select-none shadow-md"
             >
               Submit Your Review →
             </motion.button>

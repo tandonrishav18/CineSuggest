@@ -16,6 +16,7 @@ export interface Review {
   helpfulCount: number;
   commentsCount: number;
   userLiked?: boolean;
+  articleUrl?: string;
 }
 
 export interface Movie {
@@ -36,4 +37,9 @@ export interface Movie {
   reviews: Review[];
   stillUrl: string; // The image for the "Where to watch" section
   trailerKey?: string;
+  featuredArticle?: {
+    title: string;
+    url: string;
+    source?: string;
+  };
 }

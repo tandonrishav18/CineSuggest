@@ -51,7 +51,7 @@ export default function Header({
       );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-black/16 backdrop-blur-md px-3 py-3 sm:px-8 border-b border-[#112332]/40">
+    <header className="sticky top-0 z-50 w-full bg-[#050001]/90 backdrop-blur-md px-3 py-3 sm:px-8 border-b border-red-950/40 shadow-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 sm:gap-4">
         {/* Left Brand logo only */}
         <div className="flex items-center shrink-0">
@@ -63,7 +63,7 @@ export default function Header({
             <span className="font-jaro text-xl sm:text-3xl font-black tracking-wider text-white">
               Cine
             </span>
-            <span className="font-jaro text-xl sm:text-3xl font-black tracking-wider text-[#4df2d6]">
+            <span className="font-jaro text-xl sm:text-3xl font-black tracking-wider text-[#e50914]">
               Suggest
             </span>
           </a>
@@ -72,8 +72,8 @@ export default function Header({
         {/* Search & Filter */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="relative" ref={searchContainerRef}>
-            <div className={`flex h-10 items-center rounded-full bg-[#0a1217] border border-[#112332] p-1 focus-within:border-teal-500/50 transition-all duration-500 ease-in-out overflow-hidden ${isMobileSearchOpen ? 'w-44 sm:w-64' : 'w-10 sm:w-64'}`}>
-              {/* Teal circle containing search icon */}
+            <div className={`flex h-10 items-center rounded-full bg-[#0d0203] border border-red-950/60 p-1 focus-within:border-red-600/60 transition-all duration-500 ease-in-out overflow-hidden ${isMobileSearchOpen ? 'w-44 sm:w-64' : 'w-10 sm:w-64'}`}>
+              {/* Red circle containing search icon */}
               <button 
                 onClick={() => {
                   setIsMobileSearchOpen((prev) => {
@@ -85,7 +85,7 @@ export default function Header({
                   });
                   setIsDropdownOpen(true);
                 }}
-                className="flex h-8 w-8 min-w-[2rem] min-h-[2rem] shrink-0 aspect-square items-center justify-center rounded-full bg-[#4df2d6] text-[#03080c] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+                className="flex h-8 w-8 min-w-[2rem] min-h-[2rem] shrink-0 aspect-square items-center justify-center rounded-full bg-[#e50914] text-white transition-transform hover:scale-105 active:scale-95 cursor-pointer shadow-md"
                 aria-label="Search button"
               >
                 <Search size={16} strokeWidth={2.5} />
@@ -106,7 +106,7 @@ export default function Header({
 
             {/* Results Dropdown */}
             {isDropdownOpen && searchQuery && (
-              <div className="absolute right-0 mt-2 w-72 max-h-80 overflow-y-auto rounded-xl border border-[#112332] bg-[#0a1217] p-1 shadow-2xl z-50">
+              <div className="absolute right-0 mt-2 w-72 max-h-80 overflow-y-auto rounded-xl border border-red-900/40 bg-[#0d0203] p-1 shadow-2xl z-50">
                 {dropdownMovies.length > 0 ? (
                   dropdownMovies.map((movie) => (
                     <button
@@ -120,8 +120,8 @@ export default function Header({
                       }}
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
                         selectedMovie?.id === movie.id
-                          ? 'bg-teal-500/10 text-[#4df2d6]'
-                          : 'text-slate-300 hover:bg-[#0d1f2d] hover:text-white'
+                          ? 'bg-red-900/20 text-[#ff2a3b]'
+                          : 'text-slate-300 hover:bg-red-950/40 hover:text-white'
                       }`}
                     >
                       <img
@@ -145,12 +145,10 @@ export default function Header({
             )}
           </div>
 
-
           {/* Filter Icon — hidden on phone */}
           <button 
-            className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-[#112332] bg-[#0a1217] text-slate-200 transition-all hover:bg-[#0d1f2d] hover:text-[#4df2d6] cursor-pointer"
+            className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-red-950/60 bg-[#0d0203] text-slate-200 transition-all hover:bg-red-950/40 hover:text-[#ff2a3b] cursor-pointer"
             onClick={() => {
-              // Toggle random selection for fun as visual filter effect
               const nextIndex = (movies.findIndex(m => m.id === selectedMovie.id) + 1) % movies.length;
               onSelectMovie(movies[nextIndex]);
               onViewChange('discover');
@@ -168,14 +166,14 @@ export default function Header({
             onClick={() => onViewChange(activeView === 'cinelist' ? 'discover' : 'cinelist')}
             className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-all cursor-pointer ${
               activeView === 'cinelist'
-                ? 'border-[#4df2d6] bg-[#4df2d6]/10 text-[#4df2d6] shadow-[0_0_12px_rgba(77,242,214,0.3)]'
-                : 'border-[#112332] bg-[#0a1217] text-slate-200 hover:bg-[#0d1f2d] hover:text-[#4df2d6]'
+                ? 'border-[#e50914] bg-[#e50914]/20 text-[#ff2a3b] shadow-[0_0_12px_rgba(229,9,20,0.4)]'
+                : 'border-red-950/60 bg-[#0d0203] text-slate-200 hover:bg-red-950/40 hover:text-[#ff2a3b]'
             }`}
             title="My CineList"
           >
             <Heart size={18} className={activeView === 'cinelist' ? 'fill-current' : ''} />
             {cineListCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#4df2d6] text-[10px] font-extrabold text-[#03080c] shadow-sm border border-[#03080c]">
+              <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#e50914] text-[10px] font-extrabold text-white shadow-sm border border-black">
                 {cineListCount}
               </span>
             )}

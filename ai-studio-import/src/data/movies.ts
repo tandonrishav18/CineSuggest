@@ -170,7 +170,8 @@ export const DIGEST_ITEMS: DigestItem[] = [
     metadata: "actively debating",
     voices: "2.4k voices",
     upvotes: 1845,
-    downvotes: 432
+    downvotes: 432,
+    url: "https://ioaglobal.org/blog/ai-in-hollywood-a-complex-challenge/"
   },
   {
     id: "superhero-losing-magic",
@@ -181,7 +182,8 @@ export const DIGEST_ITEMS: DigestItem[] = [
     badgeColor: "bg-amber-500",
     metadata: "450 comments",
     upvotes: 932,
-    downvotes: 140
+    downvotes: 140,
+    url: "https://time.com/6319815/marvel-cinematic-universe-future/"
   },
   {
     id: "homelander-joker",
@@ -192,7 +194,8 @@ export const DIGEST_ITEMS: DigestItem[] = [
     badgeColor: "bg-teal-500",
     metadata: "Deep dive thread",
     upvotes: 1240,
-    downvotes: 89
+    downvotes: 89,
+    url: "https://www.imdb.com/news/ni64643118/"
   }
 ];
 

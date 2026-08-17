@@ -78,14 +78,14 @@ if (input) {
   input.addEventListener("focus", () =>
     animateMini(
       input,
-      { boxShadow: "0 0 0 4px rgba(117,212,203,0.22)" },
+      { boxShadow: "0 0 0 4px rgba(229,9,20,0.35)" },
       { duration: 0.3, easing: [0.22, 1, 0.36, 1] }
     )
   );
   input.addEventListener("blur", () =>
     animateMini(
       input,
-      { boxShadow: "0 0 0 0px rgba(117,212,203,0)" },
+      { boxShadow: "0 0 0 0px rgba(229,9,20,0)" },
       { duration: 0.25, easing: "ease-out" }
     )
   );

@@ -34,6 +34,11 @@ export const MOVIES: Movie[] = [
         priceText: 'Rent From Rs. 99',
       }
     ],
+    featuredArticle: {
+      title: "Homelander - Generational performance since Heath Ledger's Joker",
+      url: "https://www.imdb.com/news/ni64643118/",
+      source: "IMDb News"
+    },
     reviews: [
       {
         id: 'tb-rev-1',
@@ -46,6 +51,19 @@ export const MOVIES: Movie[] = [
         helpfulCount: 312,
         commentsCount: 22,
         userLiked: false,
+      },
+      {
+        id: 'tb-rev-2',
+        author: 'IMDb News',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop',
+        timestamp: 'Featured Article',
+        vibeTag: '🔥 99% Generational',
+        vibeType: 'masterpiece',
+        content: 'Homelander - Generational performance since Heath Ledger\'s Joker. Antony Starr\'s terrifying, nuanced depiction has redefined modern screen villainy.',
+        articleUrl: 'https://www.imdb.com/news/ni64643118/',
+        helpfulCount: 1540,
+        commentsCount: 210,
+        userLiked: true,
       }
     ]
   },

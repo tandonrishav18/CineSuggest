@@ -99,8 +99,17 @@ export default function CineDigest() {
         {/* Left Side: Large Feature Card ("AI in Hollywood") */}
         <div className="lg:col-span-7">
           <motion.div 
-            whileHover={{ borderColor: "rgba(54, 255, 219, 0.3)" }}
-            className="w-full h-full rounded-3xl overflow-hidden border border-[#14273f]/60 bg-neutral-950 flex flex-col justify-between relative shadow-2xl min-h-[420px] group"
+            whileHover={{ borderColor: "rgba(54, 255, 219, 0.4)" }}
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              if (target.closest('button')) return;
+              const link = mainItem.url || 'https://ioaglobal.org/blog/ai-in-hollywood-a-complex-challenge/';
+              if (link) {
+                window.open(link, '_blank', 'noopener,noreferrer');
+              }
+            }}
+            title="Click to open article"
+            className="w-full h-full rounded-3xl overflow-hidden border border-[#14273f]/60 bg-neutral-950 flex flex-col justify-between relative shadow-2xl min-h-[420px] group cursor-pointer"
           >
             {/* Background image & overlay */}
             <div className="absolute inset-0">
@@ -138,7 +147,7 @@ export default function CineDigest() {
             {/* Bottom Content Area */}
             <div className="relative z-10 p-6 mt-auto">
               <div className="max-w-2xl text-left">
-                <h3 className="text-2xl md:text-3.5xl font-bold font-display text-white leading-tight tracking-wide mb-3">
+                <h3 className="text-2xl md:text-3.5xl font-bold font-display text-white leading-tight tracking-wide mb-3 group-hover:text-[#36ffdb] transition-colors duration-200">
                   {mainItem.title}
                 </h3>
                 <p className="text-neutral-300 text-sm md:text-base font-sans font-light leading-relaxed mb-6">
@@ -204,8 +213,17 @@ export default function CineDigest() {
           {sideItems.map((item) => (
             <motion.div 
               key={item.id}
-              whileHover={{ borderColor: "rgba(54, 255, 219, 0.2)" }}
-              className="rounded-2xl border border-[#14273f]/60 bg-[#040911]/90 overflow-hidden relative flex flex-col justify-between min-h-[200px] h-full group"
+              whileHover={{ borderColor: "rgba(54, 255, 219, 0.4)" }}
+              onClick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.closest('button')) return;
+                const link = item.url || (item.id === 'homelander-joker' ? 'https://www.imdb.com/news/ni64643118/' : item.id === 'superhero-losing-magic' ? 'https://time.com/6319815/marvel-cinematic-universe-future/' : undefined);
+                if (link) {
+                  window.open(link, '_blank', 'noopener,noreferrer');
+                }
+              }}
+              title="Click to open article"
+              className="rounded-2xl border border-[#14273f]/60 bg-[#040911]/90 overflow-hidden relative flex flex-col justify-between min-h-[200px] h-full group cursor-pointer"
             >
               {/* Background cover image */}
               <div className="absolute inset-0">

@@ -31,7 +31,7 @@ export default function CineList({
           <button
             onClick={onBrowseMovies}
             aria-label="Back to Discover"
-            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-[#112332] bg-[#0a1217] text-slate-300 transition-all hover:bg-[#0d1f2d] hover:text-[#4df2d6] hover:border-[#4df2d6]/40 cursor-pointer shrink-0 shadow-sm"
+            className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-red-950/60 bg-[#0d0203] text-slate-300 transition-all hover:bg-red-950/40 hover:text-[#ff2a3b] hover:border-red-600/40 cursor-pointer shrink-0 shadow-sm"
           >
             <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 stroke-[2.5]" />
           </button>
@@ -49,7 +49,7 @@ export default function CineList({
         {savedMovies.length > 0 && (
           <button
             onClick={onBrowseMovies}
-            className="text-xs font-semibold uppercase tracking-wider text-[#4df2d6] hover:text-[#5ce1cb] transition-colors cursor-pointer"
+            className="text-xs font-semibold uppercase tracking-wider text-[#ff2a3b] hover:text-[#e50914] transition-colors cursor-pointer"
           >
             + Add More
           </button>
@@ -67,9 +67,9 @@ export default function CineList({
             className="flex flex-col items-center justify-center py-20 text-center"
           >
             {/* Elegant glassmorphic illustration placeholder */}
-            <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#0a1217] border border-[#112332] shadow-[0_0_30px_rgba(77,242,214,0.05)] text-slate-500">
+            <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#0d0203] border border-red-950/60 shadow-[0_0_30px_rgba(229,9,20,0.15)] text-slate-500">
               <Film size={40} className="stroke-[1.5] text-slate-400" />
-              <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#4df2d6]/10 text-[#4df2d6] border border-[#4df2d6]/30">
+              <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#e50914]/20 text-[#ff2a3b] border border-[#e50914]/40">
                 <Star size={12} className="fill-current" />
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function CineList({
 
             <motion.button
               onClick={onBrowseMovies}
-              className="rounded-full bg-[#4df2d6] px-8 py-3 text-sm font-bold text-[#03080c] shadow-lg shadow-[#4df2d6]/10 hover:shadow-[#4df2d6]/20 transition-all cursor-pointer"
+              className="rounded-full bg-[#e50914] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#e50914]/20 hover:shadow-[#e50914]/40 hover:bg-[#ff2a3b] transition-all cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -110,16 +110,16 @@ export default function CineList({
                   damping: 30,
                   opacity: { duration: 0.2 } 
                 }}
-                className="group relative flex items-center justify-between gap-4 rounded-2xl border border-[#4df2d6]/30 bg-[#081522]/60 backdrop-blur-md p-3 md:p-4 hover:border-[#4df2d6]/60 transition-all hover:bg-[#0c1f30]/80 cursor-pointer overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                className="group relative flex items-center justify-between gap-4 rounded-2xl border border-red-950/50 bg-[#0d0203]/70 backdrop-blur-md p-3 md:p-4 hover:border-red-600/60 transition-all hover:bg-red-950/30 cursor-pointer overflow-hidden shadow-xl"
                 onClick={() => onSelectMovie(movie)}
               >
                 {/* Subtle soft-glow light-leak inside hovered item */}
-                <div className="absolute -left-12 -top-12 h-24 w-24 rounded-full bg-[#4df2d6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
+                <div className="absolute -left-12 -top-12 h-24 w-24 rounded-full bg-[#e50914]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none" />
 
                 {/* Left side: Thumbnail Poster & Text details */}
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                   {/* Poster Thumbnail */}
-                  <div className="relative h-16 w-12 md:h-20 md:w-16 flex-shrink-0 overflow-hidden rounded-lg border border-[#112332] bg-[#03080c] shadow-inner">
+                  <div className="relative h-16 w-12 md:h-20 md:w-16 flex-shrink-0 overflow-hidden rounded-lg border border-red-950/60 bg-[#050001] shadow-inner">
                     <img
                       src={movie.posterUrl}
                       alt={movie.title}
@@ -131,7 +131,7 @@ export default function CineList({
                   {/* Text Description */}
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                      <h4 className="font-share text-base md:text-lg font-bold text-white group-hover:text-[#4df2d6] transition-colors truncate">
+                      <h4 className="font-share text-base md:text-lg font-bold text-white group-hover:text-[#ff2a3b] transition-colors truncate">
                         {movie.title}
                       </h4>
                       <span className="text-xs text-slate-500">{movie.year}</span>
@@ -139,7 +139,7 @@ export default function CineList({
 
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                       {/* IMDb rating display */}
-                      <div className="flex items-center gap-1 bg-[#4df2d6]/5 border border-[#4df2d6]/15 rounded px-1.5 py-0.5 text-[11px] font-mono font-medium text-[#4df2d6]">
+                      <div className="flex items-center gap-1 bg-red-950/40 border border-red-800/30 rounded px-1.5 py-0.5 text-[11px] font-mono font-medium text-[#ff2a3b]">
                         <Star size={10} className="fill-current" />
                         <span>{movie.imdbRating.split('/')[0]}</span>
                       </div>
@@ -175,7 +175,7 @@ export default function CineList({
                   </button>
 
                   {/* Open details chevron */}
-                  <div className="text-slate-500 group-hover:text-[#4df2d6] transition-all transform group-hover:translate-x-1 duration-200">
+                  <div className="text-slate-500 group-hover:text-[#ff2a3b] transition-all transform group-hover:translate-x-1 duration-200">
                     <ChevronRight size={18} />
                   </div>
                 </div>

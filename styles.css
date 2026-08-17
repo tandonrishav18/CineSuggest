@@ -1,11 +1,12 @@
 :root {
-  --background: #001017;
-  --background-deep: #000b10;
-  --primary: #75d4cb;
+  --background: #0d0203;
+  --background-deep: #050001;
+  --primary: #e50914;
+  --primary-hover: #ff2a3b;
   --text-primary: #ffffff;
-  --glass: rgba(128, 128, 128, 0.3);
-  --glass-stroke: rgba(255, 255, 255, 0.4);
-  --input-fill: rgba(255, 255, 255, 0.12);
+  --glass: rgba(22, 6, 8, 0.55);
+  --glass-stroke: rgba(229, 9, 20, 0.4);
+  --input-fill: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -39,7 +40,7 @@ button {
   position: relative;
   min-height: 100svh;
   overflow: hidden;
-  background: linear-gradient(180deg, #001118 0%, #001016 54%, #00141b 100%);
+  background: linear-gradient(180deg, #0d0203 0%, #060001 54%, #0f0204 100%);
 }
 
 .shape-grid,
@@ -53,8 +54,8 @@ button {
   inset: 0;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(117, 212, 203, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(117, 212, 203, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(229, 9, 20, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 9, 20, 0.08) 1px, transparent 1px);
   background-size: 34.833px 34.833px;
   opacity: 0.9;
 }
@@ -67,10 +68,10 @@ button {
   height: 1318px;
   background: radial-gradient(
     ellipse at 50% 41%,
-    rgba(130, 195, 190, 0.44) 0%,
-    rgba(92, 138, 137, 0.34) 34%,
-    rgba(41, 78, 82, 0.18) 55%,
-    rgba(0, 16, 23, 0) 78%
+    rgba(229, 9, 20, 0.45) 0%,
+    rgba(170, 7, 15, 0.32) 34%,
+    rgba(90, 4, 8, 0.18) 55%,
+    rgba(13, 2, 3, 0) 78%
   );
   filter: blur(2px);
 }
@@ -304,7 +305,7 @@ button {
 .code-input:focus {
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(117, 212, 203, 0.16);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.35);
 }
 
 .action-group {
@@ -336,12 +337,13 @@ button {
 .primary-button {
   border: 0;
   background: var(--primary);
-  color: #000;
-  box-shadow: inset 0 0 5.2px rgba(255, 255, 255, 0.54);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: inset 0 0 5.2px rgba(255, 255, 255, 0.4);
 }
 
 .primary-button:hover {
-  background: #5dbcbc;
+  background: var(--primary-hover);
 }
 
 .primary-button:active {
@@ -383,14 +385,14 @@ button {
 
 .secondary-button:hover {
   background: #ffffff;
-  color: #001017;
+  color: #0d0203;
   border-color: #ffffff;
 }
 
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .resend-button:focus-visible {
-  outline: 3px solid rgba(117, 212, 203, 0.35);
+  outline: 3px solid rgba(229, 9, 20, 0.45);
   outline-offset: 3px;
 }
 

@@ -19,6 +19,7 @@ export interface DigestItem {
   voices?: string;
   upvotes: number;
   downvotes: number;
+  url?: string;
 }
 
 export interface ReviewItem {
